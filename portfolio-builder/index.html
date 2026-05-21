@@ -26,7 +26,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* HEADER */
+  /* ── HEADER BANNER ── */
   .header {
     position: relative;
     text-align: center;
@@ -35,19 +35,15 @@
     border-bottom: 1px solid rgba(76, 185, 213, 0.4);
     overflow: hidden;
   }
-
   .header::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 600px;
-    height: 600px;
+    top: 50%; left: 50%;
+    width: 600px; height: 600px;
     transform: translate(-50%, -50%);
     background: radial-gradient(circle, rgba(76, 185, 213, 0.15) 0%, transparent 70%);
     pointer-events: none;
   }
-
   .header h1 {
     font-size: clamp(1.6rem, 4vw, 2.4rem);
     font-weight: 900;
@@ -57,7 +53,6 @@
     position: relative;
     z-index: 1;
   }
-
   .header .sub {
     font-size: clamp(0.9rem, 2vw, 1.1rem);
     color: var(--accent);
@@ -67,21 +62,128 @@
     z-index: 1;
   }
 
-  /* PROGRESS */
+  /* ── WELCOME HERO ── */
+  .welcome {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 2rem;
+    text-align: center;
+  }
+  .welcome-badge {
+    display: inline-block;
+    padding: 0.25rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(169, 220, 234, 0.08);
+    border: 1px solid rgba(169, 220, 234, 0.2);
+    margin-bottom: 1.25rem;
+  }
+  .welcome h2 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .welcome .hook {
+    font-size: 1.1rem;
+    color: var(--secondary);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .welcome .desc {
+    font-size: 0.9rem;
+    color: rgba(228, 232, 237, 0.6);
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+
+  /* ── JOURNEY GRID ── */
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .journey-card {
+    text-align: left;
+    padding: 1rem 1.1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(76, 185, 213, 0.12);
+    background: rgba(76, 185, 213, 0.03);
+    transition: all 0.25s;
+  }
+  .journey-card:hover {
+    border-color: rgba(76, 185, 213, 0.3);
+    background: rgba(76, 185, 213, 0.06);
+  }
+  .journey-num {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .journey-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.2rem;
+  }
+  .journey-time {
+    font-size: 0.72rem;
+    color: rgba(228, 232, 237, 0.4);
+  }
+  .journey-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(76, 185, 213, 0.3);
+    margin-right: 0.4rem;
+  }
+  .journey-dot.done {
+    background: var(--accent);
+  }
+
+  .start-btn {
+    display: inline-block;
+    padding: 0.85rem 2.2rem;
+    background: var(--secondary);
+    color: var(--primary);
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: all 0.25s;
+    text-decoration: none;
+  }
+  .start-btn:hover {
+    background: #3da8c4;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(76, 185, 213, 0.35);
+  }
+
+  /* ── PROGRESS ── */
   .progress-wrap {
     max-width: 820px;
     margin: 0 auto;
-    padding: 1.5rem 1.5rem 0.5rem;
+    padding: 0 1.5rem 0.5rem;
   }
-
   .progress-label {
     display: flex;
     justify-content: space-between;
     font-size: 0.85rem;
     color: rgba(228, 232, 237, 0.6);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
-
   .progress-bar {
     width: 100%;
     height: 6px;
@@ -89,7 +191,6 @@
     border-radius: 3px;
     overflow: hidden;
   }
-
   .progress-fill {
     height: 100%;
     width: 0%;
@@ -98,95 +199,81 @@
     transition: width 0.4s ease;
   }
 
-  /* MAIN */
+  /* ── MAIN ── */
   .main {
     max-width: 820px;
     margin: 0 auto;
     padding: 1rem 1.5rem 4rem;
   }
 
-  /* SECTION */
+  /* ── SECTION ── */
   .section {
     margin-bottom: 1rem;
-    border: 1px solid rgba(76, 185, 213, 0.15);
+    border: 1px solid rgba(76, 185, 213, 0.12);
     border-radius: 12px;
     overflow: hidden;
     transition: border-color 0.3s;
   }
-
   .section:hover {
-    border-color: rgba(76, 185, 213, 0.3);
+    border-color: rgba(76, 185, 213, 0.25);
   }
-
   .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 1.5rem;
+    padding: 1.15rem 1.5rem;
     cursor: pointer;
     user-select: none;
     background: rgba(76, 185, 213, 0.03);
     transition: background 0.2s;
   }
-
   .section-header:hover {
     background: rgba(76, 185, 213, 0.06);
   }
-
   .section-header-left {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     min-width: 0;
   }
-
   .section-toggle {
-    width: 24px;
-    height: 24px;
+    width: 24px; height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.25s;
     flex-shrink: 0;
   }
-
   .section-toggle.open {
     transform: rotate(90deg);
   }
-
   .section-toggle svg {
-    width: 16px;
-    height: 16px;
+    width: 16px; height: 16px;
     fill: none;
     stroke: var(--accent);
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-
   .section-title {
     font-size: 1.05rem;
     font-weight: 700;
     color: var(--primary);
     line-height: 1.3;
   }
-
   .section-meta {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     flex-shrink: 0;
   }
-
   .section-time {
     font-size: 0.75rem;
     color: rgba(228, 232, 237, 0.5);
     white-space: nowrap;
   }
-
   .section-check {
-    width: 20px;
-    height: 20px;
+    width: 20px; height: 20px;
     border: 2px solid rgba(169, 220, 234, 0.4);
     border-radius: 50%;
     display: flex;
@@ -195,46 +282,37 @@
     flex-shrink: 0;
     transition: all 0.25s;
   }
-
   .section-check.done {
     background: var(--accent);
     border-color: var(--accent);
   }
-
   .section-check.done svg {
     display: block;
   }
-
   .section-check svg {
     display: none;
-    width: 10px;
-    height: 10px;
+    width: 10px; height: 10px;
     fill: none;
     stroke: var(--bg);
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-
-  /* SECTION BODY */
   .section-body {
     display: none;
     padding: 0 1.5rem 1.5rem;
   }
-
   .section-body.open {
     display: block;
   }
 
-  /* SUBSECTIONS */
+  /* ── SUBSECTIONS ── */
   .subsection {
     margin-bottom: 1.5rem;
   }
-
   .subsection:last-child {
     margin-bottom: 0;
   }
-
   .sub-label {
     font-size: 0.7rem;
     font-weight: 800;
@@ -243,70 +321,61 @@
     color: var(--accent);
     margin-bottom: 0.5rem;
   }
-
   .sub-summary {
     font-size: 0.9rem;
     color: var(--secondary);
     font-weight: 500;
     margin-bottom: 0.75rem;
   }
-
   .sub-body p {
     margin-bottom: 0.75rem;
     font-size: 0.9rem;
     line-height: 1.7;
     color: var(--text);
   }
-
   .sub-body p:last-child {
     margin-bottom: 0;
   }
 
-  /* BLOCKQUOTE STYLE */
+  /* ── WEAK/STRONG ── */
   .weak-strong {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
     margin: 0.5rem 0;
   }
-
   .weak-box, .strong-box {
     padding: 0.75rem 1rem;
     border-radius: 8px;
     font-size: 0.85rem;
     line-height: 1.5;
   }
-
   .weak-box {
-    background: rgba(255, 80, 80, 0.08);
-    border-left: 2px solid rgba(255, 80, 80, 0.4);
+    background: rgba(255, 80, 80, 0.06);
+    border-left: 2px solid rgba(255, 80, 80, 0.35);
   }
-
   .weak-box .box-label {
     font-weight: 700;
     color: rgba(255, 120, 120, 0.9);
     margin-bottom: 0.25rem;
   }
-
   .strong-box {
     background: rgba(76, 185, 213, 0.08);
     border-left: 2px solid var(--secondary);
   }
-
   .strong-box .box-label {
     font-weight: 700;
     color: var(--secondary);
     margin-bottom: 0.25rem;
   }
 
-  /* TOOL LIST */
+  /* ── TOOLS ── */
   .tool-list {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     margin: 0.5rem 0;
   }
-
   .tool-tag {
     padding: 0.35rem 0.75rem;
     border-radius: 999px;
@@ -316,12 +385,11 @@
     color: var(--accent);
   }
 
-  /* MISTAKES */
+  /* ── MISTAKES ── */
   .mistakes-list {
     list-style: none;
     padding: 0;
   }
-
   .mistakes-list li {
     padding: 0.5rem 0 0.5rem 1.25rem;
     position: relative;
@@ -329,11 +397,9 @@
     line-height: 1.5;
     border-bottom: 1px solid rgba(76, 185, 213, 0.06);
   }
-
   .mistakes-list li:last-child {
     border-bottom: none;
   }
-
   .mistakes-list li::before {
     content: '\2716';
     position: absolute;
@@ -343,12 +409,11 @@
     font-size: 0.75rem;
   }
 
-  /* ACTION STEPS */
+  /* ── ACTIONS ── */
   .actions-list {
     list-style: none;
     padding: 0;
   }
-
   .actions-list li {
     display: flex;
     align-items: flex-start;
@@ -360,26 +425,21 @@
     transition: all 0.25s;
     cursor: pointer;
   }
-
   .actions-list li:hover {
     border-color: rgba(76, 185, 213, 0.25);
   }
-
   .actions-list li.done {
     background: rgba(76, 185, 213, 0.08);
     border-color: rgba(76, 185, 213, 0.2);
   }
-
   .actions-list li.done .action-text {
     text-decoration: line-through;
     opacity: 0.6;
   }
-
   .actions-list input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
+    width: 18px; height: 18px;
     border: 2px solid rgba(169, 220, 234, 0.4);
     border-radius: 4px;
     flex-shrink: 0;
@@ -388,42 +448,35 @@
     position: relative;
     transition: all 0.2s;
   }
-
   .actions-list input[type="checkbox"]:checked {
     background: var(--accent);
     border-color: var(--accent);
   }
-
   .actions-list input[type="checkbox"]:checked::after {
     content: '';
     position: absolute;
-    left: 4px;
-    top: 1px;
-    width: 5px;
-    height: 9px;
+    left: 4px; top: 1px;
+    width: 5px; height: 9px;
     border: solid var(--bg);
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
   }
-
   .action-text {
     font-size: 0.9rem;
     line-height: 1.4;
   }
-
   .action-text strong {
     display: block;
     color: var(--primary);
     margin-bottom: 0.15rem;
   }
-
   .action-text span {
     color: var(--text);
     opacity: 0.8;
     font-weight: 400;
   }
 
-  /* WEEKLY TARGET */
+  /* ── WEEKLY TARGET ── */
   .weekly-target {
     margin-top: 1rem;
     padding: 0.75rem 1rem;
@@ -434,27 +487,23 @@
     align-items: flex-start;
     gap: 0.6rem;
   }
-
   .weekly-target .icon {
     font-size: 1.1rem;
     flex-shrink: 0;
     margin-top: 1px;
   }
-
   .weekly-target .text {
     font-size: 0.85rem;
     line-height: 1.5;
     color: var(--secondary);
   }
-
   .weekly-target .text strong {
     color: var(--primary);
   }
 
-  /* RESPONSIVE */
-  @media (max-width: 600px) {
-    .header { padding: 2rem 1rem 1.5rem; }
-    .header::before { width: 400px; height: 400px; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .welcome { padding: 2rem 1rem 1.5rem; }
     .main { padding: 1rem 1rem 3rem; }
     .section-header { padding: 1rem; }
     .section-body { padding: 0 1rem 1rem; }
@@ -463,11 +512,15 @@
     .section-meta { gap: 0.5rem; }
     .section-time { font-size: 0.7rem; }
     .actions-list li { padding: 0.6rem; }
+    .journey { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+    .header::before { width: 400px; height: 400px; }
+    .header { padding: 2rem 1rem 1.5rem; }
   }
-
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     .section-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
     .section-meta { align-self: flex-end; }
+    .journey { grid-template-columns: 1fr; }
+    .welcome h2 { font-size: 1.3rem; }
   }
 </style>
 </head>
@@ -479,10 +532,53 @@
   <p class="sub">Portfolio Builder Module</p>
 </header>
 
+<!-- WELCOME -->
+<section class="welcome" id="welcome">
+  <div class="welcome-badge">6 Modules · ~70 min</div>
+  <h2>Build a portfolio that wins clients</h2>
+  <p class="hook">You already know how to make AI video. Now make it pay.</p>
+  <p class="desc">This course walks you through the six portfolio types that brands and agencies pay for. You'll learn what clients look for, which tools to use, what good looks like, and how to price your work. By the end you'll have a published portfolio with a rate card.</p>
+
+  <div class="journey" id="journey">
+    <div class="journey-card" id="j-ugc">
+      <div class="journey-num">Module 1</div>
+      <div class="journey-title">UGC & Product Videos</div>
+      <div class="journey-time"><span class="journey-dot"></span> 12 min</div>
+    </div>
+    <div class="journey-card" id="j-commercial">
+      <div class="journey-num">Module 2</div>
+      <div class="journey-title">Commercial & Brand Ads</div>
+      <div class="journey-time"><span class="journey-dot"></span> 15 min</div>
+    </div>
+    <div class="journey-card" id="j-realestate">
+      <div class="journey-num">Module 3</div>
+      <div class="journey-title">Real Estate & Architecture</div>
+      <div class="journey-time"><span class="journey-dot"></span> 10 min</div>
+    </div>
+    <div class="journey-card" id="j-social">
+      <div class="journey-num">Module 4</div>
+      <div class="journey-title">Social Content & Grid</div>
+      <div class="journey-time"><span class="journey-dot"></span> 12 min</div>
+    </div>
+    <div class="journey-card" id="j-hosting">
+      <div class="journey-num">Module 5</div>
+      <div class="journey-title">Portfolio Hosting</div>
+      <div class="journey-time"><span class="journey-dot"></span> 10 min</div>
+    </div>
+    <div class="journey-card" id="j-pricing">
+      <div class="journey-num">Module 6</div>
+      <div class="journey-title">Pricing & Packaging</div>
+      <div class="journey-time"><span class="journey-dot"></span> 10 min</div>
+    </div>
+  </div>
+
+  <a href="#module-ugc" class="start-btn">START COURSE</a>
+</section>
+
 <!-- PROGRESS -->
 <div class="progress-wrap">
   <div class="progress-label">
-    <span>Progress</span>
+    <span>Total Progress</span>
     <span id="progress-text">0 / 30</span>
   </div>
   <div class="progress-bar">
@@ -490,15 +586,15 @@
   </div>
 </div>
 
-<!-- MAIN -->
+<!-- ──────── MODULES ──────── -->
 <main class="main" id="app">
 
-  <!-- ==================== SECTION 1: UGC ==================== -->
-  <div class="section" data-section="ugc">
+  <!-- ==================== MODULE 1: UGC ==================== -->
+  <div class="section" data-section="ugc" id="module-ugc">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-header-left">
         <div class="section-toggle"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
-        <div class="section-title">UGC & Product Videos</div>
+        <div class="section-title">Module 1 — UGC & Product Videos</div>
       </div>
       <div class="section-meta">
         <span class="section-time">~12 min</span>
@@ -509,30 +605,27 @@
       <div class="subsection">
         <div class="sub-label">Why This Matters</div>
         <div class="sub-body">
-          <p>User-generated content is no longer a side hustle. 92% of consumers trust UGC over traditional advertising, and nearly 79% say it directly impacts purchasing decisions. By 2026, 73% of brands now request portfolios before negotiations begin, up from 58% in 2024.</p>
+          <p>User-generated content is no longer a side hustle. 92% of consumers trust UGC over traditional advertising, and nearly 79% say it directly impacts purchasing decisions. By 2026, 73% of brands request portfolios before negotiations begin, up from 58% in 2024.</p>
           <p>The shift is clear: brands don't care about your follower count. They care about your ability to produce authentic, conversion-ready content. The best part? You can start with spec work using products you already own. This is the lowest barrier to entry and the fastest path to paid work in AI filmmaking. Creators with portfolios charge 25-40% higher rates than those without.</p>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">What Good Looks Like</div>
         <div class="weak-strong">
-          <div class="weak-box"><div class="box-label">Weak</div>A single unboxing video shot on phone with bad window light, no hook, no CTA. No structure, no labels, no context.</div>
+          <div class="weak-box"><div class="box-label">Weak</div>A single unboxing video shot on phone with bad window light, no hook, no CTA. No structure, no context.</div>
           <div class="strong-box"><div class="box-label">Strong</div>5-8 curated clips organized by category (e-commerce, beauty, SaaS). Each has a hook in the first 2 seconds, clear lighting, stable framing, visible CTA. Accompanied by 1-sentence context note (goal, platform, result).</div>
         </div>
       </div>
-
       <div class="subsection">
-        <div class="sub-label">Recommended Tools</div>
+        <div class="sub-label">Recommended Tools (May 2026)</div>
         <div class="tool-list">
-          <span class="tool-tag">Billo — Free UGC marketplace</span>
-          <span class="tool-tag">Insense — Free brand-creator matching</span>
+          <span class="tool-tag">Arcads — 1000+ AI actors, emotion control</span>
+          <span class="tool-tag">HeyGen — Multilingual avatar video</span>
+          <span class="tool-tag">ElevenLabs — AI voiceover from $5/mo</span>
           <span class="tool-tag">CapCut — Free mobile/desktop editing</span>
-          <span class="tool-tag">VEED.IO — Free cloud editing + AI subs</span>
-          <span class="tool-tag">Runway Gen-4 — $15/mo cinematic polish</span>
+          <span class="tool-tag">PixVerse V6 — Fast social UGC vids</span>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Common Mistakes</div>
         <ul class="mistakes-list">
@@ -543,28 +636,16 @@
           <li>Not mobile-first — 88% of portfolio viewers use phones to review creators</li>
         </ul>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Action Steps</div>
         <ul class="actions-list" data-checklist="ugc">
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Review 5 products</strong><span>Pick 3 products you already own and shoot spec content for them</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Film 3 UGC clips</strong><span>One talking-head review, one before/after, one unboxing style</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Edit each clip</strong><span>Include a hook (first 2 seconds) + clear call-to-action in every clip</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Add context notes</strong><span>Write 1 sentence per clip explaining goal, platform, and any results</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Create a rate card</strong><span>Base price per video + 2 add-on options (usage rights, raw footage)</span></div>
-          </li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Review 5 products</strong><span>Pick 3 products you already own and shoot spec content for them</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Film 3 UGC clips</strong><span>One talking-head review, one before/after, one unboxing style</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Edit each clip</strong><span>Include a hook (first 2 seconds) + clear call-to-action in every clip</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Add context notes</strong><span>Write 1 sentence per clip explaining goal, platform, and any results</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Create a rate card</strong><span>Base price per video + 2 add-on options (usage rights, raw footage)</span></div></li>
         </ul>
       </div>
-
       <div class="weekly-target">
         <div class="icon">&#9200;</div>
         <div class="text"><strong>This week:</strong> Shoot and edit 3 UGC spec clips. Publish to your portfolio by end of week.</div>
@@ -572,12 +653,12 @@
     </div>
   </div>
 
-  <!-- ==================== SECTION 2: COMMERCIAL ==================== -->
-  <div class="section" data-section="commercial">
+  <!-- ==================== MODULE 2: COMMERCIAL ==================== -->
+  <div class="section" data-section="commercial" id="module-commercial">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-header-left">
         <div class="section-toggle"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
-        <div class="section-title">Commercial & Brand Ads</div>
+        <div class="section-title">Module 2 — Commercial & Brand Ads</div>
       </div>
       <div class="section-meta">
         <span class="section-time">~15 min</span>
@@ -588,76 +669,61 @@
       <div class="subsection">
         <div class="sub-label">Why This Matters</div>
         <div class="sub-body">
-          <p>We are in Phase 3 of AI advertising. Full generative video has arrived. Commercials that once cost $100K+ can now be produced by solo creators for under $2,000 using tools like Veo 3, Runway, and Seedance. Real case: Kalshi's NBA Finals ad — $2,000 budget, 3 days production, 20M+ impressions. A 2-person team at Amaysim produced a national TV spot in under 2 weeks with AI tools.</p>
-          <p>This means mid-market and B2B brands can now afford emotional, cinematic advertising without agencies. If you can demonstrate the ability to produce broadcast-quality AI commercials, you skip the entry-level work entirely. The highest-paying asset type in AI filmmaking right now is the 30-60 second brand spot. Rates range from $500-$5,000+ per finished piece depending on complexity.</p>
+          <p>We are in Phase 3 of AI advertising. Full generative video has arrived. Commercials that once cost $100K+ can now be produced by solo creators for under $2,000 using models like Gemini Omni, Seedance 2.0, and Runway Gen-4.5. Real case: Kalshi's NBA Finals ad — $2,000 budget, 3 days production, 20M+ impressions. A 2-person team at Amaysim produced a national TV spot in under 2 weeks with AI tools.</p>
+          <p>Mid-market and B2B brands can now afford emotional, cinematic advertising without agencies. If you can demonstrate broadcast-quality AI commercials, you skip the entry-level work entirely. The highest-paying asset type in AI filmmaking right now is the 30-60 second brand spot. Rates range from $500-$5,000+ per finished piece.</p>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">What Good Looks Like</div>
         <div class="weak-strong">
-          <div class="weak-box"><div class="box-label">Weak</div>A single AI-generated clip with no narrative structure, no brand brief, no sound design. Looks like a tech demo, not an ad.</div>
-          <div class="strong-box"><div class="box-label">Strong</div>A 30-60 second spot with clear narrative arc (problem → solution → result). Consistent character style. Custom sound design. Delivered with a brief showing creative strategy behind each scene choice. 15 final shots from 300-400 generations.</div>
+          <div class="weak-box"><div class="box-label">Weak</div>A single AI-generated clip with no narrative structure, no brand brief, no sound design. Looks like a tech demo.</div>
+          <div class="strong-box"><div class="box-label">Strong</div>A 30-60 second spot with clear narrative arc (problem → solution → result). Consistent character style. Custom sound design. 15 final shots from 300-400 generations. Delivered with a creative brief.</div>
         </div>
       </div>
-
       <div class="subsection">
-        <div class="sub-label">Recommended Tools</div>
+        <div class="sub-label">Recommended Tools (May 2026)</div>
         <div class="tool-list">
-          <span class="tool-tag">Seedance 1.5 Pro — Free 4K upscale, best quality</span>
-          <span class="tool-tag">Kling 2.6 — Strong motion + character consistency</span>
-          <span class="tool-tag">Runway Gen-4 — Cinematic pro controls ($15/mo)</span>
-          <span class="tool-tag">Google Veo 3 — Best photorealism (AI Studio)</span>
-          <span class="tool-tag">ElevenLabs — AI voiceover from $5/mo</span>
+          <span class="tool-tag">Gemini Omni Flash — Multimodal gen, world physics, conversational editing</span>
+          <span class="tool-tag">Seedance 2.0 — Motion stability + audio-video joint gen</span>
+          <span class="tool-tag">Kling 3.0 — Motion Sync, Dream Actor, built-in audio</span>
+          <span class="tool-tag">Runway Gen-4.5 — Cinematic pro controls</span>
+          <span class="tool-tag">Magnific — 4K upscale + AI creative platform</span>
           <span class="tool-tag">DaVinci Resolve — Free pro color + sound design</span>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Common Mistakes</div>
         <ul class="mistakes-list">
           <li>Making a tech demo instead of an ad — clients buy emotional impact, not AI novelty</li>
-          <li>No brief or creative strategy behind the spot — just "here's what the tool generated"</li>
+          <li>No brief or creative strategy — just "here's what the tool generated"</li>
           <li>Bad pacing — AI clips don't automatically have good rhythm, you must edit for timing</li>
-          <li>Ignoring sound design — silence or mismatched AI music kills the emotional impact</li>
-          <li>Not delivering in multiple formats — vertical + horizontal + square for different placements</li>
+          <li>Ignoring sound design — silence or mismatched music kills the emotional impact</li>
+          <li>Not delivering in multiple formats — vertical + horizontal for different placements</li>
         </ul>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Action Steps</div>
         <ul class="actions-list" data-checklist="commercial">
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Write a 30-sec ad brief</strong><span>Include: target audience, pain point, solution, tone, and desired emotion</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Generate 10-15 clips</strong><span>Use 2 AI tools (Seedance + Kling or Runway) across scenes</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Edit into a coherent spot</strong><span>30-second commercial with sound design and brand end card</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Add branding frames</strong><span>Opening brand frame + end CTA card with consistent typography</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Categorize in portfolio</strong><span>Save under "Commercial / Brand Ads" with brief notes on strategy</span></div>
-          </li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Write a 30-sec ad brief</strong><span>Include: target audience, pain point, solution, tone, and desired emotion</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Generate 10-15 clips</strong><span>Use 2 AI models (Gemini Omni + Seedance or Kling 3.0) across scenes</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Edit into a coherent spot</strong><span>30-second commercial with sound design and brand end card</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Add branding frames</strong><span>Opening brand frame + end CTA card with consistent typography</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Categorize in portfolio</strong><span>Save under "Commercial / Brand Ads" with brief notes on strategy</span></div></li>
         </ul>
       </div>
-
       <div class="weekly-target">
         <div class="icon">&#9200;</div>
-        <div class="text"><strong>This week:</strong> Complete one 30-second AI-generated brand ad with full sound design. Add to your portfolio.</div>
+        <div class="text"><strong>This week:</strong> Complete one 30-second AI-generated brand ad with full sound design. Add to portfolio.</div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== SECTION 3: REAL ESTATE ==================== -->
-  <div class="section" data-section="realestate">
+  <!-- ==================== MODULE 3: REAL ESTATE ==================== -->
+  <div class="section" data-section="realestate" id="module-realestate">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-header-left">
         <div class="section-toggle"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
-        <div class="section-title">Real Estate & Architecture</div>
+        <div class="section-title">Module 3 — Real Estate & Architecture</div>
       </div>
       <div class="section-meta">
         <span class="section-time">~10 min</span>
@@ -669,29 +735,26 @@
         <div class="sub-label">Why This Matters</div>
         <div class="sub-body">
           <p>Real estate video is one of the highest-paying niches in AI filmmaking. Listings with video sell 403% faster than those without. In 2026, commercial real estate teams have adopted AI tools as daily workflow essentials for property marketing, virtual staging, and neighborhood flyovers.</p>
-          <p>A single property video package (walkthrough + aerial + virtual staging) can command $500-$2,000+ per property. This niche pays premium rates because the content directly drives sales, not just engagement. Real estate agents and developers have budgets for marketing that creators targeting lifestyle brands don't always see. It's an underserved niche with consistent recurring work.</p>
+          <p>A single property video package (walkthrough + aerial + virtual staging) can command $500-$2,000+ per property. This niche pays premium rates because the content directly drives sales, not just engagement. Real estate agents and developers have dedicated marketing budgets. It's an underserved niche with consistent recurring work.</p>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">What Good Looks Like</div>
         <div class="weak-strong">
-          <div class="weak-box"><div class="box-label">Weak</div>A flat slideshow of property photos with background music. No motion, no atmosphere, no floor plan overlay, no neighborhood context.</div>
-          <div class="strong-box"><div class="box-label">Strong</div>Cinematic establishing shot (exterior), smooth interior walkthrough, floor plan overlay with animated captions, neighborhood context (schools, parks, transit). 60-90 seconds. Delivered in vertical + horizontal formats. Ambient sound design throughout.</div>
+          <div class="weak-box"><div class="box-label">Weak</div>A flat slideshow of property photos with background music. No motion, no atmosphere, no floor plan overlay.</div>
+          <div class="strong-box"><div class="box-label">Strong</div>Cinematic establishing shot (exterior), smooth interior walkthrough, floor plan overlay with animated captions, neighborhood context. 60-90 seconds. Vertical + horizontal. Ambient sound throughout.</div>
         </div>
       </div>
-
       <div class="subsection">
-        <div class="sub-label">Recommended Tools</div>
+        <div class="sub-label">Recommended Tools (May 2026)</div>
         <div class="tool-list">
-          <span class="tool-tag">Kling 2.6 — Best interior/exterior generation</span>
-          <span class="tool-tag">Seedance 1.5 Pro — Cinematic flythroughs + free 4K</span>
+          <span class="tool-tag">Kling 3.0 — Best interior/exterior gen with consistent architecture</span>
+          <span class="tool-tag">Seedance 2.0 — Cinematic flythroughs + audio-video</span>
+          <span class="tool-tag">Gemini Omni Flash — Conversational scene editing</span>
+          <span class="tool-tag">Magnific — 4K upscale for listing visuals</span>
           <span class="tool-tag">DaVinci Resolve — Free pro color grading</span>
-          <span class="tool-tag">Topaz Video AI — 4K upscale locally</span>
-          <span class="tool-tag">CapCut — Quick turnaround social cuts</span>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Common Mistakes</div>
         <ul class="mistakes-list">
@@ -702,41 +765,29 @@
           <li>Bad color consistency — interior and exterior shots should share a unified grade</li>
         </ul>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Action Steps</div>
         <ul class="actions-list" data-checklist="realestate">
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Generate 10 property shots</strong><span>3 exterior, 5 interior, 2 detail shots in Kling or Seedance</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Edit a 60-sec walkthrough</strong><span>Seamless flow with music beds and ambient sound</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Overlay floor plan graphic</strong><span>Animate floor plan at the :30 mark for spatial context</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Create vertical version</strong><span>9:16 cut for Instagram Reels and TikTok</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Package as "Real Estate Package"</strong><span>Add to portfolio with a clear rate for property video packages</span></div>
-          </li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Generate 10 property shots</strong><span>3 exterior, 5 interior, 2 detail in Kling 3.0 or Seedance 2.0</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Edit a 60-sec walkthrough</strong><span>Seamless flow with music beds and ambient sound</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Overlay floor plan graphic</strong><span>Animate floor plan at the :30 mark for spatial context</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Create vertical version</strong><span>9:16 cut for Instagram Reels and TikTok</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Package as "Real Estate Package"</strong><span>Add to portfolio with a clear rate for property video packages</span></div></li>
         </ul>
       </div>
-
       <div class="weekly-target">
         <div class="icon">&#9200;</div>
-        <div class="text"><strong>This week:</strong> Produce one 60-sec property showcase + one 15-sec vertical cut for social. Add both to portfolio.</div>
+        <div class="text"><strong>This week:</strong> Produce one 60-sec property showcase + one 15-sec vertical cut. Add both to portfolio.</div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== SECTION 4: SOCIAL ==================== -->
-  <div class="section" data-section="social">
+  <!-- ==================== MODULE 4: SOCIAL ==================== -->
+  <div class="section" data-section="social" id="module-social">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-header-left">
         <div class="section-toggle"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
-        <div class="section-title">Social Content & Instagram Grid</div>
+        <div class="section-title">Module 4 — Social Content & Instagram Grid</div>
       </div>
       <div class="section-meta">
         <span class="section-time">~12 min</span>
@@ -748,29 +799,26 @@
         <div class="sub-label">Why This Matters</div>
         <div class="sub-body">
           <p>Social-first content is where most brands spend their video budget. In 2026, Instagram's grid shifted to 3:4 vertical format, changing how you plan feeds. Brands want creators who understand grid cohesion — not perfect symmetry, but intentional visual identity. Consistent color palettes, lighting, and post ratios signal professionalism.</p>
-          <p>This niche is volume-driven. A single brand may need 10-20 pieces of social content per month. Monthly retainers of $500-$2,000+ are standard for creators who deliver consistent social packages. The key insight: social content is about systems, not inspiration. Build templates, save presets, and batch produce. Your ability to deliver a branded pack of 5 clips on a weekly retainer is worth more than a one-off viral video.</p>
+          <p>This niche is volume-driven. A single brand may need 10-20 pieces of social content per month. Monthly retainers of $500-$2,000+ are standard for creators who deliver consistent social packages. The key insight: social content is about systems, not inspiration. Build templates, save presets, and batch produce.</p>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">What Good Looks Like</div>
         <div class="weak-strong">
           <div class="weak-box"><div class="box-label">Weak</div>Random clips on different topics, no consistent color palette, mismatched aspect ratios, no brand alignment.</div>
-          <div class="strong-box"><div class="box-label">Strong</div>Batch of 5-10 social clips sharing a consistent palette (2-3 colors max), same lighting approach, same aspect ratio. Includes hook text overlay, captions, and a mix of talking head, b-roll, and text-on-screen. Grid preview shows intentional flow.</div>
+          <div class="strong-box"><div class="box-label">Strong</div>Batch of 5-10 social clips sharing a consistent palette (2-3 colors max), same lighting approach, same aspect ratio. Hook text overlay + captions. Mix of talking head, b-roll, and text-on-screen. Grid preview shows intentional flow.</div>
         </div>
       </div>
-
       <div class="subsection">
-        <div class="sub-label">Recommended Tools</div>
+        <div class="sub-label">Recommended Tools (May 2026)</div>
         <div class="tool-list">
-          <span class="tool-tag">Canva — Free social templates + brand kits</span>
+          <span class="tool-tag">Canva — Free brand kits + social templates</span>
           <span class="tool-tag">CapCut — Batch editing with saved presets</span>
-          <span class="tool-tag">VEED.IO — Fast social cuts with auto-subs</span>
-          <span class="tool-tag">Abyssale — Multi-variant automation ($49/mo)</span>
-          <span class="tool-tag">Recraft v4 — Consistent visual palette AI</span>
+          <span class="tool-tag">PixVerse V6 — Quick social UGC generation</span>
+          <span class="tool-tag">Pika 2.5 — Fast social-oriented gen, style effects</span>
+          <span class="tool-tag">Magnific — Rebranded Freepik, AI creative platform</span>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Common Mistakes</div>
         <ul class="mistakes-list">
@@ -781,41 +829,29 @@
           <li>Ignoring the grid — treating each post as standalone instead of part of a visual story</li>
         </ul>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Action Steps</div>
         <ul class="actions-list" data-checklist="social">
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Define a 3-color palette</strong><span>Establish your social brand colors and save them in Canva</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Create a Canva brand kit</strong><span>Colors + 2 fonts + logo lockup for all social templates</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Batch create 5 social clips</strong><span>60 seconds or less, using one master template</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Add hook + captions</strong><span>Every clip gets text overlay hook and subtitles</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Preview the grid</strong><span>Use Instagram's "Edit Grid" or a preview tool to check visual flow</span></div>
-          </li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Define a 3-color palette</strong><span>Establish your social brand colors and save them in Canva</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Create a Canva brand kit</strong><span>Colors + 2 fonts + logo lockup for all social templates</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Batch create 5 social clips</strong><span>60 seconds or less, using one master template</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Add hook + captions</strong><span>Every clip gets text overlay hook and subtitles</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Preview the grid</strong><span>Use Instagram's "Edit Grid" or a preview tool to check visual flow</span></div></li>
         </ul>
       </div>
-
       <div class="weekly-target">
         <div class="icon">&#9200;</div>
-        <div class="text"><strong>This week:</strong> Produce a pack of 5 social clips with consistent branding. Preview the grid layout. Add pack to portfolio.</div>
+        <div class="text"><strong>This week:</strong> Produce a pack of 5 social clips with consistent branding. Preview grid layout. Add to portfolio.</div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== SECTION 5: HOSTING ==================== -->
-  <div class="section" data-section="hosting">
+  <!-- ==================== MODULE 5: HOSTING ==================== -->
+  <div class="section" data-section="hosting" id="module-hosting">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-header-left">
         <div class="section-toggle"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
-        <div class="section-title">Portfolio Hosting & Presentation</div>
+        <div class="section-title">Module 5 — Portfolio Hosting & Presentation</div>
       </div>
       <div class="section-meta">
         <span class="section-time">~10 min</span>
@@ -830,17 +866,15 @@
           <p>In 2026, the winning portfolio format is a clean, mobile-first website with 6-12 curated samples, clear categories, visible pricing, and a contact CTA on every page. Creators with hosted websites charge 25-40% more than those sharing Google Drive links. The bar: a brand should find your best work and understand your rates within 30 seconds.</p>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">What Good Looks Like</div>
         <div class="weak-strong">
-          <div class="weak-box"><div class="box-label">Weak</div>Google Drive folder with 30+ unlabelled files. No categories. No pricing. No bio. Brand has to download each file to preview.</div>
-          <div class="strong-box"><div class="box-label">Strong</div>One-page or clean multi-page site. Hero section with headshot + headline stating niche. Gallery organized by category (UGC / Commercial / Real Estate). Rate card visible. Contact form on homepage. Mobile-first. Custom domain or clean builder platform.</div>
+          <div class="weak-box"><div class="box-label">Weak</div>Google Drive folder with 30+ unlabelled files. No categories. No pricing. Brand has to download each file to preview.</div>
+          <div class="strong-box"><div class="box-label">Strong</div>One-page or clean multi-page site. Hero section with headshot + headline stating niche. Gallery organized by category. Rate card visible. Contact form on homepage. Mobile-first. Hosted platform with custom domain.</div>
         </div>
       </div>
-
       <div class="subsection">
-        <div class="sub-label">Recommended Tools</div>
+        <div class="sub-label">Recommended Tools (May 2026)</div>
         <div class="tool-list">
           <span class="tool-tag">Carrd — Free one-page, fast loading</span>
           <span class="tool-tag">Canva — Free portfolio template export</span>
@@ -849,7 +883,6 @@
           <span class="tool-tag">Squarespace — Minimalist design $16/mo</span>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Common Mistakes</div>
         <ul class="mistakes-list">
@@ -857,44 +890,32 @@
           <li>Too many samples — curate down to 6-12 best pieces, not everything you've ever made</li>
           <li>Hard to find contact info — burying it on a separate "Contact" page only</li>
           <li>No mobile optimization — 88% of brand reviews happen on phones</li>
-          <li>No update schedule — a stale portfolio signals an inactive creator not taking new work</li>
+          <li>No update schedule — a stale portfolio signals an inactive creator</li>
         </ul>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Action Steps</div>
         <ul class="actions-list" data-checklist="hosting">
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Pick a hosting platform</strong><span>Free option: Carrd or Canva link. Pro: Wix or Squarespace.</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Create hero section</strong><span>Headshot + 1-line headline stating your niche and value proposition</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Upload 6-12 curated samples</strong><span>Organized by category with 1-line context note per sample</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Add rate card</strong><span>Base pricing + 2-3 add-on options clearly displayed</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Put CTA on every page</strong><span>Contact form or email button in header and footer of every page</span></div>
-          </li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Pick a hosting platform</strong><span>Free: Carrd, Canva link, or Notion. Pro: Wix or Squarespace.</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Create hero section</strong><span>Headshot + 1-line headline stating your niche and value proposition</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Upload 6-12 curated samples</strong><span>Organized by category with 1-line context note per sample</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Add rate card</strong><span>Base pricing + 2-3 add-on options clearly displayed</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Put CTA on every page</strong><span>Contact form or email button in header and footer of every page</span></div></li>
         </ul>
       </div>
-
       <div class="weekly-target">
         <div class="icon">&#9200;</div>
-        <div class="text"><strong>This week:</strong> Launch a minimum viable portfolio on a hosted platform. Not a Google Drive link. A real website. Share it with the community.</div>
+        <div class="text"><strong>This week:</strong> Launch a minimum viable portfolio on a hosted platform. Not a Google Drive link. A real website.</div>
       </div>
     </div>
   </div>
 
-  <!-- ==================== SECTION 6: PRICING ==================== -->
-  <div class="section" data-section="pricing">
+  <!-- ==================== MODULE 6: PRICING ==================== -->
+  <div class="section" data-section="pricing" id="module-pricing">
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-header-left">
         <div class="section-toggle"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
-        <div class="section-title">Pricing & Packaging Your Work</div>
+        <div class="section-title">Module 6 — Pricing & Packaging Your Work</div>
       </div>
       <div class="section-meta">
         <span class="section-time">~10 min</span>
@@ -905,29 +926,26 @@
       <div class="subsection">
         <div class="sub-label">Why This Matters</div>
         <div class="sub-body">
-          <p>Transparent pricing increases booking rates by 35-40%. Creators with visible rate cards close faster and at higher rates than those who say "DM for pricing." The reason is psychological: hiding price signals either inexperience or that you're too expensive. The standard structure in 2026 is base rate + add-ons, with bundles at slight discounts.</p>
-          <p>Charge by the asset, not by the hour. Hourly pricing caps your earnings at your speed. Value-based pricing ties your rate to the outcome the client gets. A 30-second UGC video that generates $50K in sales for a brand is worth more than your time to film it. This section teaches you how to structure packages that feel fair to clients and profitable for you.</p>
+          <p>Transparent pricing increases booking rates by 35-40%. Creators with visible rate cards close faster and at higher rates than those who say "DM for pricing." Hiding price signals either inexperience or that you're too expensive. The standard structure in 2026 is base rate + add-ons, with bundles at slight discounts.</p>
+          <p>Charge by the asset, not by the hour. Hourly pricing caps your earnings at your speed. Value-based pricing ties your rate to the outcome the client gets. A 30-second UGC video that generates $50K in sales for a brand is worth more than your time to film it. Structure packages that feel fair to clients and profitable for you.</p>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">What Good Looks Like</div>
         <div class="weak-strong">
-          <div class="weak-box"><div class="box-label">Weak</div>"DM for pricing" or no pricing at all. $20 per video (undervaluing yourself). No differentiation between organic vs paid usage rights.</div>
+          <div class="weak-box"><div class="box-label">Weak</div>"DM for pricing" or no pricing at all. $20 per video (undervaluing). No differentiation between organic vs paid usage rights.</div>
           <div class="strong-box"><div class="box-label">Strong</div>Clear tiered structure: $150/30-sec UGC video (organic use). Add-ons: paid ad rights (+$50), raw footage (+$75), 3 hook variations (+$30). Bundle: 3 videos for $400 (save $50). Renewal discount for existing clients.</div>
         </div>
       </div>
-
       <div class="subsection">
-        <div class="sub-label">Recommended Tools</div>
+        <div class="sub-label">Recommended Tools (May 2026)</div>
         <div class="tool-list">
           <span class="tool-tag">Notion — Free rate card template</span>
-          <span class="tool-tag">Canva — Design your rate card</span>
+          <span class="tool-tag">Canva — Design your rate card layout</span>
           <span class="tool-tag">Google Sheets — Track quotes and packages</span>
           <span class="tool-tag">HoneyBook — Free tier proposals + invoicing</span>
         </div>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Common Mistakes</div>
         <ul class="mistakes-list">
@@ -938,31 +956,19 @@
           <li>No contract or written brief — verbal agreements lead to scope creep and late payments</li>
         </ul>
       </div>
-
       <div class="subsection">
         <div class="sub-label">Action Steps</div>
         <ul class="actions-list" data-checklist="pricing">
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Set a base rate</strong><span>Example: $150 per 30-sec UGC video for organic brand use</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Define 3 add-ons</strong><span>Paid ad usage rights, raw footage delivery, extra revision rounds</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Create a bundle</strong><span>3-video package at 10-15% discount vs buying individually</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Write a 1-page contract</strong><span>Scope, deliverables, timeline, payment terms (50% upfront)</span></div>
-          </li>
-          <li onclick="toggleCheck(this)">
-            <input type="checkbox"><div class="action-text"><strong>Publish rate card</strong><span>Post it on your portfolio website — not hidden, not "DM for rates"</span></div>
-          </li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Set a base rate</strong><span>Example: $150 per 30-sec UGC video for organic brand use</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Define 3 add-ons</strong><span>Paid ad usage rights, raw footage delivery, extra revision rounds</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Create a bundle</strong><span>3-video package at 10-15% discount vs buying individually</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Write a 1-page contract</strong><span>Scope, deliverables, timeline, payment terms (50% upfront)</span></div></li>
+          <li onclick="toggleCheck(this)"><input type="checkbox"><div class="action-text"><strong>Publish rate card</strong><span>Post it on your portfolio website — not hidden, not "DM for rates"</span></div></li>
         </ul>
       </div>
-
       <div class="weekly-target">
         <div class="icon">&#9200;</div>
-        <div class="text"><strong>This week:</strong> Finalize your rate card, publish it on your portfolio, and send it to at least 2 potential clients or brands.</div>
+        <div class="text"><strong>This week:</strong> Finalize your rate card, publish it on your portfolio, and send it to at least 2 potential clients.</div>
       </div>
     </div>
   </div>
@@ -970,97 +976,64 @@
 </main>
 
 <script>
-  // STATE
-  const TOTAL_CHECKS = 30;
+  const TOTAL = 30;
 
-  function getState() {
-    try {
-      return JSON.parse(localStorage.getItem('pb-state')) || {};
-    } catch { return {}; }
+  function get(k) {
+    try { return JSON.parse(localStorage.getItem('pb-state') || '{}')[k] || []; }
+    catch { return []; }
+  }
+  function set(k, v) {
+    const s = JSON.parse(localStorage.getItem('pb-state') || '{}');
+    s[k] = v;
+    localStorage.setItem('pb-state', JSON.stringify(s));
   }
 
-  function saveState(state) {
-    localStorage.setItem('pb-state', JSON.stringify(state));
-  }
-
-  function getChecklistId(el) {
-    const parent = el.closest('.actions-list');
-    if (!parent) return null;
-    return parent.getAttribute('data-checklist');
-  }
-
-  function getCheckIndex(el) {
-    const parent = el.closest('.actions-list');
-    if (!parent) return -1;
-    return Array.from(parent.querySelectorAll('li')).indexOf(el);
-  }
-
-  function isChecked(el) {
-    return el.classList.contains('done');
-  }
-
-  function updateProgress() {
-    const state = getState();
+  function updateAll() {
+    const ids = ['ugc','commercial','realestate','social','hosting','pricing'];
     let done = 0;
-    const sections = ['ugc', 'commercial', 'realestate', 'social', 'hosting', 'pricing'];
-    sections.forEach(s => {
-      const arr = state[s] || [];
+    ids.forEach(id => {
+      const arr = get(id);
       done += arr.filter(Boolean).length;
-    });
-    const pct = TOTAL_CHECKS > 0 ? Math.round((done / TOTAL_CHECKS) * 100) : 0;
-    document.getElementById('progress-fill').style.width = pct + '%';
-    document.getElementById('progress-text').textContent = done + ' / ' + TOTAL_CHECKS;
-  }
-
-  function updateSectionChecks() {
-    const state = getState();
-    const sections = ['ugc', 'commercial', 'realestate', 'social', 'hosting', 'pricing'];
-    sections.forEach(s => {
-      const arr = state[s] || [];
-      const allDone = arr.length > 0 && arr.every(Boolean);
-      const check = document.querySelector('#check-' + s);
+      const allDone = arr.length === 5 && arr.every(Boolean);
+      const check = document.getElementById('check-'+id);
       if (check) check.classList.toggle('done', allDone);
+      // journey dot
+      const jd = document.querySelector('#j-'+id+' .journey-dot');
+      if (jd) jd.classList.toggle('done', allDone);
     });
+    const pct = Math.round((done/TOTAL)*100);
+    document.getElementById('progress-fill').style.width = pct+'%';
+    document.getElementById('progress-text').textContent = done+' / '+TOTAL;
   }
 
-  function renderState() {
-    const state = getState();
-    const sections = ['ugc', 'commercial', 'realestate', 'social', 'hosting', 'pricing'];
-    sections.forEach(s => {
-      const list = document.querySelector('.actions-list[data-checklist="' + s + '"]');
+  function render() {
+    const ids = ['ugc','commercial','realestate','social','hosting','pricing'];
+    ids.forEach(id => {
+      const list = document.querySelector('.actions-list[data-checklist="'+id+'"]');
       if (!list) return;
-      const items = list.querySelectorAll('li');
-      const arr = state[s] || [];
-      items.forEach((li, i) => {
+      const arr = get(id);
+      list.querySelectorAll('li').forEach((li, i) => {
         const cb = li.querySelector('input[type="checkbox"]');
-        if (arr[i]) {
-          li.classList.add('done');
-          if (cb) cb.checked = true;
-        } else {
-          li.classList.remove('done');
-          if (cb) cb.checked = false;
-        }
+        if (arr[i]) { li.classList.add('done'); if (cb) cb.checked = true; }
+        else { li.classList.remove('done'); if (cb) cb.checked = false; }
       });
     });
-    updateProgress();
-    updateSectionChecks();
+    updateAll();
   }
 
   window.toggleCheck = function(el) {
     el.classList.toggle('done');
     const cb = el.querySelector('input[type="checkbox"]');
     if (cb) cb.checked = el.classList.contains('done');
-
-    const sid = getChecklistId(el);
-    const idx = getCheckIndex(el);
-    if (sid && idx >= 0) {
-      const state = getState();
-      if (!state[sid]) state[sid] = [];
-      state[sid][idx] = el.classList.contains('done');
-      saveState(state);
-      updateProgress();
-      updateSectionChecks();
-    }
+    const list = el.closest('.actions-list');
+    const id = list ? list.getAttribute('data-checklist') : null;
+    if (!id) return;
+    const idx = Array.from(list.querySelectorAll('li')).indexOf(el);
+    if (idx < 0) return;
+    const arr = get(id);
+    arr[idx] = el.classList.contains('done');
+    set(id, arr);
+    updateAll();
   };
 
   window.toggleSection = function(header) {
@@ -1068,38 +1041,30 @@
     const body = header.nextElementSibling;
     toggle.classList.toggle('open');
     body.classList.toggle('open');
-
-    // Save section open state
-    const section = header.closest('.section');
-    const sid = section.getAttribute('data-section');
+    const sid = header.closest('.section').getAttribute('data-section');
     try {
-      const openState = JSON.parse(localStorage.getItem('pb-open') || '{}');
-      openState[sid] = body.classList.contains('open');
-      localStorage.setItem('pb-open', JSON.stringify(openState));
+      const o = JSON.parse(localStorage.getItem('pb-open') || '{}');
+      o[sid] = body.classList.contains('open');
+      localStorage.setItem('pb-open', JSON.stringify(o));
     } catch {}
   };
 
-  // Restore section open states
-  function restoreOpenStates() {
+  document.addEventListener('DOMContentLoaded', () => {
+    // restore open states
     try {
-      const openState = JSON.parse(localStorage.getItem('pb-open') || '{}');
-      document.querySelectorAll('.section').forEach(section => {
-        const sid = section.getAttribute('data-section');
-        if (openState[sid]) {
-          const header = section.querySelector('.section-header');
-          const toggle = header.querySelector('.section-toggle');
-          const body = section.querySelector('.section-body');
-          toggle.classList.add('open');
-          body.classList.add('open');
+      const o = JSON.parse(localStorage.getItem('pb-open') || '{}');
+      document.querySelectorAll('.section').forEach(s => {
+        const sid = s.getAttribute('data-section');
+        if (o[sid]) {
+          const h = s.querySelector('.section-header');
+          const t = h.querySelector('.section-toggle');
+          const b = s.querySelector('.section-body');
+          if (t) t.classList.add('open');
+          if (b) b.classList.add('open');
         }
       });
     } catch {}
-  }
-
-  // INIT
-  document.addEventListener('DOMContentLoaded', function() {
-    restoreOpenStates();
-    renderState();
+    render();
   });
 </script>
 
