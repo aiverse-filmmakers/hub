@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artifacts — AI-Verse Filmmakers</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #07090e;
+    --primary: #ffffff;
+    --secondary: #4cb9d5;
+    --accent: #a9dcea;
+    --body: #e4e8ed;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--body);
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Navbar */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(76, 185, 213, 0.4);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--body);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--secondary);
+  }
+
+  /* Main content */
+  .main {
+    padding: 7rem 2rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .main h1 {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Card */
+  .card {
+    display: block;
+    text-decoration: none;
+    background: rgba(76, 185, 213, 0.04);
+    border: 1px solid rgba(76, 185, 213, 0.3);
+    border-radius: 12px;
+    padding: 1.75rem 1.5rem;
+    transition: all 0.25s;
+  }
+
+  .card:hover {
+    border-color: rgba(76, 185, 213, 0.6);
+    background: rgba(76, 185, 213, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(76, 185, 213, 0.1);
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.4rem;
+  }
+
+  .card-path {
+    font-size: 0.8rem;
+    color: var(--accent);
+    opacity: 0.7;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  /* Placeholder */
+  .placeholder {
+    text-align: center;
+    color: rgba(228, 232, 237, 0.5);
+    font-size: 1.1rem;
+    padding: 4rem 2rem;
+  }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    color: var(--accent);
+    font-size: 1rem;
+    padding: 2rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .navbar { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1.25rem; }
+    .nav-links a { font-size: 0.85rem; }
+    .main { padding: 6rem 1rem 2rem; }
+    .main h1 { font-size: 1.8rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="nav-logo">AI-VERSE</a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/artifacts">Artifacts</a></li>
+    <li><a href="https://www.skool.com/bogdans-ai-verse-4398/about" target="_blank">About</a></li>
+  </ul>
+</nav>
+
+<main class="main">
+  <h1>ARTIFACTS</h1>
+  <div class="grid" id="grid">
+    <div class="loading">Loading artifacts...</div>
+  </div>
+</main>
+
+<script>
+(async function() {
+  const grid = document.getElementById('grid');
+  const API = 'https://api.github.com/repos/aiverse-filmmakers/hub/contents/';
+
+  try {
+    const res = await fetch(API);
+    if (!res.ok) throw new Error('Failed to fetch');
+
+    const items = await res.json();
+    const dirs = items.filter(item => item.type === 'dir' && item.name !== 'assets');
+
+    if (dirs.length === 0) {
+      grid.innerHTML = '<div class="placeholder">More tools coming soon.</div>';
+      return;
+    }
+
+    grid.innerHTML = '';
+
+    dirs.forEach(dir => {
+      const name = dir.name
+        .replace(/-/g, ' ')
+        .replace(/_/g, ' ')
+        .replace(/\b\w/g, c => c.toUpperCase());
+
+      const card = document.createElement('a');
+      card.className = 'card';
+      card.href = `/${dir.name}/`;
+      card.innerHTML = `
+        <div class="card-icon">📦</div>
+        <div class="card-name">${name}</div>
+        <div class="card-path">/${dir.name}/</div>
+      `;
+      grid.appendChild(card);
+    });
+  } catch (err) {
+    grid.innerHTML = '<div class="placeholder">More tools coming soon.</div>';
+  }
+})();
+</script>
+
+</body>
+</html>
