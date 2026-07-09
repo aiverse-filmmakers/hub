@@ -1,177 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-Verse Filmmakers</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg: #07090e;
-    --primary: #ffffff;
-    --secondary: #4cb9d5;
-    --accent: #a9dcea;
-    --orange: #d4782a;
-    --body: #e4e8ed;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--body);
-    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Navbar */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem 2rem;
-    background: var(--bg);
-    border-bottom: 1px solid rgba(76, 185, 213, 0.4);
-    backdrop-filter: blur(12px);
-  }
-
-  .nav-logo {
-    font-size: 1.35rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    color: var(--primary);
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--body);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover {
-    color: var(--secondary);
-  }
-
-  /* Hero */
-  .hero {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, rgba(76, 185, 213, 0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.2rem, 6vw, 4.5rem);
-    font-weight: 900;
-    color: var(--primary);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero .subtext {
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    font-weight: 400;
-    color: var(--orange);
-    margin-top: 1rem;
-    position: relative;
-    z-index: 1;
-    text-shadow: 0 0 40px rgba(212, 120, 42, 0.4), 0 0 80px rgba(212, 120, 42, 0.2);
-  }
-
-  .cta-btn {
-    display: inline-block;
-    margin-top: 2.5rem;
-    padding: 0.95rem 2.8rem;
-    background: var(--secondary);
-    color: var(--primary);
-    font-size: 1.1rem;
-    font-weight: 700;
-    border-radius: 999px;
-    text-decoration: none;
-    transition: all 0.25s;
-    position: relative;
-    z-index: 1;
-    letter-spacing: 0.03em;
-  }
-
-  .cta-btn:hover {
-    background: #3da8c4;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(76, 185, 213, 0.35);
-  }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    .navbar {
-      padding: 1rem 1.25rem;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Verse Filmmakers | Commercial AI Visuals for Films, Social and Ads</title>
+  <meta name="description" content="AI-Verse Filmmakers is Bogdan Pascal's Skool community for commercial AI visuals, cinematic ads, consistency systems, client-ready workflows and daily feedback." />
+  <meta property="og:title" content="AI-Verse Filmmakers" />
+  <meta property="og:description" content="Learn to create commercial AI visuals for social media, films and high-paying adverts. From phone or PC." />
+  <meta property="og:image" content="assets/aiverse/member-showcase-qc.jpg" />
+  <meta name="theme-color" content="#07090e" />
+  <link rel="icon" href="assets/aiverse/ai-verse-mark.svg" />
+  <style>
+    :root {
+      --bg: #07090e;
+      --bg2: #000;
+      --panel: rgba(255,255,255,.075);
+      --panel-strong: rgba(255,255,255,.12);
+      --line: rgba(255,255,255,.15);
+      --line-blue: rgba(76,185,213,.38);
+      --text: #f7fbff;
+      --muted: rgba(234,242,248,.72);
+      --soft: rgba(234,242,248,.52);
+      --blue: #4cb9d5;
+      --blue2: #a9dcea;
+      --orange: #d4782a;
+      --gold: #f4c06b;
+      --green: #77f0b1;
+      --radius: 28px;
+      --shadow: 0 22px 80px rgba(0,0,0,.38);
+      color-scheme: dark;
     }
-    .nav-links {
-      gap: 1.25rem;
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(76,185,213,.2), transparent 34rem),
+        radial-gradient(circle at 80% 8%, rgba(212,120,42,.14), transparent 32rem),
+        linear-gradient(180deg, #020305 0%, #07090e 36%, #000 100%);
+      overflow-x: hidden;
     }
-    .nav-links a {
-      font-size: 0.85rem;
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(circle at top, black, transparent 68%);
+      z-index: -2;
     }
-    .hero {
-      padding: 1rem;
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(4,7,11,.72);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      backdrop-filter: saturate(180%) blur(24px);
     }
-    .cta-btn {
-      padding: 0.85rem 2.2rem;
-      font-size: 1rem;
+    .nav-inner {
+      width: min(1180px, calc(100% - 28px));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
     }
-  }
-</style>
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .06em; }
+    .brand img { width: 34px; height: 34px; border-radius: 10px; }
+    .nav-links { display: flex; align-items: center; gap: 24px; color: rgba(255,255,255,.74); font-size: 13px; }
+    .nav-links a:hover { color: white; }
+    .nav-cta { padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,.92); color: #05070b; font-weight: 700; font-size: 13px; }
+
+    .section { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .hero { min-height: 100vh; display: grid; align-items: center; padding: 116px 0 80px; position: relative; }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 46px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 8px 13px; border: 1px solid var(--line-blue); background: rgba(76,185,213,.08); border-radius: 999px; color: var(--blue2); font-size: 13px; font-weight: 650; box-shadow: 0 0 40px rgba(76,185,213,.12); }
+    .pulse { width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 18px var(--green); }
+    h1 { margin: 24px 0 16px; font-size: clamp(52px, 9vw, 112px); line-height: .88; letter-spacing: -.075em; font-weight: 760; }
+    .hero .lead { max-width: 680px; font-size: clamp(19px, 2.1vw, 28px); line-height: 1.18; color: rgba(255,255,255,.78); letter-spacing: -.035em; }
+    .hero .lead b { color: white; font-weight: 680; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 21px; border-radius: 999px; font-weight: 760; letter-spacing: -.01em; transition: transform .2s ease, border .2s ease, background .2s ease; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: #fff; color: #020305; box-shadow: 0 18px 60px rgba(255,255,255,.16); }
+    .btn-secondary { border: 1px solid rgba(255,255,255,.24); color: white; background: rgba(255,255,255,.06); }
+
+    .hero-card {
+      position: relative;
+      min-height: 620px;
+      border-radius: 42px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.035));
+      box-shadow: var(--shadow);
+    }
+    .hero-card::before { content:""; position:absolute; inset:-1px; background: radial-gradient(circle at 50% 5%, rgba(169,220,234,.24), transparent 38%), linear-gradient(180deg, transparent 50%, rgba(0,0,0,.82)); z-index:2; pointer-events:none; }
+    .mosaic { position: absolute; inset: 0; display:grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 110px; gap: 8px; padding: 8px; transform: rotate(-3deg) scale(1.08); filter: saturate(1.12) contrast(1.05); }
+    .mosaic img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; opacity: .88; }
+    .mosaic img:nth-child(1) { grid-column: span 3; grid-row: span 2; }
+    .mosaic img:nth-child(2) { grid-column: span 2; grid-row: span 3; }
+    .mosaic img:nth-child(3) { grid-column: span 1; grid-row: span 2; }
+    .mosaic img:nth-child(4) { grid-column: span 2; grid-row: span 2; }
+    .mosaic img:nth-child(5) { grid-column: span 2; grid-row: span 2; }
+    .mosaic img:nth-child(6) { grid-column: span 2; grid-row: span 3; }
+    .hero-float { position: absolute; z-index: 3; left: 22px; right: 22px; bottom: 22px; padding: 22px; border: 1px solid rgba(255,255,255,.2); background: rgba(5,8,12,.68); border-radius: 28px; backdrop-filter: blur(24px) saturate(150%); }
+    .hero-float h2 { margin: 0 0 8px; font-size: 30px; line-height: 1; letter-spacing: -.045em; }
+    .hero-float p { margin: 0; color: var(--muted); line-height: 1.45; }
+
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 22px 0 0; }
+    .stat { padding: 18px; border-radius: 22px; background: rgba(255,255,255,.065); border: 1px solid rgba(255,255,255,.1); }
+    .stat strong { display:block; font-size: 28px; letter-spacing: -.04em; }
+    .stat span { color: var(--soft); font-size: 13px; }
+
+    .strip { width: 100%; overflow: hidden; padding: 18px 0; border-block: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.035); }
+    .strip-track { display: flex; width: max-content; animation: marquee 28s linear infinite; gap: 10px; }
+    .logo-pill { padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color: rgba(255,255,255,.78); font-weight: 720; letter-spacing: -.02em; white-space: nowrap; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    .section-pad { padding: 110px 0; }
+    .section-head { display:flex; justify-content:space-between; gap: 24px; align-items:end; margin-bottom: 34px; }
+    .kicker { color: var(--blue2); font-weight: 760; letter-spacing: .04em; text-transform: uppercase; font-size: 12px; }
+    h2 { margin: 10px 0 0; font-size: clamp(38px, 6vw, 76px); line-height: .93; letter-spacing: -.065em; }
+    .section-copy { max-width: 470px; color: var(--muted); line-height: 1.52; font-size: 17px; }
+
+    .inside-grid { display:grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .glass-card { position: relative; padding: 24px; border-radius: var(--radius); background: linear-gradient(145deg, rgba(255,255,255,.105), rgba(255,255,255,.04)); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 22px 80px rgba(0,0,0,.22); overflow: hidden; }
+    .glass-card::after { content:""; position:absolute; inset:auto -30% -60% -30%; height: 160px; background: radial-gradient(circle, rgba(76,185,213,.22), transparent 65%); pointer-events:none; }
+    .number { font-size: 12px; color: var(--blue2); font-weight: 800; letter-spacing: .12em; }
+    .glass-card h3 { margin: 42px 0 10px; font-size: 25px; letter-spacing: -.035em; }
+    .glass-card p { margin: 0; color: var(--muted); line-height: 1.48; }
+
+    .roadmap { display:grid; grid-template-columns: .9fr 1.1fr; gap: 16px; align-items: stretch; }
+    .phone { border-radius: 42px; background: #05070b; border: 1px solid rgba(255,255,255,.16); padding: 12px; box-shadow: var(--shadow); min-height: 720px; position: sticky; top: 88px; align-self: start; }
+    .phone-screen { height: 100%; border-radius: 32px; padding: 24px; background: radial-gradient(circle at 50% 10%, rgba(76,185,213,.22), transparent 38%), linear-gradient(180deg, #111827, #030406); overflow: hidden; }
+    .phone-title { font-size: 38px; line-height: .95; letter-spacing: -.055em; margin: 220px 0 12px; }
+    .phone img { width: 92px; height: 92px; border-radius: 26px; box-shadow: 0 0 70px rgba(76,185,213,.32); }
+    .modules { display:grid; gap: 12px; }
+    .module { padding: 22px; border-radius: 24px; background: rgba(255,255,255,.065); border: 1px solid rgba(255,255,255,.1); display:grid; grid-template-columns: 76px 1fr; gap: 18px; align-items:start; }
+    .module .badge { width: 76px; height: 76px; border-radius: 20px; display:grid; place-items:center; background: linear-gradient(145deg, rgba(76,185,213,.22), rgba(212,120,42,.18)); color: white; font-weight: 850; }
+    .module h3 { margin: 0 0 8px; font-size: 23px; letter-spacing: -.035em; }
+    .module p { margin:0; color:var(--muted); line-height:1.45; }
+
+    .work-wall { display:grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+    .work-wall img { width:100%; height: 210px; object-fit: cover; border-radius: 20px; border: 1px solid rgba(255,255,255,.1); transition: transform .35s ease, filter .35s ease; }
+    .work-wall img:hover { transform: translateY(-5px) scale(1.015); filter: saturate(1.2); }
+    .work-wall img:nth-child(1), .work-wall img:nth-child(8) { grid-column: span 2; height: 430px; }
+    .work-wall img:nth-child(4), .work-wall img:nth-child(11) { grid-column: span 2; }
+
+    .proof { display:grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    blockquote { margin:0; padding: 26px; border-radius: var(--radius); background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); min-height: 260px; display:flex; flex-direction:column; justify-content:space-between; }
+    blockquote p { margin: 0; font-size: 22px; line-height: 1.18; letter-spacing: -.04em; }
+    blockquote footer { margin-top: 24px; color: var(--soft); font-size: 13px; }
+
+    .pricing { display:grid; grid-template-columns: .85fr 1.15fr; gap: 18px; align-items: stretch; }
+    .price-card { padding: 34px; border-radius: 34px; background: linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.05)); border: 1px solid rgba(255,255,255,.18); box-shadow: var(--shadow); }
+    .price { font-size: clamp(64px, 10vw, 120px); line-height: .85; letter-spacing: -.08em; font-weight: 780; margin: 26px 0 12px; }
+    .price small { font-size: 22px; letter-spacing: -.03em; color: var(--muted); }
+    .checks { display:grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+    .check { padding: 18px; border-radius: 20px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: var(--muted); line-height:1.38; }
+    .check b { color: white; }
+
+    .final { padding: 120px 0 92px; text-align: center; }
+    .final h2 { max-width: 960px; margin-inline:auto; }
+    .final p { max-width: 680px; margin: 20px auto 0; color: var(--muted); font-size: 19px; line-height: 1.5; }
+    .footer { padding: 30px 0 54px; color: var(--soft); display:flex; justify-content:space-between; gap:20px; border-top:1px solid rgba(255,255,255,.1); }
+
+    .reveal { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s ease; }
+    .reveal.on { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .nav-links { display: none; }
+      .hero-grid, .roadmap, .pricing { grid-template-columns: 1fr; }
+      .hero-card { min-height: 560px; }
+      .stats, .inside-grid, .proof, .checks { grid-template-columns: 1fr 1fr; }
+      .section-head { display:block; }
+      .phone { position:relative; top:auto; min-height: 480px; }
+      .phone-title { margin-top: 100px; }
+      .work-wall { grid-template-columns: repeat(2,1fr); }
+      .work-wall img, .work-wall img:nth-child(1), .work-wall img:nth-child(8) { grid-column: span 1; height: 260px; }
+    }
+
+    @media (max-width: 620px) {
+      .brand span { font-size: 13px; }
+      .hero { padding-top: 94px; }
+      h1 { font-size: clamp(48px, 17vw, 76px); }
+      .hero-card { min-height: 480px; border-radius: 28px; }
+      .mosaic { grid-auto-rows: 86px; }
+      .stats, .inside-grid, .proof, .checks { grid-template-columns: 1fr; }
+      .section-pad { padding: 76px 0; }
+      .module { grid-template-columns: 1fr; }
+      .work-wall { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#top" class="brand"><img src="assets/aiverse/ai-verse-mark.svg" alt="AI-Verse logo" /><span>AI-VERSE FILMMAKERS</span></a>
+      <div class="nav-links">
+        <a href="#inside">Inside</a>
+        <a href="#classroom">Classroom</a>
+        <a href="#work">Member work</a>
+        <a href="#proof">Reviews</a>
+        <a href="#pricing">Price</a>
+      </div>
+      <a class="nav-cta" href="https://www.skool.com/bogdans-ai-verse-4398/about">Join Skool</a>
+    </div>
+  </nav>
 
-<nav class="navbar">
-  <a href="/" class="nav-logo">AI-VERSE</a>
-  <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/artifacts">Artifacts</a></li>
-    <li><a href="https://www.skool.com/bogdans-ai-verse-4398/about" target="_blank">About</a></li>
-  </ul>
-</nav>
+  <main id="top">
+    <section class="section hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow"><span class="pulse"></span> 7 day free trial · $15/month · 363 members</div>
+          <h1>Make AI visuals that feel filmed.</h1>
+          <p class="lead"><b>AI-Verse Filmmakers</b> is Bogdan Pascal's Skool community for commercial AI visuals, film-style images, social adverts, consistency systems and client-ready workflows. From phone or PC.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Start free for 7 days</a>
+            <a class="btn btn-secondary" href="#classroom">See what is inside</a>
+          </div>
+          <div class="stats" aria-label="AI-Verse community stats">
+            <div class="stat"><strong>363</strong><span>members on Skool</span></div>
+            <div class="stat"><strong>#1</strong><span>AI film community for phone and PC on Skool</span></div>
+            <div class="stat"><strong>131</strong><span>Bogdan posts archived for learning patterns</span></div>
+            <div class="stat"><strong>6.4k</strong><span>captured comments in the community archive</span></div>
+          </div>
+        </div>
+        <div class="hero-card" aria-label="AI-Verse member work mosaic">
+          <div class="mosaic">
+            <img src="assets/aiverse/work-01.jpg" alt="AI-Verse member cinematic work sample" />
+            <img src="assets/aiverse/work-02.jpg" alt="AI-Verse member vertical AI visual" />
+            <img src="assets/aiverse/work-03.jpg" alt="AI-Verse member commercial image" />
+            <img src="assets/aiverse/work-04.jpg" alt="AI-Verse member AI video frame" />
+            <img src="assets/aiverse/work-05.jpg" alt="AI-Verse member creative output" />
+            <img src="assets/aiverse/work-06.jpg" alt="AI-Verse member AI image" />
+            <img src="assets/aiverse/work-07.jpg" alt="AI-Verse member visual work" />
+            <img src="assets/aiverse/work-08.jpg" alt="AI-Verse community gallery image" />
+          </div>
+          <div class="hero-float">
+            <h2>Not prompt copying. Director-level thinking.</h2>
+            <p>World building, virtual actors, products, lenses, grading, storyboards, real commercial builds, quoting, closing and delivery.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="hero">
-  <h1>JOIN AI-VERSE<br>FILMMAKERS</h1>
-  <p class="subtext">The Only AI Filmmaker Skool Made by Filmmakers.</p>
-  <a href="https://www.skool.com/bogdans-ai-verse-4398/about" target="_blank" class="cta-btn">JOIN THE AI-VERSE</a>
-</section>
+    <div class="strip" aria-label="Tools and platforms covered">
+      <div class="strip-track">
+        <span class="logo-pill">ChatGPT Images 2</span><span class="logo-pill">Freepik</span><span class="logo-pill">Magnific</span><span class="logo-pill">Kling AI</span><span class="logo-pill">OpenArt</span><span class="logo-pill">ElevenLabs</span><span class="logo-pill">CapCut</span><span class="logo-pill">DaVinci Resolve</span><span class="logo-pill">Google Flow</span><span class="logo-pill">Runway</span>
+        <span class="logo-pill">ChatGPT Images 2</span><span class="logo-pill">Freepik</span><span class="logo-pill">Magnific</span><span class="logo-pill">Kling AI</span><span class="logo-pill">OpenArt</span><span class="logo-pill">ElevenLabs</span><span class="logo-pill">CapCut</span><span class="logo-pill">DaVinci Resolve</span><span class="logo-pill">Google Flow</span><span class="logo-pill">Runway</span>
+      </div>
+    </div>
 
+    <section id="inside" class="section section-pad reveal">
+      <div class="section-head">
+        <div><div class="kicker">What this is</div><h2>A film school brain inside a Skool community.</h2></div>
+        <p class="section-copy">AI-Verse is built around real production instincts. Learn how to direct AI like a scene, not just generate random pretty shots.</p>
+      </div>
+      <div class="inside-grid">
+        <article class="glass-card"><span class="number">01</span><h3>Cinematic image systems</h3><p>Prompting, world building, virtual actors, product assets, defined looks, lens choices and Hollywood-style grading.</p></article>
+        <article class="glass-card"><span class="number">02</span><h3>Pro consistency</h3><p>Character, prop, animal and product consistency sheets, storyboard grids, multi-angle control and visual DNA workflows.</p></article>
+        <article class="glass-card"><span class="number">03</span><h3>Commercial advert builds</h3><p>Screen-recorded ad builds, mobile workflows, product shoots, moodboards, storyboards, video generation, edit and final delivery.</p></article>
+        <article class="glass-card"><span class="number">04</span><h3>VIP workflow tools</h3><p>Visual Architect, Time Machine, Pricing Partner, one-click advert workflows, product studio angle systems and texture fixes.</p></article>
+        <article class="glass-card"><span class="number">05</span><h3>Client-ready path</h3><p>Quote, close and deliver. Pricing AI video services, protecting revisions, image-first production and credit-aware pricing.</p></article>
+        <article class="glass-card"><span class="number">06</span><h3>Daily feedback</h3><p>Post work, ask questions, join challenges and get practical feedback from creators who are building alongside you.</p></article>
+      </div>
+    </section>
+
+    <section id="classroom" class="section section-pad reveal">
+      <div class="section-head">
+        <div><div class="kicker">Classroom map</div><h2>From first image to client-ready AI studio.</h2></div>
+        <p class="section-copy">The classroom is not random tutorials. It is a growing production system with sprints, challenges, prompt tools and practical assets.</p>
+      </div>
+      <div class="roadmap">
+        <aside class="phone">
+          <div class="phone-screen">
+            <img src="assets/aiverse/ai-verse-mark.svg" alt="AI-Verse mark" />
+            <div class="phone-title">Start with taste. Build with systems. Finish for clients.</div>
+            <p class="section-copy">Beginner friendly, but not basic. The goal is work that can survive social, ads, portfolio and client delivery.</p>
+          </div>
+        </aside>
+        <div class="modules">
+          <article class="module"><div class="badge">S1</div><div><h3>The Awakening</h3><p>AI image generation, scene building, real people, product assets, defined looks, grading, camera angles and focal lengths.</p></div></article>
+          <article class="module"><div class="badge">S2</div><div><h3>Pro Consistency</h3><p>Consistency sheets, storyboard systems, commercial-ready storyboard prompts, audio rules and structured homework.</p></div></article>
+          <article class="module"><div class="badge">S3</div><div><h3>The Director's Chair</h3><p>Full ad walkthroughs, client/product research, face and body creation, moodboards, upscaling, video, music, voice and final edit.</p></div></article>
+          <article class="module"><div class="badge">VIP</div><div><h3>VIP Vault</h3><p>Client-ready prompts, brand kits, cinematic adverts, food commercial photography, product grids and custom AI-Verse agents.</p></div></article>
+          <article class="module"><div class="badge">PR</div><div><h3>The Prism</h3><p>Look development through cinema, commercial, music video and documentary references. Blade Runner, Dune, Dior and more.</p></div></article>
+          <article class="module"><div class="badge">£</div><div><h3>Quote, Close & Deliver</h3><p>Pricing your AI video services, locking the deal, setting boundaries, revisions, image-first workflow and getting paid.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="section section-pad reveal">
+      <div class="section-head">
+        <div><div class="kicker">Member work</div><h2>A community that makes things.</h2></div>
+        <p class="section-copy">MVP gallery using archived AI-Verse member thumbnails from Google Drive/local archive. Next version can pull fresh approved work automatically.</p>
+      </div>
+      <div class="work-wall">
+        <img src="assets/aiverse/work-09.jpg" alt="AI-Verse member work sample 1" />
+        <img src="assets/aiverse/work-10.jpg" alt="AI-Verse member work sample 2" />
+        <img src="assets/aiverse/work-11.jpg" alt="AI-Verse member work sample 3" />
+        <img src="assets/aiverse/work-12.jpg" alt="AI-Verse member work sample 4" />
+        <img src="assets/aiverse/work-13.jpg" alt="AI-Verse member work sample 5" />
+        <img src="assets/aiverse/work-14.jpg" alt="AI-Verse member work sample 6" />
+        <img src="assets/aiverse/work-01.jpg" alt="AI-Verse member work sample 7" />
+        <img src="assets/aiverse/work-02.jpg" alt="AI-Verse member work sample 8" />
+        <img src="assets/aiverse/work-03.jpg" alt="AI-Verse member work sample 9" />
+        <img src="assets/aiverse/work-04.jpg" alt="AI-Verse member work sample 10" />
+        <img src="assets/aiverse/work-05.jpg" alt="AI-Verse member work sample 11" />
+      </div>
+    </section>
+
+    <section id="proof" class="section section-pad reveal">
+      <div class="section-head">
+        <div><div class="kicker">Reviews and proof</div><h2>What members notice.</h2></div>
+        <p class="section-copy">Real Skool activity, real feedback loops and a room shaped around production, not guru theory.</p>
+      </div>
+      <div class="proof">
+        <blockquote><p>“That instinct to work like a real set instead of just chasing pretty shots is exactly why this room feels different.”</p><footer>Member comment · AI-Verse challenge thread</footer></blockquote>
+        <blockquote><p>“Once you know a good workflow, it’s a shame not to use it.”</p><footer>Member workflow share · Product around the house challenge</footer></blockquote>
+        <blockquote><p>“Put this as one complete workflow... so moodboard creation, storyboard prompt etc is easier to find or copy.”</p><footer>Member classroom feedback · Sprint 2 workflow request</footer></blockquote>
+      </div>
+    </section>
+
+    <section id="pricing" class="section section-pad reveal">
+      <div class="pricing">
+        <div class="price-card">
+          <div class="kicker">Founding price</div>
+          <div class="price">$15<small>/month</small></div>
+          <p class="section-copy">Start free for 7 days. Cancel anytime. Current Skool page says only 43 spots left at $15/month.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Join AI-Verse</a></div>
+        </div>
+        <div class="checks">
+          <div class="check"><b>Free AI tools to start.</b><br />Begin generating today without needing a studio setup.</div>
+          <div class="check"><b>Director-level feedback.</b><br />Learn how to think like a filmmaker, not just a prompt user.</div>
+          <div class="check"><b>Consistency Pro module.</b><br />Build repeatable characters, props, products and scenes.</div>
+          <div class="check"><b>Screen-recorded ad builds.</b><br />Watch real commercial workflows from setup to final edit.</div>
+          <div class="check"><b>Quote, close and deliver.</b><br />Turn creative skill into client-ready services.</div>
+          <div class="check"><b>Phone or PC.</b><br />Work from the tools you already have.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final reveal">
+      <div class="kicker">AI-Verse Filmmakers</div>
+      <h2>Stop making AI clips. Start building commercial visual systems.</h2>
+      <p>Learn the taste, the workflow, the camera logic and the client path. Then post your work, get feedback and improve inside the room.</p>
+      <div class="hero-actions" style="justify-content:center"><a class="btn btn-primary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Start free for 7 days</a><a class="btn btn-secondary" href="https://www.skool.com/bogdans-ai-verse-4398">Open Skool</a></div>
+    </section>
+  </main>
+
+  <footer class="section footer">
+    <div>© AI-Verse Filmmakers · Built for Bogdan Pascal</div>
+    <div><a href="https://github.com/aiverse-filmmakers/hub">GitHub</a> · <a href="artifacts.html">Tools</a> · <a href="https://www.skool.com/bogdans-ai-verse-4398/about">Skool</a></div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('on');
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
