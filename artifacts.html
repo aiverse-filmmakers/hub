@@ -1,216 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Artifacts — AI-Verse Filmmakers</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg: #07090e;
-    --primary: #ffffff;
-    --secondary: #4cb9d5;
-    --accent: #a9dcea;
-    --body: #e4e8ed;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--body);
-    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-    min-height: 100vh;
-  }
-
-  /* Navbar */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem 2rem;
-    background: var(--bg);
-    border-bottom: 1px solid rgba(76, 185, 213, 0.4);
-    backdrop-filter: blur(12px);
-  }
-
-  .nav-logo {
-    font-size: 1.35rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    color: var(--primary);
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--body);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover {
-    color: var(--secondary);
-  }
-
-  /* Main content */
-  .main {
-    padding: 7rem 2rem 3rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .main h1 {
-    font-size: 2.4rem;
-    font-weight: 900;
-    color: var(--primary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 2.5rem;
-    text-align: center;
-  }
-
-  /* Grid */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.5rem;
-  }
-
-  /* Card */
-  .card {
-    display: block;
-    text-decoration: none;
-    background: rgba(76, 185, 213, 0.04);
-    border: 1px solid rgba(76, 185, 213, 0.3);
-    border-radius: 12px;
-    padding: 1.75rem 1.5rem;
-    transition: all 0.25s;
-  }
-
-  .card:hover {
-    border-color: rgba(76, 185, 213, 0.6);
-    background: rgba(76, 185, 213, 0.08);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(76, 185, 213, 0.1);
-  }
-
-  .card-icon {
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .card-name {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 0.4rem;
-  }
-
-  .card-path {
-    font-size: 0.8rem;
-    color: var(--accent);
-    opacity: 0.7;
-    font-family: 'SF Mono', 'Fira Code', monospace;
-  }
-
-  /* Placeholder */
-  .placeholder {
-    text-align: center;
-    color: rgba(228, 232, 237, 0.5);
-    font-size: 1.1rem;
-    padding: 4rem 2rem;
-  }
-
-  /* Loading */
-  .loading {
-    text-align: center;
-    color: var(--accent);
-    font-size: 1rem;
-    padding: 2rem;
-  }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    .navbar { padding: 1rem 1.25rem; }
-    .nav-links { gap: 1.25rem; }
-    .nav-links a { font-size: 0.85rem; }
-    .main { padding: 6rem 1rem 2rem; }
-    .main h1 { font-size: 1.8rem; }
-    .grid { grid-template-columns: 1fr; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member Tools | AI-Verse Filmmakers</title>
+  <meta name="description" content="AI-Verse Filmmakers member tools and browser artifacts." />
+  <style>
+    :root {
+      --page: #f5f5f7;
+      --ink: #1d1d1f;
+      --muted: rgba(29,29,31,.66);
+      --blue: #0071e3;
+      --line: rgba(29,29,31,.12);
+      --card: #ffffff;
+      --shadow: 0 18px 70px rgba(0,0,0,.1);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--page); color: var(--ink); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 52px;
+      display: flex;
+      justify-content: center;
+      background: rgba(245,245,247,.72);
+      backdrop-filter: saturate(180%) blur(22px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner { width: min(1080px, calc(100% - 28px)); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 760; white-space: nowrap; }
+    .nav-links { display: flex; align-items: center; gap: 18px; font-size: 13px; color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta { min-height: 34px; display: inline-flex; align-items: center; border-radius: 999px; padding: 0 14px; background: var(--ink); color: #fff; font-weight: 700; }
+    main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; padding: 88px 0 72px; }
+    .hero { max-width: 760px; margin-bottom: 44px; }
+    .kicker { margin: 0 0 12px; color: var(--blue); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 760; }
+    h1 { margin: 0 0 16px; font-size: clamp(48px, 8vw, 96px); line-height: .9; letter-spacing: -.07em; }
+    .lead { margin: 0; color: var(--muted); font-size: clamp(19px, 2.2vw, 27px); line-height: 1.18; letter-spacing: -.035em; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+    .card {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 28px;
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 24px 86px rgba(0,0,0,.14); }
+    .card-name { font-size: 26px; line-height: 1; letter-spacing: -.04em; font-weight: 760; }
+    .card-path { margin-top: 16px; color: var(--muted); font-size: 13px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .placeholder, .loading { color: var(--muted); padding: 32px; border-radius: 28px; background: #fff; border: 1px solid var(--line); }
+    footer { width: min(1080px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 44px; border-top: 1px solid var(--line); color: var(--muted); display: flex; justify-content: space-between; gap: 16px; font-size: 14px; }
+    footer a { text-decoration: underline; text-underline-offset: 4px; }
+    @media (max-width: 620px) { .nav-cta { display: none; } main { padding-top: 62px; } footer { flex-direction: column; } }
+  </style>
 </head>
 <body>
+  <nav class="nav" aria-label="Member tools navigation">
+    <div class="nav-inner">
+      <a href="./" class="brand">AI-Verse Filmmakers</a>
+      <div class="nav-links">
+        <a href="./">Home</a>
+        <a href="./artifacts.html">Member tools</a>
+        <a class="nav-cta" href="https://www.skool.com/bogdans-ai-verse-4398/about">Join AI-Verse</a>
+      </div>
+    </div>
+  </nav>
 
-<nav class="navbar">
-  <a href="/" class="nav-logo">AI-VERSE</a>
-  <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/artifacts">Artifacts</a></li>
-    <li><a href="https://www.skool.com/bogdans-ai-verse-4398/about" target="_blank">About</a></li>
-  </ul>
-</nav>
+  <main>
+    <section class="hero">
+      <p class="kicker">Member tools</p>
+      <h1>AI-Verse browser tools.</h1>
+      <p class="lead">Small interactive tools and course artifacts. Links are now relative, so they work properly here and the Home link brings you back.</p>
+    </section>
+    <section class="grid" id="grid" aria-live="polite">
+      <div class="loading">Loading member tools...</div>
+    </section>
+  </main>
 
-<main class="main">
-  <h1>ARTIFACTS</h1>
-  <div class="grid" id="grid">
-    <div class="loading">Loading artifacts...</div>
-  </div>
-</main>
+  <footer>
+    <div>© 2026 AI-Verse Filmmakers</div>
+    <div><a href="./">Back to homepage</a></div>
+  </footer>
 
-<script>
-(async function() {
-  const grid = document.getElementById('grid');
-  const API = 'https://api.github.com/repos/aiverse-filmmakers/hub/contents/';
+  <script>
+    (async function() {
+      const grid = document.getElementById('grid');
+      const api = 'https://api.github.com/repos/aiverse-filmmakers/hub/contents/';
+      const excluded = new Set(['assets', 'artifacts', '.github']);
 
-  try {
-    const res = await fetch(API);
-    if (!res.ok) throw new Error('Failed to fetch');
+      try {
+        const res = await fetch(api);
+        if (!res.ok) throw new Error('Failed to fetch tools');
+        const items = await res.json();
+        const dirs = items.filter(item => item.type === 'dir' && !excluded.has(item.name));
 
-    const items = await res.json();
-    const dirs = items.filter(item => item.type === 'dir' && item.name !== 'assets');
+        if (dirs.length === 0) {
+          grid.innerHTML = '<div class="placeholder">More member tools coming soon.</div>';
+          return;
+        }
 
-    if (dirs.length === 0) {
-      grid.innerHTML = '<div class="placeholder">More tools coming soon.</div>';
-      return;
-    }
+        grid.innerHTML = '';
+        dirs.forEach(dir => {
+          const name = dir.name
+            .replace(/-/g, ' ')
+            .replace(/_/g, ' ')
+            .replace(/\b\w/g, c => c.toUpperCase());
 
-    grid.innerHTML = '';
+          const card = document.createElement('a');
+          card.className = 'card';
+          card.href = `./${dir.name}/`;
 
-    dirs.forEach(dir => {
-      const name = dir.name
-        .replace(/-/g, ' ')
-        .replace(/_/g, ' ')
-        .replace(/\b\w/g, c => c.toUpperCase());
+          const top = document.createElement('div');
+          const label = document.createElement('p');
+          label.className = 'kicker';
+          label.textContent = 'Tool';
+          const title = document.createElement('div');
+          title.className = 'card-name';
+          title.textContent = name;
+          top.append(label, title);
 
-      const card = document.createElement('a');
-      card.className = 'card';
-      card.href = `/${dir.name}/`;
-      card.innerHTML = `
-        <div class="card-icon">📦</div>
-        <div class="card-name">${name}</div>
-        <div class="card-path">/${dir.name}/</div>
-      `;
-      grid.appendChild(card);
-    });
-  } catch (err) {
-    grid.innerHTML = '<div class="placeholder">More tools coming soon.</div>';
-  }
-})();
-</script>
+          const path = document.createElement('div');
+          path.className = 'card-path';
+          path.textContent = `./${dir.name}/`;
 
+          card.append(top, path);
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        grid.innerHTML = '<div class="placeholder">More member tools coming soon.</div>';
+      }
+    })();
+  </script>
 </body>
 </html>
