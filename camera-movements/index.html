@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Explore 46 camera movements for AI filmmaking. Watch each movement, search the library and copy production-ready prompts in one click." />
+  <meta property="og:title" content="Camera Movement Library | AI-Verse Filmmakers" />
+  <meta property="og:description" content="A visual camera movement library with looping examples and one-click AI video prompts." />
+  <meta name="theme-color" id="themeColor" content="#ffffff" />
+  <title>Camera Movement Library | AI-Verse Filmmakers</title>
+  <script>
+    (function () {
+      const saved = localStorage.getItem('aiverse-theme');
+      const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (systemDark ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+    })();
+  </script>
+  <style>
+    :root,
+    html[data-theme="light"] {
+      color-scheme: light;
+      --canvas: #ffffff;
+      --surface: rgba(245, 245, 247, 0.78);
+      --surface-solid: #f5f5f7;
+      --card: rgba(255, 255, 255, 0.74);
+      --card-solid: #ffffff;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --faint: #86868b;
+      --line: rgba(29, 29, 31, 0.13);
+      --line-strong: rgba(29, 29, 31, 0.22);
+      --nav: rgba(255, 255, 255, 0.78);
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --accent-soft: rgba(0, 113, 227, 0.09);
+      --track: #e8e8ed;
+      --thumb: #ffffff;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.09);
+      --prompt: rgba(245, 245, 247, 0.84);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --canvas: #000000;
+      --surface: rgba(17, 17, 17, 0.8);
+      --surface-solid: #111111;
+      --card: rgba(22, 22, 24, 0.76);
+      --card-solid: #171717;
+      --text: #f5f5f7;
+      --muted: #a1a1a6;
+      --faint: #86868b;
+      --line: rgba(255, 255, 255, 0.14);
+      --line-strong: rgba(255, 255, 255, 0.24);
+      --nav: rgba(0, 0, 0, 0.78);
+      --accent: #2997ff;
+      --accent-hover: #4aa8ff;
+      --accent-soft: rgba(41, 151, 255, 0.13);
+      --track: #2c2c2e;
+      --thumb: #111111;
+      --shadow: 0 20px 58px rgba(0, 0, 0, 0.34);
+      --prompt: rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--canvas); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      overflow-x: hidden;
+      background: var(--canvas);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 180ms ease, color 180ms ease;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      height: 56px;
+      background: var(--nav);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: saturate(180%) blur(22px);
+      -webkit-backdrop-filter: saturate(180%) blur(22px);
+    }
+    .nav-inner {
+      width: min(1440px, calc(100% - 32px));
+      height: 100%;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--text); }
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .nav-cta {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 650;
+      transition: background-color 160ms ease, transform 160ms ease;
+    }
+    .nav-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    .theme-switch {
+      width: 58px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+    }
+    .switch-track {
+      position: relative;
+      width: 50px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--track);
+    }
+    .switch-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--thumb);
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+      transition: transform 200ms cubic-bezier(.2, .8, .2, 1);
+    }
+    html[data-theme="dark"] .switch-thumb { transform: translateX(20px); }
+    .theme-icon { width: 13px; height: 13px; color: var(--text); }
+    .icon-moon { display: none; }
+    html[data-theme="dark"] .icon-sun { display: none; }
+    html[data-theme="dark"] .icon-moon { display: block; }
+
+    .hero {
+      width: min(1440px, calc(100% - 40px));
+      margin-inline: auto;
+      padding: 132px 0 64px;
+      text-align: center;
+    }
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 1000px;
+      margin: 0 auto 22px;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 650;
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      text-wrap: balance;
+    }
+    .lead {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(19px, 2.2vw, 27px);
+      line-height: 1.3;
+      letter-spacing: -0.025em;
+      text-wrap: pretty;
+    }
+    .library-meta {
+      margin: 25px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 18px;
+      color: var(--faint);
+      font-size: 13px;
+    }
+    .library-meta span:not(:last-child)::after { content: "·"; margin-left: 18px; }
+
+    .toolbar-shell {
+      position: sticky;
+      top: 56px;
+      z-index: 80;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--nav);
+      backdrop-filter: saturate(180%) blur(22px);
+      -webkit-backdrop-filter: saturate(180%) blur(22px);
+    }
+    .toolbar {
+      width: min(1440px, calc(100% - 32px));
+      min-height: 76px;
+      margin-inline: auto;
+      padding: 12px 0;
+      display: grid;
+      grid-template-columns: minmax(220px, 340px) minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+    }
+    .search {
+      position: relative;
+      min-width: 0;
+    }
+    .search svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      width: 17px;
+      height: 17px;
+      color: var(--muted);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .search input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0 42px;
+      background: var(--surface);
+      color: var(--text);
+      -webkit-appearance: none;
+    }
+    .search input::placeholder { color: var(--faint); }
+    .clear-search {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transform: translateY(-50%);
+      display: none;
+    }
+    .search.has-value .clear-search { display: grid; place-items: center; }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 2px;
+      scrollbar-width: none;
+      scroll-snap-type: x proximity;
+    }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter {
+      min-height: 40px;
+      flex: 0 0 auto;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      scroll-snap-align: start;
+      transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+    }
+    .filter:hover { color: var(--text); border-color: var(--line-strong); }
+    .filter[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--canvas); }
+    .result-count { color: var(--muted); font-size: 13px; white-space: nowrap; }
+
+    main { padding: 38px 0 96px; background: var(--surface-solid); }
+    .grid {
+      width: min(1440px, calc(100% - 32px));
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .card {
+      min-width: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: saturate(150%) blur(24px);
+      -webkit-backdrop-filter: saturate(150%) blur(24px);
+    }
+    .media {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--surface-solid);
+      border-bottom: 1px solid var(--line);
+    }
+    .media video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      pointer-events: none;
+      background: #000000;
+    }
+    .media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    .media-label {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      max-width: calc(100% - 24px);
+      min-height: 30px;
+      padding: 0 10px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.45);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 650;
+      backdrop-filter: saturate(150%) blur(16px);
+      -webkit-backdrop-filter: saturate(150%) blur(16px);
+    }
+    .media-dot { width: 5px; height: 5px; border-radius: 50%; background: #ffffff; opacity: 0.58; }
+    .card-body { padding: 20px; display: flex; flex: 1; flex-direction: column; }
+    .card-kicker {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0 0 16px;
+      font-size: 28px;
+      font-weight: 650;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+    .prompt {
+      width: 100%;
+      flex: 1;
+      margin: 0 0 14px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--prompt);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: left;
+      cursor: copy;
+      user-select: text;
+      transition: border-color 160ms ease, background-color 160ms ease;
+    }
+    .prompt:hover { border-color: var(--line-strong); }
+    .copy-button {
+      width: 100%;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 650;
+      cursor: pointer;
+      transition: background-color 160ms ease, transform 160ms ease;
+    }
+    .copy-button:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .copy-button:active { transform: translateY(0); }
+    .copy-button svg { width: 16px; height: 16px; }
+
+    .empty {
+      grid-column: 1 / -1;
+      padding: 80px 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      text-align: center;
+    }
+    .empty h2 { margin-bottom: 8px; }
+    .empty p { margin: 0; color: var(--muted); }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: var(--canvas);
+    }
+    .footer-inner {
+      width: min(1440px, calc(100% - 32px));
+      min-height: 120px;
+      margin-inline: auto;
+      padding: 28px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+    .footer a:hover { color: var(--text); }
+
+    .toast {
+      position: fixed;
+      z-index: 200;
+      left: 50%;
+      bottom: 24px;
+      min-height: 44px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: var(--text);
+      color: var(--canvas);
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 650;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 12px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+    .toast[data-visible="true"] { opacity: 1; transform: translate(-50%, 0); }
+
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .nav, .toolbar-shell { background: var(--canvas); }
+      .card { background: var(--card-solid); }
+      .media-label { background: rgba(0, 0, 0, 0.72); }
+    }
+
+    @media (max-width: 1120px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .toolbar { grid-template-columns: minmax(220px, 320px) minmax(0, 1fr); }
+      .result-count { grid-column: 1 / -1; justify-self: end; margin-top: -4px; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .hero { width: min(100% - 32px, 620px); padding: 112px 0 48px; }
+      h1 { font-size: clamp(45px, 14vw, 68px); }
+      .library-meta span:not(:last-child)::after { display: none; }
+      .toolbar-shell { top: 56px; }
+      .toolbar {
+        width: 100%;
+        padding: 10px 16px 12px;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+      }
+      .search { grid-column: 1 / -1; }
+      .filters { margin-left: -2px; padding-right: 22px; }
+      .result-count { grid-column: auto; grid-row: 2; align-self: center; margin: 0; }
+      main { padding-top: 24px; }
+      .grid { grid-template-columns: 1fr; gap: 16px; }
+      .card { border-radius: 20px; }
+      .card-body { padding: 18px; }
+      .prompt { font-size: 13px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (max-width: 440px) {
+      .nav-inner { width: calc(100% - 20px); gap: 8px; }
+      .brand { font-size: 10px; letter-spacing: 0.08em; }
+      .nav-cta { display: none; }
+      .theme-switch { width: 52px; }
+      .hero { padding-top: 104px; }
+      .lead { font-size: 19px; }
+      .library-meta { display: grid; gap: 4px; }
+      .grid { width: calc(100% - 20px); }
+      .media-label { left: 9px; bottom: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="brand" href="../">AI-VERSE FILMMAKERS</a>
+      <div class="nav-links">
+        <a href="../">Home</a>
+        <a href="../artifacts.html">Member tools</a>
+        <a href="./" aria-current="page">Camera movements</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-switch" id="themeSwitch" type="button" role="switch" aria-checked="false" aria-label="Switch to dark mode">
+          <span class="switch-track" aria-hidden="true">
+            <span class="switch-thumb">
+              <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+              <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path></svg>
+            </span>
+          </span>
+          <span class="sr-only" id="themeSwitchText">Switch to dark mode</span>
+        </button>
+        <a class="nav-cta" href="https://www.skool.com/bogdans-ai-verse-4398/about">Join AI-Verse</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <p class="eyebrow">AI-Verse Filmmakers</p>
+    <h1>Camera Movement Library.</h1>
+    <p class="lead">Watch how each camera move changes a scene, then copy the exact movement prompt into your AI video workflow.</p>
+    <p class="library-meta" aria-label="Library details"><span>46 movement examples</span><span>Looping video references</span><span>One-click prompts</span></p>
+  </header>
+
+  <section class="toolbar-shell" aria-label="Library controls">
+    <div class="toolbar">
+      <label class="search" id="searchWrap">
+        <span class="sr-only">Search camera movements</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="searchInput" type="search" inputmode="search" autocomplete="off" placeholder="Search camera movements" />
+        <button class="clear-search" id="clearSearch" type="button" aria-label="Clear search">×</button>
+      </label>
+      <div class="filters" id="filters" aria-label="Filter by movement type"></div>
+      <div class="result-count" id="resultCount" aria-live="polite">Loading library...</div>
+    </div>
+  </section>
+
+  <main>
+    <section class="grid" id="grid" aria-label="Camera movement prompts" aria-busy="true"></section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 AI-Verse Filmmakers</div>
+      <div class="footer-links"><a href="../">Home</a><a href="../artifacts.html">Member tools</a><a href="https://www.skool.com/bogdans-ai-verse-4398/about">Join AI-Verse</a></div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Prompt copied</div>
+
+  <script>
+    const root = document.documentElement;
+    const themeSwitch = document.getElementById('themeSwitch');
+    const themeSwitchText = document.getElementById('themeSwitchText');
+    const themeColor = document.getElementById('themeColor');
+    const grid = document.getElementById('grid');
+    const filters = document.getElementById('filters');
+    const searchInput = document.getElementById('searchInput');
+    const searchWrap = document.getElementById('searchWrap');
+    const clearSearch = document.getElementById('clearSearch');
+    const resultCount = document.getElementById('resultCount');
+    const toast = document.getElementById('toast');
+
+    let movements = [];
+    let activeGroup = 'All';
+    let toastTimer = null;
+    let videos = [];
+
+    function applyTheme(theme, persist = true) {
+      root.dataset.theme = theme;
+      root.style.colorScheme = theme;
+      const dark = theme === 'dark';
+      themeSwitch.setAttribute('aria-checked', String(dark));
+      themeSwitch.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      themeSwitchText.textContent = dark ? 'Switch to light mode' : 'Switch to dark mode';
+      themeColor.setAttribute('content', dark ? '#000000' : '#ffffff');
+      if (persist) localStorage.setItem('aiverse-theme', theme);
+    }
+
+    themeSwitch.addEventListener('click', () => applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+    applyTheme(root.dataset.theme || 'light', false);
+
+    function copyIcon() {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor');
+      svg.setAttribute('stroke-width', '2');
+      svg.setAttribute('stroke-linecap', 'round');
+      svg.setAttribute('aria-hidden', 'true');
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', '9'); rect.setAttribute('y', '9'); rect.setAttribute('width', '11'); rect.setAttribute('height', '11'); rect.setAttribute('rx', '2');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', 'M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3');
+      svg.append(rect, path);
+      return svg;
+    }
+
+    async function copyText(text, button) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.style.position = 'fixed';
+          area.style.opacity = '0';
+          document.body.appendChild(area);
+          area.focus();
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+        }
+        showToast('Prompt copied');
+        if (button) {
+          const label = button.querySelector('span');
+          label.textContent = 'Copied';
+          setTimeout(() => { label.textContent = 'Copy prompt'; }, 1400);
+        }
+      } catch (error) {
+        showToast('Select the prompt and copy it');
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.dataset.visible = 'true';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { toast.dataset.visible = 'false'; }, 1700);
+    }
+
+    function createCard(item, index) {
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.dataset.group = item.group;
+      card.dataset.search = `${item.title} ${item.group} ${item.shot} ${item.prompt}`.toLowerCase();
+
+      const media = document.createElement('div');
+      media.className = 'media';
+      const video = document.createElement('video');
+      video.muted = true;
+      video.defaultMuted = true;
+      video.loop = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      video.preload = 'none';
+      video.poster = item.poster;
+      video.dataset.src = item.video;
+      video.setAttribute('aria-label', `${item.title} camera movement example`);
+      video.setAttribute('disablepictureinpicture', '');
+      video.setAttribute('controlslist', 'nodownload noplaybackrate nofullscreen noremoteplayback');
+      if (index < 6) loadVideo(video);
+
+      const mediaLabel = document.createElement('span');
+      mediaLabel.className = 'media-label';
+      const mediaDot = document.createElement('span');
+      mediaDot.className = 'media-dot';
+      mediaDot.setAttribute('aria-hidden', 'true');
+      const mediaText = document.createElement('span');
+      mediaText.textContent = item.group;
+      mediaLabel.append(mediaDot, mediaText);
+      media.append(video, mediaLabel);
+
+      const body = document.createElement('div');
+      body.className = 'card-body';
+      const kicker = document.createElement('p');
+      kicker.className = 'card-kicker';
+      kicker.textContent = item.shot;
+      const title = document.createElement('h2');
+      title.textContent = item.title;
+      const prompt = document.createElement('button');
+      prompt.className = 'prompt';
+      prompt.type = 'button';
+      prompt.textContent = item.displayPrompt;
+      prompt.setAttribute('aria-label', `Copy ${item.title} prompt`);
+      const copyButton = document.createElement('button');
+      copyButton.className = 'copy-button';
+      copyButton.type = 'button';
+      const copyLabel = document.createElement('span');
+      copyLabel.textContent = 'Copy prompt';
+      copyButton.append(copyIcon(), copyLabel);
+      copyButton.setAttribute('aria-label', `Copy ${item.title} prompt`);
+      prompt.addEventListener('click', () => copyText(item.prompt, copyButton));
+      copyButton.addEventListener('click', () => copyText(item.prompt, copyButton));
+      body.append(kicker, title, prompt, copyButton);
+      card.append(media, body);
+      videos.push(video);
+      return card;
+    }
+
+    function loadVideo(video) {
+      if (video.src || !video.dataset.src) return;
+      video.src = video.dataset.src;
+      video.load();
+    }
+
+    const loadObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) loadVideo(entry.target);
+      });
+    }, { rootMargin: '700px 0px' }) : null;
+
+    const playObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting && !video.closest('.card').hidden) {
+          loadVideo(video);
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.08 }) : null;
+
+    function observeVideos() {
+      videos.forEach(video => {
+        if (loadObserver) loadObserver.observe(video);
+        if (playObserver) playObserver.observe(video);
+        if (!loadObserver || !playObserver) {
+          loadVideo(video);
+          video.play().catch(() => {});
+        }
+      });
+    }
+
+    function buildFilters() {
+      const counts = movements.reduce((map, item) => map.set(item.group, (map.get(item.group) || 0) + 1), new Map());
+      const groups = ['All', ...counts.keys()];
+      filters.replaceChildren(...groups.map(group => {
+        const button = document.createElement('button');
+        button.className = 'filter';
+        button.type = 'button';
+        button.dataset.group = group;
+        button.setAttribute('aria-pressed', String(group === activeGroup));
+        button.textContent = `${group} ${group === 'All' ? movements.length : counts.get(group)}`;
+        button.addEventListener('click', () => {
+          activeGroup = group;
+          filters.querySelectorAll('.filter').forEach(filter => filter.setAttribute('aria-pressed', String(filter === button)));
+          applyFilters();
+        });
+        return button;
+      }));
+    }
+
+    function applyFilters() {
+      const query = searchInput.value.trim().toLowerCase();
+      searchWrap.classList.toggle('has-value', query.length > 0);
+      let shown = 0;
+      grid.querySelectorAll('.card').forEach(card => {
+        const matchesGroup = activeGroup === 'All' || card.dataset.group === activeGroup;
+        const matchesSearch = !query || card.dataset.search.includes(query);
+        card.hidden = !(matchesGroup && matchesSearch);
+        if (!card.hidden) shown += 1;
+        const video = card.querySelector('video');
+        if (card.hidden) video.pause();
+        else if (video.getBoundingClientRect().top < window.innerHeight && video.getBoundingClientRect().bottom > 0) video.play().catch(() => {});
+      });
+      resultCount.textContent = `${shown} ${shown === 1 ? 'movement' : 'movements'}`;
+      let empty = grid.querySelector('.empty');
+      if (shown === 0 && !empty) {
+        empty = document.createElement('div');
+        empty.className = 'empty';
+        const title = document.createElement('h2');
+        title.textContent = 'No movement found.';
+        const text = document.createElement('p');
+        text.textContent = 'Try a different search or category.';
+        empty.append(title, text);
+        grid.appendChild(empty);
+      } else if (shown > 0 && empty) {
+        empty.remove();
+      }
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+    clearSearch.addEventListener('click', () => {
+      searchInput.value = '';
+      searchInput.focus();
+      applyFilters();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        videos.forEach(video => video.pause());
+      } else {
+        videos.forEach(video => {
+          const rect = video.getBoundingClientRect();
+          if (!video.closest('.card').hidden && rect.top < window.innerHeight && rect.bottom > 0) video.play().catch(() => {});
+        });
+      }
+    });
+
+    async function init() {
+      try {
+        const response = await fetch('data.json');
+        if (!response.ok) throw new Error(`Library request failed with ${response.status}`);
+        movements = await response.json();
+        if (!Array.isArray(movements) || movements.length !== 46) throw new Error('Camera movement data is incomplete');
+        grid.replaceChildren(...movements.map(createCard));
+        buildFilters();
+        applyFilters();
+        observeVideos();
+        grid.setAttribute('aria-busy', 'false');
+      } catch (error) {
+        grid.setAttribute('aria-busy', 'false');
+        const empty = document.createElement('div');
+        empty.className = 'empty';
+        const title = document.createElement('h2');
+        title.textContent = 'The library could not load.';
+        const text = document.createElement('p');
+        text.textContent = 'Refresh the page to try again.';
+        empty.append(title, text);
+        grid.replaceChildren(empty);
+        resultCount.textContent = 'Unavailable';
+        console.error(error);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

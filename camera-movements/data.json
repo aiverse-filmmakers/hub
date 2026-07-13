@@ -1,0 +1,1198 @@
+[
+  {
+    "id": "shot-01",
+    "shot": "Shot 01",
+    "group": "Pan/Tilt",
+    "title": "Static shot",
+    "prompt": "Camera: locked-off static shot. Movement: hold one fixed camera position for the full clip. Speed: still and steady. Framing: keep the same angle, height, lens distance and composition. End: finish with the same framing and camera position.",
+    "displayPrompt": "locked-off static shot. Movement: hold one fixed camera position for the full clip. Speed: still and steady. Framing: keep the same angle, height, lens distance and composition. End: finish with the same framing and camera position.",
+    "video": "media/01-static-shot.mp4",
+    "poster": "posters/01-static-shot.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "38440"
+      }
+    }
+  },
+  {
+    "id": "shot-02",
+    "shot": "Shot 02",
+    "group": "Pan/Tilt",
+    "title": "Pan right",
+    "prompt": "Camera: pan right. Movement: rotate the camera horizontally from left to right from one fixed point. Speed: smooth constant rotation. Framing: keep the horizon level while new space enters from the right side of the frame. End: settle on a clear final composition.",
+    "displayPrompt": "pan right. Movement: rotate the camera horizontally from left to right from one fixed point. Speed: smooth constant rotation. Framing: keep the horizon level while new space enters from the right side of the frame. End: settle on a clear final composition.",
+    "video": "media/02-pan-right.mp4",
+    "poster": "posters/02-pan-right.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "243000"
+      }
+    }
+  },
+  {
+    "id": "shot-02b",
+    "shot": "Shot 02B",
+    "group": "Pan/Tilt",
+    "title": "Pan left",
+    "prompt": "Camera: pan left. Movement: rotate the camera horizontally from right to left from one fixed point. Speed: smooth constant rotation. Framing: keep the horizon level while new space enters from the left side of the frame. End: settle on a clear final composition.",
+    "displayPrompt": "pan left. Movement: rotate the camera horizontally from right to left from one fixed point. Speed: smooth constant rotation. Framing: keep the horizon level while new space enters from the left side of the frame. End: settle on a clear final composition.",
+    "video": "media/2b-pan-left.mp4",
+    "poster": "posters/2b-pan-left.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "467946"
+      }
+    }
+  },
+  {
+    "id": "shot-03",
+    "shot": "Shot 03",
+    "group": "Pan/Tilt",
+    "title": "Whip pan right",
+    "prompt": "Camera: whip pan right. Movement: rotate rapidly from the starting direction toward a new target on the right. Speed: fast snap with brief motion blur during the rotation. Framing: begin on one readable composition and land on a second readable target. End: settle into a sharp final frame.",
+    "displayPrompt": "whip pan right. Movement: rotate rapidly from the starting direction toward a new target on the right. Speed: fast snap with brief motion blur during the rotation. Framing: begin on one readable composition and land on a second readable target. End: settle into a sharp final frame.",
+    "video": "media/03-whip-pan-right.mp4",
+    "poster": "posters/03-whip-pan-right.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "366904"
+      }
+    }
+  },
+  {
+    "id": "shot-03b",
+    "shot": "Shot 03B",
+    "group": "Pan/Tilt",
+    "title": "Whip pan left",
+    "prompt": "Camera: whip pan left. Movement: rotate rapidly from the starting direction toward a new target on the left. Speed: fast snap with brief motion blur during the rotation. Framing: begin on one readable composition and land on a second readable target. End: settle into a sharp final frame.",
+    "displayPrompt": "whip pan left. Movement: rotate rapidly from the starting direction toward a new target on the left. Speed: fast snap with brief motion blur during the rotation. Framing: begin on one readable composition and land on a second readable target. End: settle into a sharp final frame.",
+    "video": "media/3b-whip-pan-left.mp4",
+    "poster": "posters/3b-whip-pan-left.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "576738"
+      }
+    }
+  },
+  {
+    "id": "shot-04",
+    "shot": "Shot 04",
+    "group": "Pan/Tilt",
+    "title": "Tilt up",
+    "prompt": "Camera: tilt up. Movement: rotate the camera upward from one fixed point. Speed: smooth constant tilt. Framing: keep the vertical subject or architecture centered as the frame travels upward. End: land on the upper target.",
+    "displayPrompt": "tilt up. Movement: rotate the camera upward from one fixed point. Speed: smooth constant tilt. Framing: keep the vertical subject or architecture centered as the frame travels upward. End: land on the upper target.",
+    "video": "media/04-tilt-up.mp4",
+    "poster": "posters/04-tilt-up.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "390098"
+      }
+    }
+  },
+  {
+    "id": "shot-04b",
+    "shot": "Shot 04B",
+    "group": "Pan/Tilt",
+    "title": "Tilt down",
+    "prompt": "Camera: tilt down. Movement: rotate the camera downward from one fixed point. Speed: smooth constant tilt. Framing: keep the vertical subject or architecture centered as the frame travels downward. End: land on the lower target.",
+    "displayPrompt": "tilt down. Movement: rotate the camera downward from one fixed point. Speed: smooth constant tilt. Framing: keep the vertical subject or architecture centered as the frame travels downward. End: land on the lower target.",
+    "video": "media/4b-tilt-down.mp4",
+    "poster": "posters/4b-tilt-down.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "432749"
+      }
+    }
+  },
+  {
+    "id": "shot-05",
+    "shot": "Shot 05",
+    "group": "Zoom/Lens",
+    "title": "Slow zoom in",
+    "prompt": "Camera: slow zoom in. Movement: slowly increase lens focal length toward a tighter frame. Speed: gradual and even. Framing: keep the main visual target readable as it becomes larger in frame. End: finish on a stable tighter composition.",
+    "displayPrompt": "slow zoom in. Movement: slowly increase lens focal length toward a tighter frame. Speed: gradual and even. Framing: keep the main visual target readable as it becomes larger in frame. End: finish on a stable tighter composition.",
+    "video": "media/05-slow-zoom-in.mp4",
+    "poster": "posters/05-slow-zoom-in.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "65289"
+      }
+    }
+  },
+  {
+    "id": "shot-05b",
+    "shot": "Shot 05B",
+    "group": "Zoom/Lens",
+    "title": "Slow zoom out",
+    "prompt": "Camera: slow zoom out. Movement: slowly decrease lens focal length toward a wider frame. Speed: gradual and even. Framing: keep the main visual target readable as more surrounding space appears. End: finish on a stable wider composition.",
+    "displayPrompt": "slow zoom out. Movement: slowly decrease lens focal length toward a wider frame. Speed: gradual and even. Framing: keep the main visual target readable as more surrounding space appears. End: finish on a stable wider composition.",
+    "video": "media/5b-slow-zoom-out.mp4",
+    "poster": "posters/5b-slow-zoom-out.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "294470"
+      }
+    }
+  },
+  {
+    "id": "shot-06",
+    "shot": "Shot 06",
+    "group": "Zoom/Lens",
+    "title": "Fast zoom in",
+    "prompt": "Camera: fast zoom in. Movement: quickly increase lens focal length toward the main visual target. Speed: quick decisive zoom. Framing: keep the target centered or clearly readable during the scale change. End: finish on a stable tighter composition.",
+    "displayPrompt": "fast zoom in. Movement: quickly increase lens focal length toward the main visual target. Speed: quick decisive zoom. Framing: keep the target centered or clearly readable during the scale change. End: finish on a stable tighter composition.",
+    "video": "media/06-fast-zoom-in-v2.mp4",
+    "poster": "posters/06-fast-zoom-in-v2.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "10.083333",
+        "size": "143294"
+      }
+    }
+  },
+  {
+    "id": "shot-06b",
+    "shot": "Shot 06B",
+    "group": "Zoom/Lens",
+    "title": "Fast zoom out",
+    "prompt": "Camera: fast zoom out. Movement: quickly decrease lens focal length away from the main visual target. Speed: quick decisive zoom. Framing: keep the target readable as the surrounding space appears. End: finish on a stable wider composition.",
+    "displayPrompt": "fast zoom out. Movement: quickly decrease lens focal length away from the main visual target. Speed: quick decisive zoom. Framing: keep the target readable as the surrounding space appears. End: finish on a stable wider composition.",
+    "video": "media/06b-fast-zoom-out-v2.mp4",
+    "poster": "posters/06b-fast-zoom-out-v2.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "10.083333",
+        "size": "243021"
+      }
+    }
+  },
+  {
+    "id": "shot-07a",
+    "shot": "Shot 07A",
+    "group": "Zoom/Lens",
+    "title": "Crash zoom in",
+    "prompt": "Camera: crash zoom in. Movement: snap the lens rapidly toward the main visual target. Speed: very fast and punchy. Framing: keep the target readable through the sudden scale change. End: land on a bold tighter composition.",
+    "displayPrompt": "crash zoom in. Movement: snap the lens rapidly toward the main visual target. Speed: very fast and punchy. Framing: keep the target readable through the sudden scale change. End: land on a bold tighter composition.",
+    "video": "media/07a-crash-zoom-in-v2.mp4",
+    "poster": "posters/07a-crash-zoom-in-v2.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "10.083333",
+        "size": "150755"
+      }
+    }
+  },
+  {
+    "id": "shot-07b",
+    "shot": "Shot 07B",
+    "group": "Zoom/Lens",
+    "title": "Crash zoom out",
+    "prompt": "Camera: crash zoom out. Movement: snap the lens rapidly away from the main visual target. Speed: very fast and punchy. Framing: keep the target readable as the surrounding space appears. End: land on a bold wider composition.",
+    "displayPrompt": "crash zoom out. Movement: snap the lens rapidly away from the main visual target. Speed: very fast and punchy. Framing: keep the target readable as the surrounding space appears. End: land on a bold wider composition.",
+    "video": "media/07b-crash-zoom-out-v2.mp4",
+    "poster": "posters/07b-crash-zoom-out-v2.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "10.000000",
+        "size": "255367"
+      }
+    }
+  },
+  {
+    "id": "shot-08",
+    "shot": "Shot 08",
+    "group": "Dolly/Track",
+    "title": "Dolly in",
+    "prompt": "Camera: dolly in. Movement: move the camera physically forward in a straight line toward the main subject. Speed: smooth controlled push. Framing: keep camera height, lens direction and subject position consistent while distance closes. End: finish in a tighter composition.",
+    "displayPrompt": "dolly in. Movement: move the camera physically forward in a straight line toward the main subject. Speed: smooth controlled push. Framing: keep camera height, lens direction and subject position consistent while distance closes. End: finish in a tighter composition.",
+    "video": "media/08-dolly-in.mp4",
+    "poster": "posters/08-dolly-in.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "519842"
+      }
+    }
+  },
+  {
+    "id": "shot-09",
+    "shot": "Shot 09",
+    "group": "Dolly/Track",
+    "title": "Dolly out",
+    "prompt": "Camera: dolly out. Movement: move the camera physically backward in a straight line away from the main subject. Speed: smooth controlled retreat. Framing: keep lens direction and camera height consistent while more environment enters frame. End: finish in a wider composition.",
+    "displayPrompt": "dolly out. Movement: move the camera physically backward in a straight line away from the main subject. Speed: smooth controlled retreat. Framing: keep lens direction and camera height consistent while more environment enters frame. End: finish in a wider composition.",
+    "video": "media/09-dolly-out.mp4",
+    "poster": "posters/09-dolly-out.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "439676"
+      }
+    }
+  },
+  {
+    "id": "shot-10",
+    "shot": "Shot 10",
+    "group": "Physical Moves",
+    "title": "Truck right",
+    "prompt": "Camera: truck right. Movement: move the camera physically to the right on a straight horizontal path. Speed: smooth constant lateral travel. Framing: keep the lens facing the same direction while the scene slides across frame. End: finish on a clean lateral composition.",
+    "displayPrompt": "truck right. Movement: move the camera physically to the right on a straight horizontal path. Speed: smooth constant lateral travel. Framing: keep the lens facing the same direction while the scene slides across frame. End: finish on a clean lateral composition.",
+    "video": "media/10-truck-right.mp4",
+    "poster": "posters/10-truck-right.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "125042"
+      }
+    }
+  },
+  {
+    "id": "shot-10b",
+    "shot": "Shot 10B",
+    "group": "Physical Moves",
+    "title": "Truck left",
+    "prompt": "Camera: truck left. Movement: move the camera physically to the left on a straight horizontal path. Speed: smooth constant lateral travel. Framing: keep the lens facing the same direction while the scene slides across frame. End: finish on a clean lateral composition.",
+    "displayPrompt": "truck left. Movement: move the camera physically to the left on a straight horizontal path. Speed: smooth constant lateral travel. Framing: keep the lens facing the same direction while the scene slides across frame. End: finish on a clean lateral composition.",
+    "video": "media/10b-truck-left.mp4",
+    "poster": "posters/10b-truck-left.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "599970"
+      }
+    }
+  },
+  {
+    "id": "shot-11a",
+    "shot": "Shot 11A",
+    "group": "Physical Moves",
+    "title": "Pedestal up",
+    "prompt": "Camera: pedestal up. Movement: move the entire camera vertically upward in a straight line. Speed: smooth constant lift. Framing: keep the lens level and pointed in the same direction during the vertical move. End: finish with the higher framing clearly readable.",
+    "displayPrompt": "pedestal up. Movement: move the entire camera vertically upward in a straight line. Speed: smooth constant lift. Framing: keep the lens level and pointed in the same direction during the vertical move. End: finish with the higher framing clearly readable.",
+    "video": "media/11a-pedestal-up.mp4",
+    "poster": "posters/11a-pedestal-up.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "238037"
+      }
+    }
+  },
+  {
+    "id": "shot-11b",
+    "shot": "Shot 11B",
+    "group": "Physical Moves",
+    "title": "Pedestal down",
+    "prompt": "Camera: pedestal down. Movement: move the entire camera vertically downward in a straight line. Speed: smooth constant descent. Framing: keep the lens level and pointed in the same direction during the vertical move. End: finish with the lower framing clearly readable.",
+    "displayPrompt": "pedestal down. Movement: move the entire camera vertically downward in a straight line. Speed: smooth constant descent. Framing: keep the lens level and pointed in the same direction during the vertical move. End: finish with the lower framing clearly readable.",
+    "video": "media/11b-pedestal-down.mp4",
+    "poster": "posters/11b-pedestal-down.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "551151"
+      }
+    }
+  },
+  {
+    "id": "shot-12",
+    "shot": "Shot 12",
+    "group": "Physical Moves",
+    "title": "Slider right",
+    "prompt": "Camera: slider right. Movement: slide the camera a small distance to the right. Speed: slow controlled constant motion. Framing: keep foreground, subject and background layers readable as parallax shifts. End: finish on a refined composition with the new right-side angle visible.",
+    "displayPrompt": "slider right. Movement: slide the camera a small distance to the right. Speed: slow controlled constant motion. Framing: keep foreground, subject and background layers readable as parallax shifts. End: finish on a refined composition with the new right-side angle visible.",
+    "video": "media/12-slider-right.mp4",
+    "poster": "posters/12-slider-right.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "100815"
+      }
+    }
+  },
+  {
+    "id": "shot-12b",
+    "shot": "Shot 12B",
+    "group": "Physical Moves",
+    "title": "Slider left",
+    "prompt": "Camera: slider left. Movement: slide the camera a small distance to the left. Speed: slow controlled constant motion. Framing: keep foreground, subject and background layers readable as parallax shifts. End: finish on a refined composition with the new left-side angle visible.",
+    "displayPrompt": "slider left. Movement: slide the camera a small distance to the left. Speed: slow controlled constant motion. Framing: keep foreground, subject and background layers readable as parallax shifts. End: finish on a refined composition with the new left-side angle visible.",
+    "video": "media/12b-slider-left.mp4",
+    "poster": "posters/12b-slider-left.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "447597"
+      }
+    }
+  },
+  {
+    "id": "shot-13",
+    "shot": "Shot 13",
+    "group": "Physical Moves",
+    "title": "Push past / pass-by shot",
+    "prompt": "Camera: push past. Movement: move forward past a visible foreground object, edge or opening. Speed: smooth forward glide. Framing: let the foreground pass close to the lens while the space beyond becomes clearer. End: arrive inside or beyond the foreground layer.",
+    "displayPrompt": "push past. Movement: move forward past a visible foreground object, edge or opening. Speed: smooth forward glide. Framing: let the foreground pass close to the lens while the space beyond becomes clearer. End: arrive inside or beyond the foreground layer.",
+    "video": "media/13-push-past-pass-by-shot.mp4",
+    "poster": "posters/13-push-past-pass-by-shot.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "543749"
+      }
+    }
+  },
+  {
+    "id": "shot-14",
+    "shot": "Shot 14",
+    "group": "Physical Moves",
+    "title": "Arc right",
+    "prompt": "Camera: arc right. Movement: move on a shallow curved path around the main subject toward the right side. Speed: smooth measured curve. Framing: keep distance, height and subject readability consistent while the angle changes. End: finish from a new right-side angle.",
+    "displayPrompt": "arc right. Movement: move on a shallow curved path around the main subject toward the right side. Speed: smooth measured curve. Framing: keep distance, height and subject readability consistent while the angle changes. End: finish from a new right-side angle.",
+    "video": "media/14-arc-right.mp4",
+    "poster": "posters/14-arc-right.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "234716"
+      }
+    }
+  },
+  {
+    "id": "shot-14b",
+    "shot": "Shot 14B",
+    "group": "Physical Moves",
+    "title": "Arc left",
+    "prompt": "Camera: arc left. Movement: move on a shallow curved path around the main subject toward the left side. Speed: smooth measured curve. Framing: keep distance, height and subject readability consistent while the angle changes. End: finish from a new left-side angle.",
+    "displayPrompt": "arc left. Movement: move on a shallow curved path around the main subject toward the left side. Speed: smooth measured curve. Framing: keep distance, height and subject readability consistent while the angle changes. End: finish from a new left-side angle.",
+    "video": "media/14b-arc-left.mp4",
+    "poster": "posters/14b-arc-left.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "847258"
+      }
+    }
+  },
+  {
+    "id": "shot-15",
+    "shot": "Shot 15",
+    "group": "Physical Moves",
+    "title": "Orbit clockwise",
+    "prompt": "Camera: clockwise orbit. Movement: circle clockwise around the main subject at a consistent radius. Speed: smooth controlled orbit. Framing: keep the subject centered while the background rotates around them. End: complete the intended arc or full circle with stable framing.",
+    "displayPrompt": "clockwise orbit. Movement: circle clockwise around the main subject at a consistent radius. Speed: smooth controlled orbit. Framing: keep the subject centered while the background rotates around them. End: complete the intended arc or full circle with stable framing.",
+    "video": "media/15-orbit-clockwise.mp4",
+    "poster": "posters/15-orbit-clockwise.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "475904"
+      }
+    }
+  },
+  {
+    "id": "shot-15b",
+    "shot": "Shot 15B",
+    "group": "Physical Moves",
+    "title": "Orbit counterclockwise",
+    "prompt": "Camera: counterclockwise orbit. Movement: circle counterclockwise around the main subject at a consistent radius. Speed: smooth controlled orbit. Framing: keep the subject centered while the background rotates around them. End: complete the intended arc or full circle with stable framing.",
+    "displayPrompt": "counterclockwise orbit. Movement: circle counterclockwise around the main subject at a consistent radius. Speed: smooth controlled orbit. Framing: keep the subject centered while the background rotates around them. End: complete the intended arc or full circle with stable framing.",
+    "video": "media/15b-orbit-counterclockwise.mp4",
+    "poster": "posters/15b-orbit-counterclockwise.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "381722"
+      }
+    }
+  },
+  {
+    "id": "shot-16",
+    "shot": "Shot 16",
+    "group": "Dolly/Track",
+    "title": "Tracking shot",
+    "prompt": "Camera: tracking shot. Movement: move through the scene with the main subject. Speed: match the subject's pace. Framing: keep the subject consistently readable while the environment moves around them. End: maintain a clear moving composition.",
+    "displayPrompt": "tracking shot. Movement: move through the scene with the main subject. Speed: match the subject's pace. Framing: keep the subject consistently readable while the environment moves around them. End: maintain a clear moving composition.",
+    "video": "media/16-tracking-shot.mp4",
+    "poster": "posters/16-tracking-shot.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "1177728"
+      }
+    }
+  },
+  {
+    "id": "shot-17",
+    "shot": "Shot 17",
+    "group": "Dolly/Track",
+    "title": "Follow shot / over-the-shoulder",
+    "prompt": "Camera: follow shot from behind. Movement: move behind the subject along their route at shoulder height. Speed: match the subject's pace. Framing: keep the back, shoulder or head as the foreground guide while the route ahead stays readable. End: continue following with the subject leading the frame.",
+    "displayPrompt": "follow shot from behind. Movement: move behind the subject along their route at shoulder height. Speed: match the subject's pace. Framing: keep the back, shoulder or head as the foreground guide while the route ahead stays readable. End: continue following with the subject leading the frame.",
+    "video": "media/17-follow-shot-over-the-shoulder.mp4",
+    "poster": "posters/17-follow-shot-over-the-shoulder.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "129732"
+      }
+    }
+  },
+  {
+    "id": "shot-18",
+    "shot": "Shot 18",
+    "group": "Dolly/Track",
+    "title": "Reverse tracking / walk-and-talk",
+    "prompt": "Camera: reverse tracking shot. Movement: move backward in front of the walking subject. Speed: match the subject's forward pace. Framing: keep front-facing face and body framing stable as the background moves behind them. End: hold a clear front-facing moving composition.",
+    "displayPrompt": "reverse tracking shot. Movement: move backward in front of the walking subject. Speed: match the subject's forward pace. Framing: keep front-facing face and body framing stable as the background moves behind them. End: hold a clear front-facing moving composition.",
+    "video": "media/18-reverse-tracking-walk-and-talk.mp4",
+    "poster": "posters/18-reverse-tracking-walk-and-talk.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "722952"
+      }
+    }
+  },
+  {
+    "id": "shot-19",
+    "shot": "Shot 19",
+    "group": "Dolly/Track",
+    "title": "Side tracking",
+    "prompt": "Camera: side tracking shot. Movement: move parallel beside the subject along their direction of travel. Speed: match the subject's motion. Framing: keep the subject in side profile or three-quarter profile at a stable distance. End: continue the parallel movement with clear horizontal motion.",
+    "displayPrompt": "side tracking shot. Movement: move parallel beside the subject along their direction of travel. Speed: match the subject's motion. Framing: keep the subject in side profile or three-quarter profile at a stable distance. End: continue the parallel movement with clear horizontal motion.",
+    "video": "media/19-side-tracking.mp4",
+    "poster": "posters/19-side-tracking.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "465791"
+      }
+    }
+  },
+  {
+    "id": "shot-20",
+    "shot": "Shot 20",
+    "group": "Dolly/Track",
+    "title": "Low tracking",
+    "prompt": "Camera: low tracking shot. Movement: move at ground or below-waist height alongside the subject's movement path. Speed: match the subject, footsteps or wheels. Framing: keep the low detail readable while the ground plane moves through frame. End: finish with the low perspective clearly maintained.",
+    "displayPrompt": "low tracking shot. Movement: move at ground or below-waist height alongside the subject's movement path. Speed: match the subject, footsteps or wheels. Framing: keep the low detail readable while the ground plane moves through frame. End: finish with the low perspective clearly maintained.",
+    "video": "media/20-low-tracking-v2.mp4",
+    "poster": "posters/20-low-tracking-v2.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "533983"
+      }
+    }
+  },
+  {
+    "id": "shot-21",
+    "shot": "Shot 21",
+    "group": "Dolly/Track",
+    "title": "Vehicle tracking",
+    "prompt": "Camera: vehicle tracking shot. Movement: move with the vehicle along its route. Speed: match the vehicle's pace. Framing: keep the vehicle stable in frame while the road or environment moves past. End: maintain a clear moving vehicle composition.",
+    "displayPrompt": "vehicle tracking shot. Movement: move with the vehicle along its route. Speed: match the vehicle's pace. Framing: keep the vehicle stable in frame while the road or environment moves past. End: maintain a clear moving vehicle composition.",
+    "video": "media/21-vehicle-tracking.mp4",
+    "poster": "posters/21-vehicle-tracking.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "211917"
+      }
+    }
+  },
+  {
+    "id": "shot-22",
+    "shot": "Shot 22",
+    "group": "Dolly/Track",
+    "title": "Chase shot",
+    "prompt": "Camera: chase shot. Movement: follow a moving subject quickly along the action route. Speed: fast, reactive and physically close. Framing: keep the subject visible while allowing energetic reframing. End: stay connected to the subject in motion.",
+    "displayPrompt": "chase shot. Movement: follow a moving subject quickly along the action route. Speed: fast, reactive and physically close. Framing: keep the subject visible while allowing energetic reframing. End: stay connected to the subject in motion.",
+    "video": "media/22-chase-shot.mp4",
+    "poster": "posters/22-chase-shot.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "258616"
+      }
+    }
+  },
+  {
+    "id": "shot-23",
+    "shot": "Shot 23",
+    "group": "Human Camera",
+    "title": "Handheld shot",
+    "prompt": "Camera: handheld shot. Movement: hold the camera at human operator height with natural body movement. Speed: responsive and organic. Framing: keep the subject readable while the frame has subtle sway and micro-adjustments. End: finish with a natural handheld composition.",
+    "displayPrompt": "handheld shot. Movement: hold the camera at human operator height with natural body movement. Speed: responsive and organic. Framing: keep the subject readable while the frame has subtle sway and micro-adjustments. End: finish with a natural handheld composition.",
+    "video": "media/23-handheld-shot.mp4",
+    "poster": "posters/23-handheld-shot.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "213763"
+      }
+    }
+  },
+  {
+    "id": "shot-24",
+    "shot": "Shot 24",
+    "group": "Human Camera",
+    "title": "Body-mounted camera / Snorricam",
+    "prompt": "Camera: body-mounted Snorricam. Movement: keep the camera fixed relative to the subject's torso or face while the subject moves. Speed: match the subject's body motion. Framing: keep the subject close, centered and facing the camera as the background moves around them. End: finish with the subject still locked in frame.",
+    "displayPrompt": "body-mounted Snorricam. Movement: keep the camera fixed relative to the subject's torso or face while the subject moves. Speed: match the subject's body motion. Framing: keep the subject close, centered and facing the camera as the background moves around them. End: finish with the subject still locked in frame.",
+    "video": "media/24-snorricam-v2.mp4",
+    "poster": "posters/24-snorricam-v2.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "636638"
+      }
+    }
+  },
+  {
+    "id": "shot-25",
+    "shot": "Shot 25",
+    "group": "Drone/Crane",
+    "title": "Crane up",
+    "prompt": "Camera: crane up. Movement: travel smoothly upward through open space. Speed: slow controlled vertical lift. Framing: keep the subject or location readable as the camera rises. End: finish with the higher scale clearly visible.",
+    "displayPrompt": "crane up. Movement: travel smoothly upward through open space. Speed: slow controlled vertical lift. Framing: keep the subject or location readable as the camera rises. End: finish with the higher scale clearly visible.",
+    "video": "media/25-crane-up.mp4",
+    "poster": "posters/25-crane-up.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "345623"
+      }
+    }
+  },
+  {
+    "id": "shot-25b",
+    "shot": "Shot 25B",
+    "group": "Drone/Crane",
+    "title": "Crane down",
+    "prompt": "Camera: crane down. Movement: travel smoothly downward through open space. Speed: slow controlled vertical descent. Framing: keep the subject or location readable as the camera descends. End: finish with the lower subject or destination clearly visible.",
+    "displayPrompt": "crane down. Movement: travel smoothly downward through open space. Speed: slow controlled vertical descent. Framing: keep the subject or location readable as the camera descends. End: finish with the lower subject or destination clearly visible.",
+    "video": "media/25b-crane-down.mp4",
+    "poster": "posters/25b-crane-down.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "879793"
+      }
+    }
+  },
+  {
+    "id": "shot-26",
+    "shot": "Shot 26",
+    "group": "Drone/Crane",
+    "title": "Drone push in",
+    "prompt": "Camera: drone push in. Movement: fly smoothly forward through open space toward the subject or destination. Speed: controlled aerial glide. Framing: keep the route and destination readable as the camera approaches. End: arrive at a closer aerial composition.",
+    "displayPrompt": "drone push in. Movement: fly smoothly forward through open space toward the subject or destination. Speed: controlled aerial glide. Framing: keep the route and destination readable as the camera approaches. End: arrive at a closer aerial composition.",
+    "video": "media/26-drone-push-in.mp4",
+    "poster": "posters/26-drone-push-in.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "444248"
+      }
+    }
+  },
+  {
+    "id": "shot-26b",
+    "shot": "Shot 26B",
+    "group": "Drone/Crane",
+    "title": "Drone pull back",
+    "prompt": "Camera: drone pull back. Movement: fly smoothly backward away from the subject or destination. Speed: controlled aerial retreat. Framing: keep the subject readable as more landscape appears. End: finish on a wider aerial composition.",
+    "displayPrompt": "drone pull back. Movement: fly smoothly backward away from the subject or destination. Speed: controlled aerial retreat. Framing: keep the subject readable as more landscape appears. End: finish on a wider aerial composition.",
+    "video": "media/26b-drone-pull-back.mp4",
+    "poster": "posters/26b-drone-pull-back.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "409803"
+      }
+    }
+  },
+  {
+    "id": "shot-27",
+    "shot": "Shot 27",
+    "group": "Drone/Crane",
+    "title": "Helicopter shot",
+    "prompt": "Camera: helicopter-style aerial shot. Movement: move from high altitude along a broad gradual flight path. Speed: steady controlled aerial motion. Framing: keep the landscape or distant moving subject readable at wide scale. End: finish on a stable high-altitude composition.",
+    "displayPrompt": "helicopter-style aerial shot. Movement: move from high altitude along a broad gradual flight path. Speed: steady controlled aerial motion. Framing: keep the landscape or distant moving subject readable at wide scale. End: finish on a stable high-altitude composition.",
+    "video": "media/27-helicopter-shot.mp4",
+    "poster": "posters/27-helicopter-shot.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "369689"
+      }
+    }
+  },
+  {
+    "id": "shot-s1",
+    "shot": "Shot S1",
+    "group": "Specials",
+    "title": "First-person view",
+    "prompt": "Camera: first-person view. Movement: move forward at human eye height from the character's perspective. Speed: natural walking or reaching pace. Framing: use visible hands, arms or body edges as the viewer's physical reference. End: arrive at the next point of action from the same point of view.",
+    "displayPrompt": "first-person view. Movement: move forward at human eye height from the character's perspective. Speed: natural walking or reaching pace. Framing: use visible hands, arms or body edges as the viewer's physical reference. End: arrive at the next point of action from the same point of view.",
+    "video": "media/s1-first-person-view.mp4",
+    "poster": "posters/s1-first-person-view.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "256633"
+      }
+    }
+  },
+  {
+    "id": "shot-s2",
+    "shot": "Shot S2",
+    "group": "Specials",
+    "title": "Tilt-shift",
+    "prompt": "Camera: tilt-shift miniature view. Movement: hold or glide from a high angled view over the scene. Speed: small precise movement. Framing: keep a narrow band of sharp focus across the key subject area with soft blur above and below. End: finish with the miniature-scale view intact.",
+    "displayPrompt": "tilt-shift miniature view. Movement: hold or glide from a high angled view over the scene. Speed: small precise movement. Framing: keep a narrow band of sharp focus across the key subject area with soft blur above and below. End: finish with the miniature-scale view intact.",
+    "video": "media/s2-tilt-shift.mp4",
+    "poster": "posters/s2-tilt-shift.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "515284"
+      }
+    }
+  },
+  {
+    "id": "shot-s3",
+    "shot": "Shot S3",
+    "group": "Specials",
+    "title": "Infinite zoom",
+    "prompt": "Camera: infinite zoom. Movement: zoom continuously inward toward the exact center target. Speed: smooth accelerating zoom. Framing: keep the circular target centered as it expands. End: finish when the next visual world fills the frame.",
+    "displayPrompt": "infinite zoom. Movement: zoom continuously inward toward the exact center target. Speed: smooth accelerating zoom. Framing: keep the circular target centered as it expands. End: finish when the next visual world fills the frame.",
+    "video": "media/s3-infinite-zoom.mp4",
+    "poster": "posters/s3-infinite-zoom.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "629794"
+      }
+    }
+  },
+  {
+    "id": "shot-s4",
+    "shot": "Shot S4",
+    "group": "Specials",
+    "title": "Earth zoom out",
+    "prompt": "Camera: earth zoom out. Movement: pull upward from the starting point through street, city, landscape and planet scale. Speed: rapid expanding zoom out. Framing: keep the original location centered as scale grows. End: finish on a planet-scale view with the starting point still implied at center.",
+    "displayPrompt": "earth zoom out. Movement: pull upward from the starting point through street, city, landscape and planet scale. Speed: rapid expanding zoom out. Framing: keep the original location centered as scale grows. End: finish on a planet-scale view with the starting point still implied at center.",
+    "video": "media/s4-earth-zoom-out.mp4",
+    "poster": "posters/s4-earth-zoom-out.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "897920"
+      }
+    }
+  },
+  {
+    "id": "shot-s5",
+    "shot": "Shot S5",
+    "group": "Specials",
+    "title": "Time-lapse",
+    "prompt": "Camera: locked-camera time-lapse. Movement: hold one fixed camera position while time moves rapidly forward. Speed: fast time compression with a stable camera. Framing: keep the same composition and horizon as motion passes through the frame. End: finish from the same camera angle with visible passage of time.",
+    "displayPrompt": "locked-camera time-lapse. Movement: hold one fixed camera position while time moves rapidly forward. Speed: fast time compression with a stable camera. Framing: keep the same composition and horizon as motion passes through the frame. End: finish from the same camera angle with visible passage of time.",
+    "video": "media/s5-time-lapse.mp4",
+    "poster": "posters/s5-time-lapse.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "506175"
+      }
+    }
+  },
+  {
+    "id": "shot-s6",
+    "shot": "Shot S6",
+    "group": "Specials",
+    "title": "Pass-through objects",
+    "prompt": "Camera: pass-through movement. Movement: move forward toward a visible object, surface or barrier and continue into the space beyond. Speed: smooth centered glide. Framing: keep the opening or surface centered as the transition point. End: arrive inside the revealed space beyond.",
+    "displayPrompt": "pass-through movement. Movement: move forward toward a visible object, surface or barrier and continue into the space beyond. Speed: smooth centered glide. Framing: keep the opening or surface centered as the transition point. End: arrive inside the revealed space beyond.",
+    "video": "media/s6-pass-through-objects.mp4",
+    "poster": "posters/s6-pass-through-objects.webp",
+    "mediaInfo": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360,
+          "avg_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "15.000000",
+        "size": "162184"
+      }
+    }
+  }
+]
