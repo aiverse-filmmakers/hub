@@ -7,7 +7,10 @@
   <meta name="description" content="Learn cinematic AI image, video and sound workflows with practical classes, real feedback and an active filmmaking community." />
   <meta property="og:title" content="AI-Verse Filmmakers" />
   <meta property="og:description" content="Create cinematic AI visuals for films, social media and commercial adverts. Start with a 7-day free trial." />
-  <meta property="og:image" content="assets/aiverse/gallery/gallery-03.jpg" />
+  <meta property="og:image" content="https://aiverse-filmmakers.github.io/hub/assets/aiverse/gallery/gallery-08.jpg" />
+  <meta property="og:image:alt" content="Cinematic monochrome member work from AI-Verse Filmmakers" />
+  <link rel="icon" type="image/png" href="assets/aiverse/ai-verse-avatar-badge.png" />
+  <link rel="apple-touch-icon" href="assets/aiverse/ai-verse-avatar-badge.png" />
   <meta name="theme-color" id="themeColor" content="#000000" />
   <script>
     (function () {
@@ -113,10 +116,19 @@
       gap: 18px;
     }
     .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
       font-size: 12px;
       font-weight: 650;
       letter-spacing: 0.1em;
       white-space: nowrap;
+    }
+    .brand img {
+      width: 30px;
+      height: 30px;
+      flex: 0 0 30px;
+      object-fit: contain;
     }
     .nav-links {
       display: flex;
@@ -564,6 +576,12 @@
       text-align: center;
       padding-block: 150px;
     }
+    .final-mark {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 24px;
+      object-fit: contain;
+    }
     .final h2 { max-width: 920px; margin-inline: auto; }
     .final .lead { max-width: 640px; }
 
@@ -593,7 +611,8 @@
     @media (max-width: 640px) {
       .wrap, .media-rail, .work-label { width: min(100% - 28px, 1120px); }
       .nav-inner { width: calc(100% - 20px); }
-      .brand { font-size: 10px; letter-spacing: 0.07em; }
+      .brand { gap: 7px; font-size: 10px; letter-spacing: 0.07em; }
+      .brand img { width: 27px; height: 27px; flex-basis: 27px; }
       .nav-cta { display: none; }
       .section { padding: 88px 0; }
       .hero { padding: 112px 0 44px; }
@@ -621,6 +640,7 @@
       .review-footer { align-items: start; flex-direction: column; gap: 8px; }
       .dialog-head, .dialog-content { padding-left: 20px; padding-right: 20px; }
       .footer-inner { align-items: start; flex-direction: column; }
+      .final-mark { width: 74px; height: 74px; margin-bottom: 20px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -632,12 +652,15 @@
 <body>
   <nav class="nav" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="#top" class="brand">AI-VERSE FILMMAKERS</a>
+      <a href="#top" class="brand" aria-label="AI-Verse Filmmakers home">
+        <img src="assets/aiverse/ai-verse-avatar-badge.png" alt="" aria-hidden="true" />
+        <span>AI-VERSE FILMMAKERS</span>
+      </a>
       <div class="nav-links">
         <a href="#method">Method</a>
         <a href="#classroom">Classroom</a>
         <a href="#work">Member work</a>
-        <a href="camera-movements/">Camera movements</a>
+        <a href="artifacts.html">Member tools</a>
         <a href="#reviews">Reviews</a>
         <a href="#pricing">Pricing</a>
       </div>
@@ -670,10 +693,10 @@
           <a class="button button-primary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Start free for 7 days</a>
           <a class="button button-secondary" href="#work">See member work</a>
         </div>
-        <p class="proof-line"><span class="proof-item">363 members</span><span class="proof-item">300+ five-star reviews</span><span class="proof-item">Phone or PC</span></p>
+        <p class="proof-line"><span class="proof-item">350+ members</span><span class="proof-item">300+ five-star reviews</span><span class="proof-item">Phone or PC</span></p>
 
         <div class="hero-media" aria-label="Selected AI-Verse member work">
-          <figure class="hero-frame"><img src="assets/aiverse/gallery/gallery-03.jpg" alt="Commercial AI product image created by an AI-Verse member" fetchpriority="high" /></figure>
+          <figure class="hero-frame"><img src="assets/aiverse/gallery/gallery-08.jpg" alt="Cinematic monochrome performance image created by an AI-Verse member" fetchpriority="high" /></figure>
           <figure class="hero-frame"><img src="assets/aiverse/gallery/gallery-07.jpg" alt="Cinematic AI beauty portrait created by an AI-Verse member" fetchpriority="high" /></figure>
           <figure class="hero-frame"><img src="assets/aiverse/gallery/gallery-01.jpg" alt="Cinematic AI environment image created by an AI-Verse member" fetchpriority="high" /></figure>
         </div>
@@ -689,7 +712,7 @@
         </div>
         <div class="production-layout">
           <div class="production-sticky">
-            <img src="assets/aiverse/gallery/gallery-06.jpg" alt="Cinematic product work created inside AI-Verse" />
+            <img src="assets/aiverse/gallery/gallery-02.jpg" alt="Cinematic macro portrait created inside AI-Verse" />
           </div>
           <div class="process-list">
             <article class="process-item">
@@ -836,6 +859,7 @@
 
     <section class="section final">
       <div class="wrap">
+        <img class="final-mark" src="assets/aiverse/ai-verse-avatar-badge.png" alt="AI-Verse logo" loading="lazy" />
         <p class="eyebrow">AI-Verse Filmmakers</p>
         <h2>Make your next idea feel like a film.</h2>
         <p class="lead">Join the classroom, share your work and learn the complete production workflow from first frame to final delivery.</p>
