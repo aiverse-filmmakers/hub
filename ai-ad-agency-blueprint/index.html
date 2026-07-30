@@ -129,7 +129,8 @@
       letter-spacing: 0.1em;
       white-space: nowrap;
     }
-    .brand img { width: 28px; height: 28px; object-fit: contain; }
+    .brand img { width: 30px; height: 30px; object-fit: contain; }
+    .brand span { display: inline; }
     .nav-links {
       display: flex;
       align-items: center;
@@ -304,6 +305,7 @@
       z-index: 1;
     }
     .system-node {
+      position: relative;
       min-height: 128px;
       padding: 18px 14px;
       display: flex;
@@ -316,7 +318,26 @@
     .system-node span { color: #2997ff; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
     .system-node strong { display: block; margin-top: 8px; font-size: clamp(15px, 1.5vw, 22px); line-height: 1.1; }
     .system-node small { display: block; margin-top: 8px; color: rgba(255,255,255,.62); line-height: 1.4; }
-    .system-arrow { position: absolute; right: -16px; top: 50%; width: 14px; height: 1px; background: rgba(255,255,255,.36); }
+    .system-node:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -18px;
+      width: 18px;
+      height: 1px;
+      background: #2997ff;
+    }
+    .system-node:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      top: calc(50% - 3px);
+      right: -18px;
+      width: 7px;
+      height: 7px;
+      border-top: 1px solid #2997ff;
+      border-right: 1px solid #2997ff;
+      transform: rotate(45deg);
+    }
     .brand-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
 
     .selling-block {
@@ -337,16 +358,43 @@
     }
     .block-cta p { margin: 0; color: var(--muted); font-size: 16px; }
 
-    .expert-list { border-top: 1px solid var(--line-strong); }
-    .expert-row {
+    .deliverable-chain { border-top: 1px solid var(--line-strong); counter-reset: deliverable; }
+    .deliverable-row {
+      position: relative;
       display: grid;
-      grid-template-columns: 190px 1fr;
-      gap: 34px;
+      grid-template-columns: 48px minmax(180px, .72fr) 1.28fr;
+      gap: 24px;
       padding: 28px 0;
       border-bottom: 1px solid var(--line);
     }
-    .expert-row strong { font-size: 20px; letter-spacing: -0.02em; }
-    .expert-row p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.55; }
+    .deliverable-row::before {
+      counter-increment: deliverable;
+      content: counter(deliverable, decimal-leading-zero);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 750;
+      letter-spacing: .08em;
+    }
+    .deliverable-row::after {
+      content: "↓";
+      position: absolute;
+      left: 16px;
+      bottom: -14px;
+      z-index: 1;
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--canvas);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+    }
+    .deliverable-row:last-child::after { display: none; }
+    .deliverable-name { font-size: 19px; font-weight: 680; letter-spacing: -0.02em; }
+    .deliverable-row p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.58; }
+    .deliverable-row code { color: var(--text); font-weight: 650; }
 
     .flow-list { border-top: 1px solid var(--line-strong); }
     .flow-step {
@@ -358,6 +406,23 @@
     }
     .flow-number { color: var(--accent); font-size: 14px; font-weight: 700; }
     .flow-step p { margin: 4px 0 0; color: var(--muted); font-size: 17px; line-height: 1.55; }
+
+    .route-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--line-strong);
+      border-left: 1px solid var(--line);
+    }
+    .route-step {
+      min-height: 260px;
+      padding: 30px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-elevated);
+    }
+    .route-step span { color: var(--accent); font-size: 12px; font-weight: 750; letter-spacing: .1em; }
+    .route-step h3 { margin: 18px 0 12px; }
+    .route-step p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.62; }
 
     .benefit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 46px; border-top: 1px solid var(--line-strong); }
     .benefit {
@@ -419,6 +484,7 @@
       background: var(--surface-elevated);
       box-shadow: var(--shadow);
     }
+    .module:has(.module-trigger[aria-expanded="true"]) { border-color: color-mix(in srgb, var(--accent) 44%, var(--line)); }
     .module-trigger {
       width: 100%;
       min-height: 92px;
@@ -461,6 +527,23 @@
     }
     .lesson-header p { max-width: 780px; margin: 0; color: var(--muted); font-size: 18px; line-height: 1.58; }
     .time-chip { color: var(--accent); font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .step-brief {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin: 26px 0 2px;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    .step-brief-item {
+      min-height: 150px;
+      padding: 22px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+    .step-brief-item span { display: block; margin-bottom: 10px; color: var(--accent); font-size: 11px; font-weight: 760; letter-spacing: .09em; text-transform: uppercase; }
+    .step-brief-item p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.58; }
+    .step-brief-item strong { color: var(--text); }
     .subsection { padding: 30px 0; border-bottom: 1px solid var(--line); }
     .subsection:last-child { border-bottom: 0; }
     .sub-label { margin-bottom: 12px; color: var(--accent); font-size: 12px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
@@ -474,7 +557,14 @@
     .compare-box.strong strong { color: var(--success); }
     .compare-box p { margin: 0; font-size: 15px; }
 
-    .prompt-block { margin-top: 20px; border: 1px solid var(--line); background: var(--code); }
+    .prompt-block { margin-top: 20px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--code); }
+    .prompt-usage {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--accent-soft);
+    }
+    .prompt-usage strong { display: block; margin-bottom: 5px; color: var(--text); font-size: 14px; }
+    .prompt-usage p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
     .prompt-head {
       min-height: 48px;
       padding: 8px 10px 8px 16px;
@@ -613,15 +703,15 @@
     .calc-result strong { display: block; font-size: 32px; letter-spacing: -0.04em; }
     .calc-result span { color: var(--muted); font-size: 13px; }
 
-    .source-note {
+    .finish-panel {
       margin-top: 48px;
-      padding: 24px 0;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.58;
+      padding: 34px;
+      border: 1px solid var(--line);
+      background: var(--surface-elevated);
     }
-    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .finish-panel h3 { margin-bottom: 14px; }
+    .finish-panel .eyebrow { margin-bottom: 12px; color: var(--accent); font-size: 12px; font-weight: 750; letter-spacing: .09em; }
+    .finish-panel p { max-width: 800px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.62; }
 
     footer {
       padding: 38px 0 52px;
@@ -655,15 +745,18 @@
       .nav-links { display: none; }
       .system-map-inner { inset: 9% 7% 22%; grid-template-columns: 1fr; gap: 0; align-content: center; }
       .system-node { min-height: 0; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.12); border-top: 0; }
+      .system-node::before, .system-node::after { display: none !important; }
       .system-node small { display: none; }
-      .expert-row { grid-template-columns: 1fr; gap: 8px; }
+      .deliverable-row { grid-template-columns: 42px 1fr; gap: 10px 18px; }
+      .deliverable-row p { grid-column: 2; }
       .benefit-list { grid-template-columns: 1fr; }
       .calculator-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
       .wrap { width: min(100% - 28px, 1120px); }
-      .brand span { display: none; }
+      .brand { gap: 7px; font-size: 11px; letter-spacing: .08em; }
+      .brand img { width: 27px; height: 27px; }
       .nav-cta { display: none; }
       .hero { min-height: auto; padding: 118px 0 56px; }
       h1 { font-size: clamp(46px, 15vw, 66px); }
@@ -683,6 +776,8 @@
       .module-meta { grid-column: 2; justify-content: flex-start; }
       .module-body { padding: 0 16px 24px; }
       .lesson-header { grid-template-columns: 1fr; }
+      .step-brief, .route-grid { grid-template-columns: 1fr; }
+      .step-brief-item, .route-step { min-height: 0; }
       .weak-strong { grid-template-columns: 1fr; }
       .prompt-head { align-items: flex-start; }
       .prompt-text { font-size: 12.5px; }
@@ -699,12 +794,12 @@
     <div class="nav-inner">
       <a class="brand" href="../" aria-label="AI-Verse Filmmakers home">
         <img src="./ai-verse-avatar-badge.png" alt="" />
-        <span>AI-VERSE FILMMAKERS</span>
+        <span>AI-VERSE</span>
       </a>
       <div class="nav-links">
-        <a href="#proof">Method</a>
+        <a href="#proof">Build chain</a>
+        <a href="#prompt-guide">Prompts</a>
         <a href="#lesson">Lesson</a>
-        <a href="#sources">Sources</a>
       </div>
       <div class="nav-actions">
         <button class="theme-switch" id="themeSwitch" type="button" role="switch" aria-checked="false" aria-label="Switch to dark mode">
@@ -729,7 +824,7 @@
         <p class="lead">For filmmakers and AI creators who want more than good-looking ads. Leave with a niche, a low-risk offer, a five-ad portfolio, an operating system, a selling website and a focused client plan.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#lesson">Start the build</a>
-          <a class="button button-secondary" href="#sources">See the source material</a>
+          <a class="button button-secondary" href="#prompt-guide">Where the prompts go</a>
         </div>
         <div class="proof-line" aria-label="Lesson summary">
           <span>8 modules</span><span>10 copyable prompts</span><span>40 action steps</span><span>Progress saved locally</span>
@@ -751,20 +846,23 @@
     <section class="selling-block" id="proof">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Proof before promises</p>
-          <h2>Five experts. Five gaps closed.</h2>
-          <p class="body-copy">The source build improved each time an operator attacked a weak point. This lesson keeps those corrections, not just the exciting final result.</p>
+          <p class="eyebrow">What you are building</p>
+          <h2>Eight saved outputs. One working system.</h2>
+          <p class="body-copy">This is not a collection of disconnected prompts. Every module produces a real working file or asset. You carry that result into the next module, so the system becomes more specific instead of starting from zero every time.</p>
         </div>
-        <div class="expert-list">
-          <div class="expert-row"><strong><a href="https://www.youtube.com/@LiamOttley" target="_blank" rel="noopener">Liam Ottley</a></strong><p>Turned “we make videos” into a result-led offer with a real problem, low risk, speed, a bonus and one clear next action.</p></div>
-          <div class="expert-row"><strong><a href="https://www.youtube.com/@BrockMesarich" target="_blank" rel="noopener">Brock Mesarich</a></strong><p>Fixed the outreach by leading with the prospect’s business, adding visible proof and using a free sample as a qualification filter.</p></div>
-          <div class="expert-row"><strong><a href="https://www.youtube.com/@nateherk" target="_blank" rel="noopener">Nate Herk</a></strong><p>Replaced the fragile demo with project memory, email intake, permanent client profiles, recurring delivery and exception-based quality control.</p></div>
-          <div class="expert-row"><strong><a href="https://www.youtube.com/@SaminYasar_" target="_blank" rel="noopener">Samin Yasar</a></strong><p>Reduced the selling website to five blocks: hero, proof, process, benefits and FAQ, each followed by the strongest call to action.</p></div>
-          <div class="expert-row"><strong><a href="https://www.youtube.com/@Itssssss_Jack" target="_blank" rel="noopener">Jack Roberts</a></strong><p>Killed the 5,000-message blast. The launch became 10 to 15 researched prospects with a current and specific reason to buy.</p></div>
+        <div class="deliverable-chain">
+          <div class="deliverable-row"><div class="deliverable-name">Niche brief</div><p>You choose one market, one buyer, one urgent problem and evidence that better advertising could be commercially useful. <code>This becomes the input for your offer.</code></p></div>
+          <div class="deliverable-row"><div class="deliverable-name">Approved offer</div><p>You turn the research into a result-led test offer with honest risk removal, speed, a useful bonus and one next action. <code>This tells every portfolio ad what it must sell.</code></p></div>
+          <div class="deliverable-row"><div class="deliverable-name">Five-ad portfolio</div><p>You create five strategically different ads around the same buyer and offer. <code>This gives your outreach visible proof instead of promises.</code></p></div>
+          <div class="deliverable-row"><div class="deliverable-name">Outreach template</div><p>You combine one verified business observation, the portfolio and the test offer into a short message. <code>Interested replies now need a reliable intake process.</code></p></div>
+          <div class="deliverable-row"><div class="deliverable-name">Client operating system</div><p>You store verified client facts, approval states and quality rules in one persistent project. <code>This becomes the engine behind your website intake and delivery.</code></p></div>
+          <div class="deliverable-row"><div class="deliverable-name">Selling website</div><p>You publish the offer, proof, process and one clear CTA in a single destination. <code>This is the link used in your focused launch.</code></p></div>
+          <div class="deliverable-row"><div class="deliverable-name">Launch tracker</div><p>You research 10 to 15 businesses, review each message and record what happens. <code>Those results tell you whether the service deserves to scale.</code></p></div>
+          <div class="deliverable-row"><div class="deliverable-name">Recurring service</div><p>You turn a validated first delivery into a defined monthly product with fresh angles, margins, approval gates and quality control. <code>This is the finished operating model.</code></p></div>
         </div>
         <div class="block-cta">
-          <p>Use the corrections in order. Skipping one creates the next bottleneck.</p>
-          <a class="button button-primary" href="#lesson">Start with positioning</a>
+          <p>Start at the market. Each finished output removes guesswork from the next decision.</p>
+          <a class="button button-primary" href="#process">See why the order matters</a>
         </div>
       </div>
     </section>
@@ -772,41 +870,43 @@
     <section class="selling-block" id="process">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">How the lesson works</p>
-          <h2>One operating system, built in order.</h2>
-          <p class="body-copy">Each module explains the decision, shows weak versus strong execution, gives you the prompt, and ends with five concrete actions. Check them off and your progress stays on this device.</p>
+          <p class="eyebrow">Why the order matters</p>
+          <h2>Every answer changes the next question.</h2>
+          <p class="body-copy">The sequence prevents generic work. If you skip the niche, the offer has no real buyer. If you skip the offer, the ads have nothing specific to sell. If you skip the portfolio, outreach has no proof. If you scale before the small launch works, you only multiply the weak parts.</p>
         </div>
         <div class="flow-list">
-          <div class="flow-step"><div class="flow-number">01</div><div><h3>Research before production</h3><p>Pick a service niche where customers already spend money but the digital advertising is visibly weak.</p></div></div>
-          <div class="flow-step"><div class="flow-number">02</div><div><h3>Make the first decision easy</h3><p>Reduce the risk with proof, speed, a sensible entry offer and a specific next action.</p></div></div>
-          <div class="flow-step"><div class="flow-number">03</div><div><h3>Build proof before outreach</h3><p>Create five strategically different ads, then select only the strongest work for the portfolio.</p></div></div>
-          <div class="flow-step"><div class="flow-number">04</div><div><h3>Automate the repeatable work</h3><p>Store verified client details once, reuse them safely and route only failures to a person.</p></div></div>
-          <div class="flow-step"><div class="flow-number">05</div><div><h3>Launch small enough to learn</h3><p>Send 10 to 15 researched messages, track the outcome and improve from evidence before scaling.</p></div></div>
+          <div class="flow-step"><div class="flow-number">01</div><div><h3>Research the market</h3><p>You begin with a broad interest and leave with a precise niche brief. That brief gives the next module a real buyer, commercial problem and reason to spend.</p></div></div>
+          <div class="flow-step"><div class="flow-number">02</div><div><h3>Shape the offer</h3><p>You feed the niche brief into Claude or ChatGPT and turn it into one testable offer. The approved result, problem, risk boundary and CTA become the strategy inside every ad.</p></div></div>
+          <div class="flow-step"><div class="flow-number">03</div><div><h3>Create the proof</h3><p>You use the offer to brief five different ads, then move the approved briefs into your image and video tools. The finished portfolio becomes the proof link used in outreach.</p></div></div>
+          <div class="flow-step"><div class="flow-number">04</div><div><h3>Write the conversation</h3><p>You combine the offer, portfolio and one verified company detail into a personal message. A reply creates the need for structured intake rather than another loose chat.</p></div></div>
+          <div class="flow-step"><div class="flow-number">05</div><div><h3>Build the back office</h3><p>You move the offer, intake questions and quality rules into a persistent Claude or ChatGPT project. That project creates one trusted client profile for production and delivery.</p></div></div>
+          <div class="flow-step"><div class="flow-number">06</div><div><h3>Publish one destination</h3><p>You turn the offer, proof and intake route into a clear website. Instead of sending scattered files, every prospect receives one link and one action.</p></div></div>
+          <div class="flow-step"><div class="flow-number">07</div><div><h3>Test with a small launch</h3><p>You research 10 to 15 businesses and review every message before sending. Their replies reveal whether the market, offer, proof and CTA work together.</p></div></div>
+          <div class="flow-step"><div class="flow-number">08</div><div><h3>Scale what survived the test</h3><p>You use real delivery effort, client feedback and response data to define the recurring product. Automation comes last because it should repeat a proven process, not hide an uncertain one.</p></div></div>
         </div>
         <div class="block-cta">
-          <p>Do the build once for your own niche, not as a roofing copy-and-paste exercise.</p>
-          <a class="button button-primary" href="#lesson">Open the modules</a>
+          <p>Do not open ten separate chats. Keep the approved outputs together and carry them forward.</p>
+          <a class="button button-primary" href="#prompt-guide">See exactly where to paste prompts</a>
         </div>
       </div>
     </section>
 
-    <section class="selling-block" id="benefits">
+    <section class="selling-block" id="prompt-guide">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">What the system removes</p>
-          <h2>Less guessing. Less inbox labour. Better proof.</h2>
+          <p class="eyebrow">Where the prompts go</p>
+          <h2>Claude or ChatGPT plans the work. Your creative tools make the media.</h2>
+          <p class="body-copy">Most prompts on this page are planning, research, writing or operating instructions. Paste them into Claude, ChatGPT or another strong AI chat. Only move into an image, video or website tool after the strategy has been reviewed and approved.</p>
         </div>
-        <div class="benefit-list">
-          <div class="benefit"><h3>A vague service</h3><p>Replace “AI video ads” with a business result tied to one urgent problem.</p></div>
-          <div class="benefit"><h3>An empty portfolio</h3><p>Build five contrasting spec ads that demonstrate hooks, angles, format and finish.</p></div>
-          <div class="benefit"><h3>Messy client intake</h3><p>Collect, verify and store the core facts before any content is generated.</p></div>
-          <div class="benefit"><h3>Manual quality checks</h3><p>Verify names, locations, services, phone numbers and risky claims automatically, then review exceptions.</p></div>
-          <div class="benefit"><h3>One-off revenue thinking</h3><p>Design a recurring creative refresh only after the first product and delivery process work.</p></div>
-          <div class="benefit"><h3>Mass-spam outreach</h3><p>Focus on a small list where every prospect has a documented reason to care now.</p></div>
+        <div class="route-grid">
+          <div class="route-step"><span>01 · OPEN</span><h3>Create one project</h3><p>Open a Project or persistent workspace in Claude or ChatGPT and name it after your service. Keep the niche brief, offer, portfolio notes, outreach structure and client rules together. A normal chat works for the first exercise, but a project is safer once the system starts carrying information forward.</p></div>
+          <div class="route-step"><span>02 · PREPARE</span><h3>Bring the previous output</h3><p>Before pasting a prompt, attach or paste the approved result from the previous module. Replace every bracketed placeholder with real information. Tell the AI what is verified, what is still an assumption and what it must not invent.</p></div>
+          <div class="route-step"><span>03 · REVIEW</span><h3>Approve the thinking first</h3><p>Run the prompt inside Claude or ChatGPT, then challenge weak claims, vague language and unsupported prices. Save only the approved response. The model is helping you structure a decision, not making the commercial decision for you.</p></div>
+          <div class="route-step"><span>04 · PRODUCE</span><h3>Move approved briefs into production</h3><p>When a module reaches image or video creation, copy the approved scene brief into your chosen generator or use a connector if your chat platform supports one. Finish the result with real editing, sound, factual checks and brand review before it enters the portfolio.</p></div>
         </div>
         <div class="block-cta">
-          <p>The goal is not “hands-free money.” The goal is a repeatable system with human control where it matters.</p>
-          <a class="button button-primary" href="#lesson">Build the system</a>
+          <p>Every prompt inside the modules now tells you exactly where to paste it and what to bring with it.</p>
+          <a class="button button-primary" href="#faq">Clear the final questions</a>
         </div>
       </div>
     </section>
@@ -818,11 +918,12 @@
           <h2>Questions worth answering first.</h2>
         </div>
         <div class="faq-list">
-          <details><summary>Do I have to use Claude and Higgsfield?</summary><p>No. Those are the tools used in the source workflow. The operating logic is portable. Use any current reasoning model, creative platform and automation layer that can perform the same job reliably. If you use Higgsfield MCP, the current official connector is listed inside the lesson.</p></details>
-          <details><summary>Is the one-day unlimited trial permanent?</summary><p>No. The current official MCP page advertises a one-day unlimited free trial on selected models. Eligibility, limits and pricing can change. Verify the live offer before promising a cost structure to a client.</p></details>
-          <details><summary>Are $500, $2,000 a month and the revenue projections guaranteed?</summary><p>No. They are source examples for shaping an entry offer and recurring model. Your pricing must reflect your market, production quality, usage rights, service level, tool costs, revisions, taxes and delivery capacity. The built-in calculator shows scenarios, not promises.</p></details>
-          <details><summary>Can AI send everything without approval?</summary><p>It can prepare and route repeatable work, but client-facing claims, legal risk, account access, payments and outreach should remain approval-gated until the system has real evidence and clear boundaries.</p></details>
-          <details><summary>Should I contact 5,000 businesses?</summary><p>No. The final expert correction is to begin with 10 to 15 businesses that have a current reason to buy. Personalise every message with one true observation and review every draft before sending.</p></details>
+          <details><summary>Where exactly do I paste the prompts?</summary><p>Paste the planning, research and writing prompts into the message box inside Claude or ChatGPT. For the operating-system prompts, place the main rules inside a persistent Project or Custom GPT instruction area so they remain available across sessions. Each prompt card below tells you the correct location.</p></details>
+          <details><summary>Should I use Claude or ChatGPT?</summary><p>Either works. Choose the one you already understand and can use reliably. A model with web search is useful for market research. A persistent Project is useful once you need to carry approved files and client rules forward. The workflow matters more than the brand of chat tool.</p></details>
+          <details><summary>Do I paste the same prompt into my video generator?</summary><p>Not usually. Claude or ChatGPT first creates the strategy, hook, script and shot brief. After you approve that thinking, adapt the visual instructions for your image or video platform. If your AI chat has a trusted creative connector, it can pass the approved request directly, but you still review the result before saving it.</p></details>
+          <details><summary>How do I know when to move to the next module?</summary><p>Continue only when you have saved the stated outcome. Module 1 needs a niche brief. Module 2 needs an approved offer. Module 3 needs five finished ads and one portfolio link. The blue handoff panel in every module explains what the next stage receives.</p></details>
+          <details><summary>Are the prices and revenue scenarios guaranteed?</summary><p>No. They are modelling examples. Your price must cover your real tools, labour, revisions, usage rights, service level, taxes, sales effort and failure rate. The calculator helps you test a scenario, not predict income.</p></details>
+          <details><summary>Can AI research, send and deliver everything automatically?</summary><p>It can prepare repeatable work, but client claims, personalisation, payments, account access, legal risk, publishing and delivery should remain approval-gated until the process has been manually proven. Automate the stable steps, not the uncertain decisions.</p></details>
         </div>
         <div class="block-cta">
           <p>You now have the five-block website pattern in front of you. The full build starts below.</p>
@@ -842,9 +943,9 @@
     <section class="lesson-shell" id="lesson">
       <div class="wrap">
         <div class="lesson-intro">
-          <p class="eyebrow">The complete lesson</p>
+          <p class="eyebrow">The connected build</p>
           <h2>Build from the market backwards.</h2>
-          <p class="body-copy">Do not begin by generating pretty videos. Begin with a buyer, a painful problem and a reason your first offer feels safe enough to test.</p>
+          <p class="body-copy">Start with Module 1 even if you already know how to generate ads. Each module tells you what you are doing now, why it comes next, where to paste the prompt, what information to bring and what must be saved before continuing.</p>
         </div>
 
         <div class="modules">
@@ -855,11 +956,17 @@
             </button>
             <div class="module-body" id="positioning-body">
               <div class="lesson-header"><p>Find a service market that already spends on advertising, sells high-value work and has weak digital creative you can visibly improve.</p><span class="time-chip">Outcome: one researched niche</span></div>
-              <div class="subsection"><div class="sub-label">Why this matters</div><p>Popular categories attract creators because they look exciting. That often means more competition, stronger existing content and less urgency. The source workflow looked for “plain” industries where customers are valuable and weak advertising creates a visible gap.</p><p>Roofing was the example, not the universal answer. Your job is to find a niche where one new customer can justify the cost of better creative.</p></div>
-              <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>“I want to make ads for restaurants because the visuals are fun.” No budget evidence, no urgent problem and no reason to choose you.</p></div><div class="compare-box strong"><strong>Strong</strong><p>“This service has high customer value, actively buys ads and still runs old or low-quality creative.” The gap is visible and commercially useful.</p></div></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Niche research prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Act as a B2B positioning researcher. Identify service niches that already spend meaningful money on traditional or digital advertising but have visibly weak video creative. Use current public sources. For each niche, show customer value, evidence of ad spend, common business pain, quality of current ads, seasonality, legal or compliance risk, and why one new customer could justify better creative. Rank the top five opportunities and separate verified facts from assumptions.</pre></div>
+              <div class="step-brief">
+                <div class="step-brief-item"><span>What we are doing now</span><p>We are choosing <strong>one market and one decision-maker</strong>. We are not writing ads yet because the commercial target must come before the creative direction.</p></div>
+                <div class="step-brief-item"><span>Why this comes first</span><p>The niche determines the buyer’s problem, customer value, legal boundaries, visual language and realistic price. Every later decision depends on it.</p></div>
+                <div class="step-brief-item"><span>Where to use the prompt</span><p>Open a new chat in <strong>Claude or ChatGPT with web search enabled</strong>. Use this chat only for market research until the niche brief is approved.</p></div>
+                <div class="step-brief-item"><span>What moves forward</span><p>Save a one-page niche brief containing the buyer, painful problem, customer value, live ad evidence and assumptions. <strong>Module 2 uses this file to build the offer.</strong></p></div>
               </div>
-              <div class="subsection"><div class="sub-label">Recommended tools</div><p>Use a current research-capable model, public ad libraries, search results and company websites. Claude and Higgsfield were used in the source, but the decision framework is tool-independent.</p><div class="tool-list"><a class="tool-link" href="https://www.facebook.com/ads/library/" target="_blank" rel="noopener">Meta Ad Library</a><a class="tool-link" href="https://adstransparency.google.com/" target="_blank" rel="noopener">Google Ads Transparency</a><a class="tool-link" href="https://higgsfield.ai/blog/ai-ad-agency" target="_blank" rel="noopener">Official source lesson</a></div></div>
+              <div class="subsection"><div class="sub-label">Why this matters</div><p>Popular categories attract creators because they look exciting. That often means more competition, stronger existing content and less urgency. We are looking for industries where customers are valuable and weak advertising creates a visible commercial gap.</p><p>Roofing is one possible example, not a universal answer. Your job is to find a niche where one acquired customer could justify the cost of better creative.</p></div>
+              <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>“I want to make ads for restaurants because the visuals are fun.” No budget evidence, no urgent problem and no reason to choose you.</p></div><div class="compare-box strong"><strong>Strong</strong><p>“This service has high customer value, actively buys ads and still runs old or low-quality creative.” The gap is visible and commercially useful.</p></div></div>
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: Claude or ChatGPT with web search</strong><p>Use a fresh research chat. Add your country or region, industries you understand and any production limits before the prompt.</p></div><div class="prompt-head"><span>Niche research prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Act as a B2B positioning researcher. Identify service niches that already spend meaningful money on traditional or digital advertising but have visibly weak video creative. Use current public information. For each niche, show customer value, evidence of ad spend, common business pain, quality of current ads, seasonality, legal or compliance risk, and why one new customer could justify better creative. Rank the top five opportunities and separate verified facts from assumptions.</pre></div>
+              </div>
+              <div class="subsection"><div class="sub-label">Where the evidence comes from</div><p>Claude or ChatGPT organises the research, but it should not be the only evidence. Check live ads, search results and real company websites yourself. Save the links beside each claim so you can separate fact from assumption.</p><div class="tool-list"><a class="tool-link" href="https://www.facebook.com/ads/library/" target="_blank" rel="noopener">Meta Ad Library</a><a class="tool-link" href="https://adstransparency.google.com/" target="_blank" rel="noopener">Google Ads Transparency</a><span class="tool-link">Company websites</span></div></div>
               <div class="subsection"><div class="sub-label">Common mistakes</div><ul class="mistake-list"><li>Picking a niche because it looks cinematic instead of because buyers have budget and urgency.</li><li>Using one market-size number as proof of demand. Check live advertisers and real local businesses.</li><li>Ignoring seasonality, licensing, compliance and the value of one acquired customer.</li><li>Choosing a niche without enough visible businesses to research and contact.</li></ul></div>
               <div class="subsection"><div class="sub-label">Action steps</div><ul class="actions-list">
                 <li class="action-item"><input type="checkbox"><div class="action-copy"><strong>List five service niches</strong><span>Choose markets where one customer is financially meaningful.</span></div></li>
@@ -879,9 +986,15 @@
             </button>
             <div class="module-body" id="offer-body" hidden>
               <div class="lesson-header"><p>Sell the business result, hit the buyer’s real problem, reduce the risk, add speed plus a reason to act, then state the next action.</p><span class="time-chip">Outcome: one testable offer</span></div>
-              <div class="subsection"><div class="sub-label">Why this matters</div><p>Businesses do not buy “AI videos.” They buy a plausible path to more customers, booked jobs, qualified leads or stronger conversion. The creative is the vehicle, not the final desire.</p><p>The source formula contains five parts: result, core problem, risk removal, speed plus an easy entry price and bonus, then one direct call to action.</p></div>
+              <div class="step-brief">
+                <div class="step-brief-item"><span>What we are doing now</span><p>We are turning the niche research into <strong>one offer a real buyer can understand and test</strong>. The offer defines what the ads will promise and what your service must deliver.</p></div>
+                <div class="step-brief-item"><span>Why this comes now</span><p>Making portfolio ads before the offer is approved creates attractive work with no commercial centre. The offer gives every hook, claim and CTA the same destination.</p></div>
+                <div class="step-brief-item"><span>Where to use the prompt</span><p>Continue inside the same <strong>Claude or ChatGPT project</strong>. Attach the Module 1 niche brief and add your real production costs, delivery speed and revision limits.</p></div>
+                <div class="step-brief-item"><span>What moves forward</span><p>Save one approved offer with the result, problem, risk boundary, speed, price logic, bonus and CTA. <strong>Module 3 uses it to create five ad briefs.</strong></p></div>
+              </div>
+              <div class="subsection"><div class="sub-label">Why this matters</div><p>Businesses do not buy “AI videos.” They buy a plausible path to more customers, booked jobs, qualified leads or stronger conversion. The creative is the vehicle, not the final desire.</p><p>The offer contains five connected parts: the desired result, the real problem, honest risk removal, believable speed plus an easy entry point and useful bonus, then one direct next action.</p></div>
               <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>“We make five AI videos for your social media.” It describes output but gives the buyer no business reason to respond.</p></div><div class="compare-box strong"><strong>Strong</strong><p>“We will build five ads aimed at filling your quiet weeks. You see the finished work before the agreed payment, and the first sample is ready within the test window.” Clear result, problem, risk and action.</p></div></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Offer-building prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Research current pricing and offer patterns for creative agencies serving [NICHE]. Cite the sources. Then write three short offers using this formula: sell the buyer's desired business result, hit their biggest current problem, remove as much legitimate risk as possible, add a believable delivery speed, use an easy test price or test scope, add one useful bonus, and finish with one specific call to action. Explain every discount so low pricing does not reduce trust. Mark all prices as examples until I validate my real costs and market.</pre></div>
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: the same Claude or ChatGPT project</strong><p>Attach your niche brief first. Add your real costs and boundaries, then replace [NICHE] before running the prompt.</p></div><div class="prompt-head"><span>Offer-building prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Research current pricing and offer patterns for creative agencies serving [NICHE]. Show the evidence used. Then write three short offers using this formula: sell the buyer's desired business result, hit their biggest current problem, remove as much legitimate risk as possible, add a believable delivery speed, use an easy test price or test scope, add one useful bonus, and finish with one specific call to action. Explain every discount so low pricing does not reduce trust. Mark all prices as examples until I validate my real costs and market.</pre></div>
               </div>
               <div class="subsection"><div class="sub-label">Recommended tools</div><p>Use current competitor research, your actual production costs and a simple proposal document. Never build the promise around a temporary tool promotion.</p><div class="tool-list"><span class="tool-link">Current research model</span><span class="tool-link">Competitor offer audit</span><span class="tool-link">Cost spreadsheet</span></div></div>
               <div class="subsection"><div class="sub-label">Common mistakes</div><ul class="mistake-list"><li>Promising customers “on autopilot” without evidence, tracking or a media-buying plan.</li><li>Offering “pay only when done” without defining approval, usage, payment timing and revision boundaries.</li><li>Using a massive discount without explaining the test or launch reason.</li><li>Adding a bonus that creates work but does not improve the buyer’s decision.</li><li>Ending with “let me know” instead of one exact next action.</li></ul></div>
@@ -903,11 +1016,17 @@
             </button>
             <div class="module-body" id="portfolio-body" hidden>
               <div class="lesson-header"><p>Create five ads that solve different communication problems, not five cosmetic variations of the same video.</p><span class="time-chip">Outcome: five finished spec ads</span></div>
-              <div class="subsection"><div class="sub-label">Why this matters</div><p>A prospect asks one question before trusting a new agency: “What will the work look like?” The first five ads answer that question before you have a client.</p><p>The source set used cinematic before-and-after, humour, customer testimonial, problem-focused and premium brand styles. The point is strategic range, not a mandatory style list.</p></div>
-              <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>Five videos with the same hook, pacing and promise, changed only by music or colour.</p></div><div class="compare-box strong"><strong>Strong</strong><p>Five distinct buyer angles, each with one problem, a relevant format, a three-second hook, accurate details and a clear next action.</p></div></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Five-ad brief prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Create five video ad briefs for [NICHE], each using a different strategic angle: transformation or before-and-after, humour, customer story, urgent problem, and premium brand trust. Use our researched audience and approved offer. For every ad provide: the single buyer problem, the first-three-second hook, a shot-by-shot concept, voiceover or dialogue, proof required, legal or factual claims to verify, format, duration, and one clear call to action. Do not generate the final videos until I approve all five briefs.</pre></div>
+              <div class="step-brief">
+                <div class="step-brief-item"><span>What we are doing now</span><p>We are turning the approved offer into <strong>five different communication strategies</strong>, then producing the strongest version of each as finished portfolio proof.</p></div>
+                <div class="step-brief-item"><span>Why this comes now</span><p>You now know the buyer and the offer. That gives the creative a job. Without those decisions, five ads would only demonstrate visual variety.</p></div>
+                <div class="step-brief-item"><span>Where to use the prompt</span><p>Use <strong>Claude or ChatGPT to create and refine the briefs</strong>. After approval, move the visual instructions into your chosen image and video tools, or use a trusted connector.</p></div>
+                <div class="step-brief-item"><span>What moves forward</span><p>Save five finished ads and publish one clean portfolio link. <strong>Module 4 places that link inside the outreach message as proof.</strong></p></div>
               </div>
-              <div class="subsection"><div class="sub-label">Recommended tools</div><p>The source connected Claude to Higgsfield through MCP. The current official connector is <code>https://mcp.higgsfield.ai/mcp</code>. Higgsfield’s live page currently advertises a one-day unlimited free trial on selected models. Verify eligibility and limits before use.</p><div class="tool-list"><a class="tool-link" href="https://higgsfield.ai/mcp" target="_blank" rel="noopener">Higgsfield MCP setup</a><a class="tool-link" href="https://higgsfield.ai/supercomputer/apps" target="_blank" rel="noopener">Higgsfield Supercomputer</a><span class="tool-link">Any equivalent current creative stack</span></div></div>
+              <div class="subsection"><div class="sub-label">Why this matters</div><p>A prospect asks one question before trusting a new agency: “What will the work look like?” The first five ads answer that question before you have a client.</p><p>A useful set might include transformation, humour, customer story, urgent problem and premium brand trust. The point is strategic range, not a mandatory style list.</p></div>
+              <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>Five videos with the same hook, pacing and promise, changed only by music or colour.</p></div><div class="compare-box strong"><strong>Strong</strong><p>Five distinct buyer angles, each with one problem, a relevant format, a three-second hook, accurate details and a clear next action.</p></div></div>
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: Claude or ChatGPT first</strong><p>Attach the niche brief and approved offer. Approve all five strategies here before opening an image or video generator.</p></div><div class="prompt-head"><span>Five-ad brief prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Create five video ad briefs for [NICHE], each using a different strategic angle: transformation or before-and-after, humour, customer story, urgent problem, and premium brand trust. Use our researched audience and approved offer. For every ad provide: the single buyer problem, the first-three-second hook, a shot-by-shot concept, voiceover or dialogue, proof required, legal or factual claims to verify, format, duration, and one clear call to action. Do not generate the final videos until I approve all five briefs.</pre></div>
+              </div>
+              <div class="subsection"><div class="sub-label">How production connects</div><p>Claude or ChatGPT handles the strategic brief, hook, script and shot logic. Your creative platform handles image and video generation. You can transfer the approved brief manually or use a connector if your setup supports one. Either way, finish the work through editing, sound design, factual checks and visual QC before it enters the portfolio.</p><div class="tool-list"><span class="tool-link">Claude or ChatGPT</span><span class="tool-link">Your image generator</span><span class="tool-link">Your video generator</span><span class="tool-link">Editing and sound</span></div></div>
               <div class="subsection"><div class="sub-label">Common mistakes</div><ul class="mistake-list"><li>Generating before approving the strategy, claims, hook and CTA.</li><li>Confusing visual variety with strategic variety.</li><li>Using fake testimonials, invented customer results or unsupported savings.</li><li>Delivering raw generations instead of editing, sound designing and quality checking the ads.</li><li>Keeping all outputs instead of selecting only the strongest proof.</li></ul></div>
               <div class="subsection"><div class="sub-label">Action steps</div><ul class="actions-list">
                 <li class="action-item"><input type="checkbox"><div class="action-copy"><strong>Approve five strategic angles</strong><span>Each ad must solve a different communication problem.</span></div></li>
@@ -927,9 +1046,15 @@
             </button>
             <div class="module-body" id="outreach-body" hidden>
               <div class="lesson-header"><p>Start with their company, prove you looked, show the work, then use the free sample as a filter for genuine interest.</p><span class="time-chip">Outcome: one personal email template</span></div>
-              <div class="subsection"><div class="sub-label">Why this matters</div><p>Busy local operators receive generic pitches constantly. Starting with your agency makes the message feel like every other sales email. Brock’s correction was simple: their company and city first, proof second, one low-friction next action last.</p><p>The free sample is not only a gift. It is a qualification step. A prospect who sends accurate business information has taken a meaningful action.</p></div>
+              <div class="step-brief">
+                <div class="step-brief-item"><span>What we are doing now</span><p>We are turning the offer and portfolio into <strong>a short conversation starter</strong> that feels specific to one business rather than written for a database.</p></div>
+                <div class="step-brief-item"><span>Why this comes now</span><p>You can finally show proof. The message no longer asks the prospect to imagine your ability because the portfolio demonstrates it before the offer is discussed.</p></div>
+                <div class="step-brief-item"><span>Where to use the prompt</span><p>Use <strong>Claude or ChatGPT</strong>. Paste the approved offer, portfolio URL and verified facts about one company above the prompt. Create drafts only, never automatic sends.</p></div>
+                <div class="step-brief-item"><span>What moves forward</span><p>Save the approved email structure and the information required for a free sample. <strong>Module 5 turns an interested reply into structured intake.</strong></p></div>
+              </div>
+              <div class="subsection"><div class="sub-label">Why this matters</div><p>Busy local operators receive generic pitches constantly. Starting with your agency makes the message feel like every other sales email. Start with their company and city, show proof, then finish with one low-friction action.</p><p>The free sample is not only a gift. It is a qualification step. A prospect who sends accurate business information has taken a meaningful action.</p></div>
               <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>“Hi, we are an innovative AI agency offering affordable content solutions.” It could be sent to anyone.</p></div><div class="compare-box strong"><strong>Strong</strong><p>The subject contains the real company and city. The first line names one true detail. The message shows proof and asks for one reply keyword to receive a sample.</p></div></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Cold email prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Rewrite my approved offer as a short cold email for [DECISION-MAKER] at [COMPANY]. Start with their business, not mine. Use the company name and city in the subject. Open with one verified observation about their current advertising or website. Add one clean portfolio link as proof. Keep the same honest test offer. End with one CTA: reply INTERESTED to receive one free sample creative for their business. Do not invent facts, results or familiarity.</pre></div>
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: Claude or ChatGPT</strong><p>Place the verified company facts, approved offer and portfolio URL above this prompt. Generate one draft at a time and check every fact yourself.</p></div><div class="prompt-head"><span>Cold email prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Rewrite my approved offer as a short cold email for [DECISION-MAKER] at [COMPANY]. Start with their business, not mine. Use the company name and city in the subject. Open with one verified observation about their current advertising or website. Add one clean portfolio link as proof. Keep the same honest test offer. End with one CTA: reply INTERESTED to receive one free sample creative for their business. Do not invent facts, results or familiarity.</pre></div>
                 <div class="email-example">Subject: [Company Name], your ads in [City]
 
 Hey [Name],
@@ -962,9 +1087,15 @@ Reply INTERESTED and I will start with one free sample creative for your busines
             </button>
             <div class="module-body" id="operations-body" hidden>
               <div class="lesson-header"><p>Move the workflow from a temporary chat into a persistent project with verified client profiles, intake rules, approval gates and exception-based quality control.</p><span class="time-chip">Outcome: one repeatable back office</span></div>
-              <div class="subsection"><div class="sub-label">Why this matters</div><p>A demo can work once while failing completely at ten clients. Every reply, brief, business fact, generation request and delivery email becomes manual labour unless the system has memory and clear states.</p><p>Nate’s key correction was not “automate everything.” It was to automate repeatable work and show a person only the failed or risky items.</p></div>
+              <div class="step-brief">
+                <div class="step-brief-item"><span>What we are doing now</span><p>We are moving the approved workflow into <strong>a persistent project that can remember the rules</strong> and produce the same safe sequence for every client.</p></div>
+                <div class="step-brief-item"><span>Why this comes now</span><p>Outreach can now create replies. Before that happens, you need a controlled place for intake, verified facts, approvals, production states and delivery checks.</p></div>
+                <div class="step-brief-item"><span>Where to use the prompts</span><p>Put the main operations prompt inside <strong>Claude Project Instructions, a ChatGPT Project or Custom GPT instructions</strong>. Add the lead-intake rule underneath it.</p></div>
+                <div class="step-brief-item"><span>What moves forward</span><p>Save the client profile schema, intake response, workflow states and approval rules. <strong>Module 6 connects these to the website and its form.</strong></p></div>
+              </div>
+              <div class="subsection"><div class="sub-label">Why this matters</div><p>A demo can work once while failing completely at ten clients. Every reply, brief, business fact, generation request and delivery email becomes manual labour unless the system has memory and clear states.</p><p>The goal is not to automate everything. Automate the repeatable work, keep the source of client truth structured and send failed or risky items to a person.</p></div>
               <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>A chat remembers a messy brief for one session. You copy details manually and watch every video, even when most are fine.</p></div><div class="compare-box strong"><strong>Strong</strong><p>Each client has one verified profile. The system drafts work from that profile, checks every output, delivers approved work and routes only failures for review.</p></div></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Operations manager prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">You are the Operations Manager for our AI ad service. Follow this workflow:
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: Project or Custom GPT instructions</strong><p>This is a standing operating rule, not a one-off chat request. Add your approved offer, quality bar and delivery boundaries beside it.</p></div><div class="prompt-head"><span>Operations manager prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">You are the Operations Manager for our AI ad service. Follow this workflow:
 1. Accept the client's raw brief, including spoken or copy-pasted notes.
 2. Check for required facts: company name, city, services, target audience, approved offer, visual preferences, contact details, delivery email, legal restrictions and brand assets.
 3. Ask for missing facts. Never invent client information.
@@ -975,7 +1106,7 @@ Reply INTERESTED and I will start with one free sample creative for your busines
 8. Run factual, visual, audio, brand and legal-risk checks.
 9. Prepare a delivery email only for outputs that passed.
 10. Move failures to Needs Review with a specific reason. Never send or publish without the required approval.</pre></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Interested-lead intake rule</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">When a lead replies INTERESTED, draft an intake response asking for company name, city, services, pricing range, strongest jobs, target customer, phone, email, website, brand assets and any regulated claims. When the answers arrive, verify public details, flag conflicts and save a permanent client profile. Prepare one free sample brief from the verified profile. Do not generate or send it until the brief is approved.</pre></div>
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: the same project instructions</strong><p>Place this below the main operations rule. It defines what the AI does when an interested reply is brought into the project.</p></div><div class="prompt-head"><span>Interested-lead intake rule</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">When a lead replies INTERESTED, draft an intake response asking for company name, city, services, pricing range, strongest jobs, target customer, phone, email, website, brand assets and any regulated claims. When the answers arrive, verify public details, flag conflicts and save a permanent client profile. Prepare one free sample brief from the verified profile. Do not generate or send it until the brief is approved.</pre></div>
               </div>
               <div class="subsection"><div class="sub-label">Recommended tools</div><p>A project or workspace with persistent instructions, an email connector, structured client records, a generation connector and deterministic quality checks. The exact stack can change.</p><div class="tool-list"><span class="tool-link">Persistent AI project</span><span class="tool-link">Email connector</span><span class="tool-link">Client profile store</span><span class="tool-link">Approval queue</span></div></div>
               <div class="subsection"><div class="sub-label">Common mistakes</div><ul class="mistake-list"><li>Telling AI to “figure out” missing client facts instead of asking or verifying.</li><li>Keeping client truth in conversation memory instead of one structured profile.</li><li>Allowing automatic sends before claims, names, numbers and permissions are proven.</li><li>Reviewing every output manually instead of building checks and reviewing exceptions.</li><li>Mixing prospect, sample, paying client and delivery states in one inbox.</li></ul></div>
@@ -997,9 +1128,15 @@ Reply INTERESTED and I will start with one free sample creative for your busines
             </button>
             <div class="module-body" id="website-body" hidden>
               <div class="lesson-header"><p>Use five blocks in order: hero, proof, process, benefits and FAQ. Follow every block with the same strongest next action.</p><span class="time-chip">Outcome: one selling portfolio page</span></div>
+              <div class="step-brief">
+                <div class="step-brief-item"><span>What we are doing now</span><p>We are turning the offer, portfolio and intake route into <strong>one public destination</strong> that answers the sale in the right order.</p></div>
+                <div class="step-brief-item"><span>Why this comes now</span><p>The website needs real proof, a defined process and a working CTA. Building it earlier would create polished pages around decisions that had not been made.</p></div>
+                <div class="step-brief-item"><span>Where to use the prompt</span><p>Paste it into <strong>Claude, ChatGPT or a coding agent that can create website files</strong>. Attach your offer, five portfolio assets, brand files and intake fields.</p></div>
+                <div class="step-brief-item"><span>What moves forward</span><p>Save a live page and test the form on phone and desktop. <strong>Module 7 uses this page as the single destination in every message.</strong></p></div>
+              </div>
               <div class="subsection"><div class="sub-label">Why this matters</div><p>A selling website is not an art project. It is a conversation that answers the buyer’s questions in the order they appear. Within five seconds the visitor should know what you do, who it is for and what they receive.</p><p>If the entry price is unusually low, explain the real reason. Unexplained cheapness can lower trust instead of increasing response.</p></div>
               <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>A cinematic reel, abstract agency language and a contact link hidden at the bottom. The visitor must decode the offer.</p></div><div class="compare-box strong"><strong>Strong</strong><p>One sentence states the result, audience and deliverable. Real work plays on the page. The process, benefits and FAQs remove friction. Every block ends with one CTA.</p></div></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Selling website prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Build a responsive website for my [NICHE] ad service using this exact five-block structure and my approved offer and portfolio:
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: Claude, ChatGPT or your coding agent</strong><p>Attach the approved offer, five portfolio files or links, AI-Verse brand assets and the exact intake form fields. Ask for complete working files, not a wireframe.</p></div><div class="prompt-head"><span>Selling website prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Build a responsive website for my [NICHE] ad service using this exact five-block structure and my approved offer and portfolio:
 1. Hero: answer in five seconds what we do, who it is for and what they get. Put the approved test offer directly below. If the price is unusually low, explain the genuine launch or test reason and state the payment boundary.
 2. Proof: play the strongest portfolio work directly on the page and explain the service in two factual sentences.
 3. Process: show the smallest set of client actions. We collect only the facts we cannot safely research, then handle audience research, scripts, production and QC.
@@ -1008,7 +1145,7 @@ Reply INTERESTED and I will start with one free sample creative for your busines
 After every block, repeat one strongest CTA that opens the same short intake form.
 Use accessible semantic HTML, real mobile layouts, fast media, keyboard support, privacy-safe forms and no fake proof.</pre></div>
               </div>
-              <div class="subsection"><div class="sub-label">Recommended tools</div><p>Use any reliable website stack that supports real media, forms, analytics and safe data handling. The source used Higgsfield MCP to launch a live page and admin flow. This AI-Verse lesson page itself demonstrates the five-block structure before the modules.</p><div class="tool-list"><a class="tool-link" href="https://roofing-video-ads.higgsfield.app/" target="_blank" rel="noopener">Source website example</a><span class="tool-link">Your website platform</span><span class="tool-link">Form and CRM</span><span class="tool-link">Performance testing</span></div></div>
+              <div class="subsection"><div class="sub-label">How the page connects</div><p>The website is the clean bridge between outreach and intake. It should play the proof directly, explain the service without internal AI jargon and send every CTA to the same short form. The form then creates the client record used by your operating project.</p><div class="tool-list"><span class="tool-link">Your website platform</span><span class="tool-link">Form and CRM</span><span class="tool-link">Analytics</span><span class="tool-link">Performance testing</span></div></div>
               <div class="subsection"><div class="sub-label">Common mistakes</div><ul class="mistake-list"><li>Using a vague hero that says nothing about audience or result.</li><li>Hiding the work behind a separate PDF, drive folder or five raw links.</li><li>Explaining internal technology before explaining the buyer’s outcome.</li><li>Showing a huge discount with no credible reason.</li><li>Changing the CTA wording and destination throughout the page.</li></ul></div>
               <div class="subsection"><div class="sub-label">Action steps</div><ul class="actions-list">
                 <li class="action-item"><input type="checkbox"><div class="action-copy"><strong>Write the five-second hero</strong><span>State result, audience and deliverable in one sentence.</span></div></li>
@@ -1028,11 +1165,17 @@ Use accessible semantic HTML, real mobile layouts, fast media, keyboard support,
             </button>
             <div class="module-body" id="launch-body" hidden>
               <div class="lesson-header"><p>Find a small group of businesses that already believe in advertising and have a visible reason to improve it now.</p><span class="time-chip">Outcome: 10 to 15 reviewed drafts</span></div>
-              <div class="subsection"><div class="sub-label">Why this matters</div><p>The original 5,000-company blast optimises volume before learning. Jack’s correction was to begin with businesses already spending on ads, using old video or pushing a premium service with weak creative.</p><p>A small researched batch tells you whether the niche, offer, proof and message work. A mass blast mostly tells you that generic email is easy to ignore.</p></div>
-              <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>Thousands of scraped contacts, no qualification, generic messages and no record of why each company should care.</p></div><div class="compare-box strong"><strong>Strong</strong><p>Fifteen prospects, each with a public reason to buy, one true observation, one reviewed draft and a tracked outcome.</p></div></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Focused launch prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Find 10 to 15 [NICHE] businesses that already spend money on advertising and have a specific reason to improve their creative now, such as outdated videos, weak promotion of a premium service, inconsistent branding or active ad spend with poor proof. Use public information only. For each business, document the source, why it fits, one true detail about its current advertising, the likely decision-maker, and a personalised email draft using our approved template. Do not send anything. I will review every fact and draft. Build an outreach tracker with company, source, reason to fit, observation, contact status, reply, intake and next action.</pre></div>
+              <div class="step-brief">
+                <div class="step-brief-item"><span>What we are doing now</span><p>We are testing the complete system with <strong>10 to 15 carefully chosen businesses</strong>. This is a learning batch, not a volume campaign.</p></div>
+                <div class="step-brief-item"><span>Why this comes now</span><p>The offer, proof, website and intake route are ready. You can now test the whole chain and diagnose where people stop rather than guessing from one isolated reply.</p></div>
+                <div class="step-brief-item"><span>Where to use the prompt</span><p>Use <strong>Claude or ChatGPT with web search enabled</strong>. Give it the niche criteria, buying signal, outreach template and website URL. Ask for research and drafts only.</p></div>
+                <div class="step-brief-item"><span>What moves forward</span><p>Save a tracker with the buying signal, message, reply, intake and next action for each business. <strong>Module 8 uses this evidence to decide what should recur.</strong></p></div>
               </div>
-              <div class="subsection"><div class="sub-label">Recommended tools</div><p>Use public ad libraries, company websites, professional directories, a tracker and email drafts. Respect platform rules, privacy law and anti-spam requirements in your market.</p><div class="tool-list"><span class="tool-link">Public sources only</span><span class="tool-link">Spreadsheet or CRM</span><span class="tool-link">Approval-gated email drafts</span></div></div>
+              <div class="subsection"><div class="sub-label">Why this matters</div><p>A 5,000-company blast optimises volume before learning. Begin with businesses already spending on ads, using outdated video or trying to sell a premium service with weak creative.</p><p>A small researched batch tells you whether the niche, offer, proof and message work. A mass blast mostly tells you that generic email is easy to ignore.</p></div>
+              <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>Thousands of scraped contacts, no qualification, generic messages and no record of why each company should care.</p></div><div class="compare-box strong"><strong>Strong</strong><p>Fifteen prospects, each with a public reason to buy, one true observation, one reviewed draft and a tracked outcome.</p></div></div>
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: Claude or ChatGPT with web search</strong><p>Attach the niche criteria, buying signal, approved email structure and website URL. Keep sending disabled and review each draft manually.</p></div><div class="prompt-head"><span>Focused launch prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Find 10 to 15 [NICHE] businesses that already spend money on advertising and have a specific reason to improve their creative now, such as outdated videos, weak promotion of a premium service, inconsistent branding or active ad spend with poor proof. Use public information only. For each business, document the evidence link, why it fits, one true detail about its current advertising, the likely decision-maker, and a personalised email draft using our approved template. Do not send anything. I will review every fact and draft. Build an outreach tracker with company, evidence link, reason to fit, observation, contact status, reply, intake and next action.</pre></div>
+              </div>
+              <div class="subsection"><div class="sub-label">How the launch connects</div><p>Use ad libraries, company websites and professional directories to find a current buying signal. Claude or ChatGPT helps organise the evidence and draft the message. Your tracker records the result. Respect platform rules, privacy law and anti-spam requirements in your market.</p><div class="tool-list"><span class="tool-link">Public business information</span><span class="tool-link">Spreadsheet or CRM</span><span class="tool-link">Approval-gated email drafts</span></div></div>
               <div class="subsection"><div class="sub-label">Common mistakes</div><ul class="mistake-list"><li>Confusing scraped volume with sales opportunity.</li><li>Writing personalisation from assumptions instead of a cited public detail.</li><li>Targeting companies that do not advertise and have no current reason to start.</li><li>Sending drafts automatically before checking names, facts, claims and tone.</li><li>Scaling before measuring replies, qualified interest and sample conversion.</li></ul></div>
               <div class="subsection"><div class="sub-label">Action steps</div><ul class="actions-list">
                 <li class="action-item"><input type="checkbox"><div class="action-copy"><strong>Define the buying signal</strong><span>Write the exact evidence that makes a business worth contacting now.</span></div></li>
@@ -1052,10 +1195,16 @@ Use accessible semantic HTML, real mobile layouts, fast media, keyboard support,
             </button>
             <div class="module-body" id="scale-body" hidden>
               <div class="lesson-header"><p>Turn the successful one-off product into a recurring creative refresh, then protect delivery with deterministic checks and human review of exceptions.</p><span class="time-chip">Outcome: one sustainable service model</span></div>
-              <div class="subsection"><div class="sub-label">Why this matters</div><p>Businesses need fresh creative because audiences fatigue and offers change. That can justify recurring service, but only after the first ads and delivery process produce real value.</p><p>The source used a $2,000 monthly example and three new variations each Monday. Treat those as modelling inputs, not a universal price or schedule.</p></div>
+              <div class="step-brief">
+                <div class="step-brief-item"><span>What we are doing now</span><p>We are turning a proven first delivery into <strong>a defined monthly product</strong> with fresh creative angles, realistic margins and a visible review process.</p></div>
+                <div class="step-brief-item"><span>Why this comes last</span><p>Recurring delivery magnifies whatever already exists. If the offer, intake or QC is weak, scheduling it only creates the same failure more often.</p></div>
+                <div class="step-brief-item"><span>Where to use the prompts</span><p>Keep them inside the persistent <strong>Claude or ChatGPT project</strong>. Run them manually first. Add scheduling or automation only after the output is stable.</p></div>
+                <div class="step-brief-item"><span>What the finished system contains</span><p>Save the monthly scope, angle history, real cost model, QC gate and Needs Review process. <strong>This is the operating model you can now test with real clients.</strong></p></div>
+              </div>
+              <div class="subsection"><div class="sub-label">Why this matters</div><p>Businesses need fresh creative because audiences fatigue and offers change. That can justify recurring service, but only after the first ads and delivery process produce real value.</p><p>A $2,000 monthly package with three new variations can be useful modelling input, but it is not a universal price or schedule. Your real delivery cost and client need decide the product.</p></div>
               <div class="subsection"><div class="sub-label">What good looks like</div><div class="weak-strong"><div class="compare-box weak"><strong>Weak</strong><p>A subscription promises endless videos with no strategy memory, cost boundary, approval process or performance learning.</p></div><div class="compare-box strong"><strong>Strong</strong><p>A defined number of fresh angles, an angle history, approved client profile, quality gates, delivery window and clear review scope.</p></div></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Recurring creative prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Review every active client profile and the history of hooks, problems, formats and offers already used. Propose three fresh ad variations for each client without repeating prior angles. Explain why each variation is new and commercially relevant. Prepare briefs and a delivery schedule. Do not generate or email anything until the briefs and current offer are approved.</pre></div>
-                <div class="prompt-block"><div class="prompt-head"><span>Quality control prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Run a quality-control check on every asset before delivery. Compare it with the approved client profile and brief. Verify company name, city, services, phone, email, logo, offer, spelling, aspect ratio, duration, audio, captions, call to action, required disclosures and every factual or legal claim. If it passes, mark it Approved for Delivery. If it fails, move it to Needs Review with the exact timestamp or frame, reason, severity and safest fix. Show me only failed or ambiguous assets. Never send automatically unless the client and workflow are explicitly approved for automatic delivery.</pre></div>
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: the persistent Claude or ChatGPT project</strong><p>Attach the approved client profile and angle history. Run manually until you know it produces genuinely new, relevant briefs.</p></div><div class="prompt-head"><span>Recurring creative prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Review every active client profile and the history of hooks, problems, formats and offers already used. Propose three fresh ad variations for each client without repeating prior angles. Explain why each variation is new and commercially relevant. Prepare briefs and a delivery schedule. Do not generate or email anything until the briefs and current offer are approved.</pre></div>
+                <div class="prompt-block"><div class="prompt-usage"><strong>Paste into: the same project after the creative rule</strong><p>Use this as the delivery gate. The AI reports failures and ambiguity, while a person approves risky claims and final delivery.</p></div><div class="prompt-head"><span>Quality control prompt</span><button class="copy-button" type="button">Copy prompt</button></div><pre class="prompt-text">Run a quality-control check on every asset before delivery. Compare it with the approved client profile and brief. Verify company name, city, services, phone, email, logo, offer, spelling, aspect ratio, duration, audio, captions, call to action, required disclosures and every factual or legal claim. If it passes, mark it Approved for Delivery. If it fails, move it to Needs Review with the exact timestamp or frame, reason, severity and safest fix. Show me only failed or ambiguous assets. Never send automatically unless the client and workflow are explicitly approved for automatic delivery.</pre></div>
                 <div class="calculator" aria-labelledby="calculatorTitle">
                   <h4 id="calculatorTitle">Scenario calculator</h4>
                   <div class="calculator-grid">
@@ -1067,7 +1216,7 @@ Use accessible semantic HTML, real mobile layouts, fast media, keyboard support,
                 </div>
               </div>
               <div class="subsection"><div class="sub-label">Recommended tools</div><p>Use a client profile store, angle history, scheduled planning trigger, asset validator, exception queue and human approval for risky claims or delivery.</p><div class="tool-list"><span class="tool-link">Client profile store</span><span class="tool-link">Creative angle history</span><span class="tool-link">Automated QC</span><span class="tool-link">Needs Review queue</span></div></div>
-              <div class="subsection"><div class="sub-label">Common mistakes</div><ul class="mistake-list"><li>Pricing from the source example without calculating real costs and service scope.</li><li>Generating three “new” ads that repeat the same hook and problem.</li><li>Automating client delivery before the checks are stable and observable.</li><li>Using AI QC as an excuse to stop sampling passed outputs.</li><li>Treating gross monthly revenue as personal income or guaranteed profit.</li></ul></div>
+              <div class="subsection"><div class="sub-label">Common mistakes</div><ul class="mistake-list"><li>Copying somebody else’s price without calculating real costs and service scope.</li><li>Generating three “new” ads that repeat the same hook and problem.</li><li>Automating client delivery before the checks are stable and observable.</li><li>Using AI QC as an excuse to stop sampling passed outputs.</li><li>Treating gross monthly revenue as personal income or guaranteed profit.</li></ul></div>
               <div class="subsection"><div class="sub-label">Action steps</div><ul class="actions-list">
                 <li class="action-item"><input type="checkbox"><div class="action-copy"><strong>Define the recurring product</strong><span>Set monthly assets, formats, revisions, rights, schedule and exclusions.</span></div></li>
                 <li class="action-item"><input type="checkbox"><div class="action-copy"><strong>Build the angle history</strong><span>Track every hook, problem, proof type, format and CTA used.</span></div></li>
@@ -1075,16 +1224,15 @@ Use accessible semantic HTML, real mobile layouts, fast media, keyboard support,
                 <li class="action-item"><input type="checkbox"><div class="action-copy"><strong>Implement QC gates</strong><span>Test every deterministic check with a known passing and failing asset.</span></div></li>
                 <li class="action-item"><input type="checkbox"><div class="action-copy"><strong>Review the first month manually</strong><span>Compare automated decisions with human review before increasing autonomy.</span></div></li>
               </ul></div>
-              <div class="subsection"><div class="sub-label">Weekly target</div><div class="weekly-target"><strong>This week: design a recurring service you could fulfil for three months.</strong><p>If the scope, margin, approval process or creative freshness fails on paper, fix it before selling it.</p></div><div class="module-cta"><a class="button button-primary" href="#sources">Review the sources</a></div></div>
+              <div class="subsection"><div class="sub-label">Weekly target</div><div class="weekly-target"><strong>This week: design a recurring service you could fulfil for three months.</strong><p>If the scope, margin, approval process or creative freshness fails on paper, fix it before selling it.</p></div><div class="module-cta"><a class="button button-primary" href="#finish">Review the finished system</a></div></div>
             </div>
           </article>
         </div>
 
-        <div class="source-note" id="sources">
-          <p><strong>Source and accuracy note.</strong> This lesson is based on the full user-supplied transcript and Higgsfield’s official companion resource, “The 5 Biggest AI Experts on YouTube Helped Me Build an Automated AI Business.” The operational examples, expert contributions and prompt categories come from that source. AI-Verse added production safeguards, approval gates, factual verification, cost caveats and portable tool guidance.</p>
-          <p><a href="https://www.youtube.com/watch?v=iOwKylW8c5Q" target="_blank" rel="noopener">Watch the original video</a> · <a href="https://higgsfield.ai/blog/ai-ad-agency?utm_source=yt&amp;utm_medium=video&amp;utm_category=prd&amp;utm_campaign=Call+with+5+youtubers&amp;utm_creator=higgsfieldai&amp;utm_content_type=de&amp;utm_post=axWYVh&amp;invite_code=call-with-5-youtubers-higgsfieldai-axWYVh" target="_blank" rel="noopener">Open the official companion resource</a> · <a href="https://higgsfield.ai/mcp" target="_blank" rel="noopener">Check the current Higgsfield MCP offer and setup</a></p>
-          <p><a href="https://assets.ctfassets.net/91663d1w6kgm/4PwDcdXWJRr7yDpsA9ksXN/09238d450fd6124d32dd4a048d8b4cab/SKILL.md" target="_blank" rel="noopener">Open the original Pro Ads Studio skill definition</a>. The official download references seven additional files that are not included in that standalone document, so treat it as source material rather than a complete installable package.</p>
-          <p>Tool availability, model names, promotions, prices and platform limits can change. Verify current official terms before relying on them. Revenue examples are scenarios, not guarantees.</p>
+        <div class="finish-panel" id="finish">
+          <p class="eyebrow">The handoff check</p>
+          <h3>Do not call the system finished until all eight outputs exist.</h3>
+          <p>You need one niche brief, one approved offer, five finished ads, one portfolio link, one outreach template, one client operating project, one live website, one launch tracker and one recurring-service plan. If a file is missing, return to that module before adding more automation.</p>
         </div>
       </div>
     </section>
