@@ -297,6 +297,32 @@
     .system-item p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.48; }
     .accent-line { width: 36px; height: 3px; margin-bottom: 24px; background: var(--accent); }
 
+    .community-ad {
+      background: var(--surface);
+    }
+    .community-ad-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 32px;
+      align-items: end;
+    }
+    .community-ad h2 {
+      max-width: 780px;
+      margin-bottom: 16px;
+      font-size: clamp(44px, 6vw, 82px);
+      line-height: .94;
+      letter-spacing: -.08em;
+      font-weight: 680;
+    }
+    .community-ad h2 span { color: var(--accent); }
+    .community-ad p:not(.eyebrow) {
+      max-width: 650px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
     .tool-grid { display: grid; grid-template-columns: minmax(280px, .78fr) minmax(0, 1.22fr); gap: 22px; align-items: start; }
     .tool-panel, .output-panel { border: 1px solid var(--line); background: var(--surface); padding: 26px; }
     .tool-panel h3, .output-panel h3 { margin-bottom: 10px; font-size: 27px; letter-spacing: -.05em; }
@@ -374,6 +400,7 @@
 
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; }
+      .community-ad-inner { grid-template-columns: 1fr; align-items: start; }
       .hero-copy { max-width: 700px; }
       .hero-media { max-width: 640px; }
       .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -421,78 +448,27 @@
           <p class="eyebrow">Visual prompt tool</p>
           <h1>MATRIX<br><span>DNA</span></h1>
           <p class="hero-lead">One visual DNA. Any idea.</p>
-          <p>Take any subject and place it inside one deliberate photographic world: fluorescent practicals, wet steel, dark glass, hard glare, green-black shadows and tense Super 35mm perspective.</p>
+          <p>Turn any idea into a premium green-black cinematic image world with wet surfaces, hard atmosphere and a tense film look.</p>
           <div class="button-row">
             <a class="button button-primary" href="#prompt">Use the prompt</a>
-            <a class="button button-secondary" href="#look">See the look</a>
+            <a class="button button-secondary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Join AI-Verse</a>
           </div>
         </div>
         <figure class="hero-media">
           <img src="assets/00-collage-cover.webp" width="1080" height="1350" alt="Eight original Matrix DNA scenes arranged as one collage">
-          <figcaption class="hero-note">A fresh text-only proof set. No classroom reference images reused.</figcaption>
+          <figcaption class="hero-note">A repeatable cinematic look for any idea.</figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="section" id="look">
-      <div class="wrap">
-        <div class="section-heading">
-          <p class="eyebrow">The proof set</p>
-          <h2>Same visual world.<br>Different ideas.</h2>
-          <p>The DNA stays fixed while the subject changes. Open any frame to inspect it at full size.</p>
+    <section class="section community-ad">
+      <div class="wrap community-ad-inner">
+        <div>
+          <p class="eyebrow">AI-Verse community</p>
+          <h2>Stop making one-off images.<br><span>Build worlds people remember.</span></h2>
+          <p>Learn cinematic AI image, video and sound workflows with practical guidance, real feedback and a community that keeps making.</p>
         </div>
-        <div class="gallery">
-          <button class="frame" type="button" data-image="01-turbine-man.webp" data-title="1/8. Turbine worker">
-            <img src="assets/01-turbine-man.webp" width="1080" height="1350" alt="Turbine worker in a fluorescent hydroelectric power station">
-            <span class="frame-meta"><span class="frame-index">1/8</span><span class="frame-name">Turbine worker</span></span>
-          </button>
-          <button class="frame" type="button" data-image="02-ceramic-bottle.webp" data-title="2/8. Ceramic object">
-            <img src="assets/02-ceramic-bottle.webp" width="1080" height="1350" alt="Unbranded black ceramic bottle on an industrial turntable">
-            <span class="frame-meta"><span class="frame-index">2/8</span><span class="frame-name">Ceramic object</span></span>
-          </button>
-          <button class="frame" type="button" data-image="03-raven-pipe.webp" data-title="3/8. Raven on chrome">
-            <img src="assets/03-raven-pipe.webp" width="1080" height="1350" alt="Black raven on a wet chrome service pipe">
-            <span class="frame-meta"><span class="frame-index">3/8</span><span class="frame-name">Raven on chrome</span></span>
-          </button>
-          <button class="frame" type="button" data-image="04-freight-locomotive.webp" data-title="4/8. Freight locomotive">
-            <img src="assets/04-freight-locomotive.webp" width="1080" height="1350" alt="Matte black freight locomotive in an underground maintenance bay">
-            <span class="frame-meta"><span class="frame-index">4/8</span><span class="frame-name">Freight locomotive</span></span>
-          </button>
-          <button class="frame" type="button" data-image="05-visor-portrait.webp" data-title="5/8. Industrial visor">
-            <img src="assets/05-visor-portrait.webp" width="1080" height="1350" alt="Worker behind a clear industrial face shield">
-            <span class="frame-meta"><span class="frame-index">5/8</span><span class="frame-name">Industrial visor</span></span>
-          </button>
-          <button class="frame" type="button" data-image="06-flooded-stairwell.webp" data-title="6/8. Flooded stairwell">
-            <img src="assets/06-flooded-stairwell.webp" width="1080" height="1350" alt="Flooded brutalist stairwell with fluorescent lights">
-            <span class="frame-meta"><span class="frame-index">6/8</span><span class="frame-name">Flooded stairwell</span></span>
-          </button>
-          <button class="frame" type="button" data-image="07-evidence-capsule.webp" data-title="7/8. Evidence capsule">
-            <img src="assets/07-evidence-capsule.webp" width="1080" height="1350" alt="Sealed transparent evidence capsule on a steel laboratory bench">
-            <span class="frame-meta"><span class="frame-index">7/8</span><span class="frame-name">Evidence capsule</span></span>
-          </button>
-          <button class="frame" type="button" data-image="08-helicopter-hero.webp" data-title="8/8. Grounded helicopter">
-            <img src="assets/08-helicopter-hero.webp" width="1080" height="1350" alt="Grounded black utility helicopter in a flooded underground hangar">
-            <span class="frame-meta"><span class="frame-index">8/8</span><span class="frame-name">Grounded helicopter</span></span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="wrap">
-        <div class="section-heading">
-          <p class="eyebrow">The visual DNA</p>
-          <h2>Lock the behaviour,<br>not just the colour.</h2>
-          <p>The result should feel photographed as one world, not recoloured by a flat green filter.</p>
-        </div>
-        <div class="system-grid">
-          <article class="system-item"><div class="accent-line"></div><strong>Light has a source</strong><p>Fluorescent tubes, reflected glare and practical fixtures create the green. No random neon wash.</p></article>
-          <article class="system-item"><div class="accent-line"></div><strong>Materials carry the frame</strong><p>Chrome, wet concrete, dark glass, black technical fabric and water respond to the actual light.</p></article>
-          <article class="system-item"><div class="accent-line"></div><strong>The camera creates pressure</strong><p>A close, slightly wide Super 35mm feeling gives the frame geometry, tension and controlled perspective.</p></article>
-          <article class="system-item"><div class="accent-line"></div><strong>Highlights stay restrained</strong><p>Desaturated highlights and deep green-black shadows keep the image cinematic instead of glossy and synthetic.</p></article>
-          <article class="system-item"><div class="accent-line"></div><strong>Every object has weight</strong><p>Props, garments, reflections, shadows, rain and water need a believable physical cause.</p></article>
-          <article class="system-item"><div class="accent-line"></div><strong>The idea stays yours</strong><p>Change the subject, location and action. Keep the visual treatment recognisable across the whole set.</p></article>
-        </div>
+        <a class="button button-primary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Start your 7-day free trial</a>
       </div>
     </section>
 
@@ -501,12 +477,12 @@
         <div class="section-heading">
           <p class="eyebrow">Prompt tool</p>
           <h2>Put your idea<br>through the DNA.</h2>
-          <p>Enter a subject and an optional direction. The tool keeps the visual system fixed while leaving the idea open.</p>
+          <p>Enter a subject and an optional direction. The prompt keeps the look consistent while leaving the idea open.</p>
         </div>
         <div class="tool-grid">
           <div class="tool-panel">
             <h3>Your idea</h3>
-            <p>Keep the input simple. The production logic stays underneath.</p>
+            <p>Start with a simple idea. Add a camera or action direction if you want.</p>
             <div class="field">
               <label for="idea">Your idea or subject</label>
               <textarea id="idea" placeholder="A black ceramic helmet on a flooded archive table.">An adult worker beside a colossal hydroelectric turbine in a wet power station.</textarea>
@@ -522,7 +498,7 @@
           </div>
           <div class="output-panel">
             <h3>Copyable prompt</h3>
-            <p>Use the output in your image model, then run the physical-logic gate before keeping the result.</p>
+            <p>Copy it into your image model and start creating.</p>
             <pre class="output" id="promptOutput" tabindex="0"></pre>
             <div class="tool-actions">
               <button class="button button-primary" id="copyPrompt" type="button">Copy prompt</button>
@@ -536,9 +512,9 @@
     <section class="section">
       <div class="wrap cta">
         <div>
-          <p class="eyebrow">AI-Verse workflow</p>
+          <p class="eyebrow">AI-Verse community</p>
           <h2>Want this look in your own projects?</h2>
-          <p>Comment <strong class="keyword">MATRIXDNA</strong> on the post and get the full reusable workflow through DM.</p>
+          <p>Comment <strong class="keyword">MATRIXDNA</strong> on the post and get the full prompt tool through DM.</p>
         </div>
         <a class="button button-primary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Join AI-Verse</a>
       </div>
@@ -548,17 +524,9 @@
   <footer class="site-footer">
     <div class="wrap footer-inner">
       <span>AI-Verse Filmmakers</span>
-      <span><a href="https://www.skool.com/bogdans-ai-verse-4398/classroom/2ea1df59?md=5588cf1329dc4a1c9aed3f056afb56fa">Source: The Prism / The Matrix</a></span>
+      <span>Visual prompt tools for cinematic creators</span>
     </div>
   </footer>
-
-  <div class="modal" id="imageModal" role="dialog" aria-modal="true" aria-label="Expanded Matrix DNA frame">
-    <div class="modal-inner">
-      <button class="modal-close" id="modalClose" type="button" aria-label="Close image">×</button>
-      <img id="modalImage" src="" alt="">
-      <div class="modal-caption" id="modalCaption"></div>
-    </div>
-  </div>
 
   <script>
     (function () {
@@ -630,32 +598,6 @@ RENDER: ARRI Alexa 35 colour response, cinema-prime lens behaviour, natural film
         window.setTimeout(function () { copyStatus.textContent = ''; }, 2400);
       });
 
-      const modal = document.getElementById('imageModal');
-      const modalImage = document.getElementById('modalImage');
-      const modalCaption = document.getElementById('modalCaption');
-      const modalClose = document.getElementById('modalClose');
-      let lastTrigger = null;
-
-      function closeModal() {
-        modal.classList.remove('open');
-        document.body.classList.remove('modal-open');
-        modalImage.src = '';
-        if (lastTrigger) lastTrigger.focus();
-      }
-      document.querySelectorAll('.frame').forEach(function (frame) {
-        frame.addEventListener('click', function () {
-          lastTrigger = frame;
-          modalImage.src = 'assets/' + frame.dataset.image;
-          modalImage.alt = frame.querySelector('img').alt;
-          modalCaption.textContent = frame.dataset.title;
-          modal.classList.add('open');
-          document.body.classList.add('modal-open');
-          modalClose.focus();
-        });
-      });
-      modalClose.addEventListener('click', closeModal);
-      modal.addEventListener('click', function (event) { if (event.target === modal) closeModal(); });
-      document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
     })();
   </script>
 </body>
