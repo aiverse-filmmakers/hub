@@ -191,7 +191,14 @@
       line-height: 1.2;
       letter-spacing: -.04em;
     }
-    .hero-copy p:not(.eyebrow):not(.hero-lead) {
+    .hero-subline {
+      margin: -12px 0 30px;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 720;
+      letter-spacing: -.02em;
+    }
+    .hero-copy p:not(.eyebrow):not(.hero-lead):not(.hero-subline) {
       max-width: 520px;
       margin-bottom: 30px;
       color: var(--muted);
@@ -300,12 +307,34 @@
     .community-ad {
       background: var(--surface);
     }
-    .community-ad-inner {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 32px;
-      align-items: end;
+    .community-ad-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--canvas);
     }
+    .community-cover {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1672 / 941;
+      object-fit: cover;
+    }
+    .community-body {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 26px;
+      align-items: start;
+      padding: 0 32px 32px;
+    }
+    .community-profile {
+      width: 112px;
+      height: 112px;
+      margin-top: -54px;
+      border: 6px solid var(--canvas);
+      border-radius: 24px;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(0,0,0,.16);
+    }
+    .community-copy { padding-top: 25px; }
     .community-ad h2 {
       max-width: 780px;
       margin-bottom: 16px;
@@ -316,8 +345,8 @@
     }
     .community-ad h2 span { color: var(--accent); }
     .community-ad p:not(.eyebrow) {
-      max-width: 650px;
-      margin-bottom: 0;
+      max-width: 720px;
+      margin-bottom: 24px;
       color: var(--muted);
       font-size: 18px;
       line-height: 1.5;
@@ -344,8 +373,8 @@
     .tool-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     .status { color: var(--muted); font-size: 12px; }
     .output {
-      min-height: 490px;
-      max-height: 680px;
+      min-height: 260px;
+      max-height: 300px;
       overflow: auto;
       margin: 0 0 16px;
       padding: 18px;
@@ -400,13 +429,15 @@
 
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; }
-      .community-ad-inner { grid-template-columns: 1fr; align-items: start; }
+      .community-body { grid-template-columns: 1fr; gap: 0; padding: 0 24px 28px; }
+      .community-profile { margin-top: -54px; }
+      .community-copy { padding-top: 18px; }
       .hero-copy { max-width: 700px; }
       .hero-media { max-width: 640px; }
       .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .system-grid { grid-template-columns: 1fr; }
       .tool-grid { grid-template-columns: 1fr; }
-      .output { min-height: 340px; }
+      .output { min-height: 250px; max-height: 300px; }
     }
     @media (max-width: 620px) {
       .wrap { width: min(100% - 28px, 1180px); }
@@ -448,7 +479,7 @@
           <p class="eyebrow">Visual prompt tool</p>
           <h1>MATRIX<br><span>DNA</span></h1>
           <p class="hero-lead">One visual DNA. Any idea.</p>
-          <p>Turn any idea into a premium green-black cinematic image world with wet surfaces, hard atmosphere and a tense film look.</p>
+          <p class="hero-subline">Steal the prompt</p>
           <div class="button-row">
             <a class="button button-primary" href="#prompt">Use the prompt</a>
             <a class="button button-secondary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Join AI-Verse</a>
@@ -456,19 +487,25 @@
         </div>
         <figure class="hero-media">
           <img src="assets/00-collage-cover.webp" width="1080" height="1350" alt="Eight original Matrix DNA scenes arranged as one collage">
-          <figcaption class="hero-note">A repeatable cinematic look for any idea.</figcaption>
+          <figcaption class="hero-note">A repeatable Matrix look for any idea</figcaption>
         </figure>
       </div>
     </section>
 
     <section class="section community-ad">
-      <div class="wrap community-ad-inner">
-        <div>
-          <p class="eyebrow">AI-Verse community</p>
-          <h2>Stop making one-off images.<br><span>Build worlds people remember.</span></h2>
-          <p>Learn cinematic AI image, video and sound workflows with practical guidance, real feedback and a community that keeps making.</p>
+      <div class="wrap">
+        <div class="community-ad-card">
+          <img class="community-cover" src="assets/aiverse-community-cover.webp" width="1672" height="941" alt="AI-Verse community cover with the words Create Anything">
+          <div class="community-body">
+            <img class="community-profile" src="assets/aiverse-community-profile.webp" width="1254" height="1254" alt="AI-Verse profile image">
+            <div class="community-copy">
+              <p class="eyebrow">AI-Verse community</p>
+              <h2>Create professional AI ads and cinematic content.</h2>
+              <p>Join AI-VERSE, 350+ members and create professional AI ads and cinematic content from your phone or PC. No experience needed. Make your first client-ready visual by Day 2.</p>
+              <a class="button button-primary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Start your 7-day free trial</a>
+            </div>
+          </div>
         </div>
-        <a class="button button-primary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Start your 7-day free trial</a>
       </div>
     </section>
 
