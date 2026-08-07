@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Matrix DNA is a reusable AI-Verse visual prompt tool for building one premium sterile cyber-noir image world around any idea.">
+  <meta property="og:title" content="Matrix DNA | AI-Verse Filmmakers">
+  <meta property="og:description" content="One visual DNA. Any idea. Explore the look and build your own Matrix DNA prompt.">
+  <meta property="og:image" content="https://aiverse-filmmakers.github.io/hub/matrix-dna/assets/00-collage-cover.webp">
+  <meta name="theme-color" id="themeColor" content="#ffffff">
+  <title>Matrix DNA | AI-Verse Filmmakers</title>
+  <script>
+    (function () {
+      const saved = localStorage.getItem('aiverse-theme');
+      const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (systemDark ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+    })();
+  </script>
+  <style>
+    :root,
+    html[data-theme="light"] {
+      color-scheme: light;
+      --canvas: #ffffff;
+      --surface: #f5f5f7;
+      --surface-strong: #ededf0;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --faint: #86868b;
+      --line: rgba(29, 29, 31, .14);
+      --line-strong: rgba(29, 29, 31, .25);
+      --accent: #a8f34f;
+      --accent-text: #183008;
+      --accent-soft: rgba(168, 243, 79, .18);
+      --nav: rgba(255, 255, 255, .84);
+      --code: #f0f0f2;
+      --shadow: 0 22px 70px rgba(0, 0, 0, .12);
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --canvas: #000000;
+      --surface: #111111;
+      --surface-strong: #181818;
+      --text: #f5f5f7;
+      --muted: #a1a1a6;
+      --faint: #86868b;
+      --line: rgba(255, 255, 255, .16);
+      --line-strong: rgba(255, 255, 255, .28);
+      --accent: #c4ff56;
+      --accent-text: #101b05;
+      --accent-soft: rgba(196, 255, 86, .16);
+      --nav: rgba(0, 0, 0, .84);
+      --code: #0d0d0e;
+      --shadow: none;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--canvas); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      overflow-x: hidden;
+      background: var(--canvas);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color .18s ease, color .18s ease;
+    }
+    body.modal-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, textarea { font: inherit; }
+    button { color: inherit; }
+    img { display: block; max-width: 100%; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+    .wrap { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 56px;
+      background: var(--nav);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+    }
+    .header-inner {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 56px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .12em;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .header-link { color: var(--muted); font-size: 13px; }
+    .header-link:hover { color: var(--text); }
+    .theme-switch {
+      width: 58px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+    }
+    .switch-track {
+      position: relative;
+      width: 50px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-strong);
+    }
+    .switch-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--text);
+      color: var(--canvas);
+      transition: transform .2s cubic-bezier(.2, .8, .2, 1);
+    }
+    html[data-theme="dark"] .switch-thumb { transform: translateX(20px); }
+    .switch-symbol { font-size: 13px; line-height: 1; }
+    .sun { display: inline; }
+    .moon { display: none; }
+    html[data-theme="dark"] .sun { display: none; }
+    html[data-theme="dark"] .moon { display: inline; }
+
+    .hero {
+      padding: 86px 0 94px;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .82fr) minmax(420px, 1.18fr);
+      gap: clamp(38px, 7vw, 100px);
+      align-items: center;
+    }
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 760;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 600px;
+      margin-bottom: 24px;
+      font-size: clamp(70px, 12vw, 150px);
+      line-height: .82;
+      letter-spacing: -.09em;
+      font-weight: 720;
+    }
+    h1 span { color: var(--accent); }
+    .hero-lead {
+      max-width: 520px;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: clamp(21px, 2.3vw, 29px);
+      line-height: 1.2;
+      letter-spacing: -.04em;
+    }
+    .hero-copy p:not(.eyebrow):not(.hero-lead) {
+      max-width: 520px;
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.58;
+    }
+    .button-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .button {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 19px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .16s ease, background-color .16s ease, border-color .16s ease;
+    }
+    .button:hover { transform: translateY(-1px); }
+    .button-primary { background: var(--accent); color: var(--accent-text); }
+    .button-primary:hover { background: #d2ff87; }
+    .button-secondary { border-color: var(--line-strong); background: var(--canvas); color: var(--text); }
+    .hero-media { margin: 0; position: relative; }
+    .hero-media img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .hero-note {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      max-width: 210px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(0,0,0,.66);
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.35;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .section { padding: 104px 0; border-bottom: 1px solid var(--line); }
+    .section-heading { max-width: 700px; margin-bottom: 42px; }
+    .section-heading h2 {
+      margin-bottom: 14px;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: .94;
+      letter-spacing: -.075em;
+      font-weight: 680;
+    }
+    .section-heading p { margin-bottom: 0; color: var(--muted); font-size: 18px; line-height: 1.5; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .frame {
+      position: relative;
+      padding: 0;
+      border: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--surface);
+      cursor: zoom-in;
+      text-align: left;
+    }
+    .frame img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .35s ease; }
+    .frame:hover img { transform: scale(1.035); }
+    .frame-meta {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      left: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 10px;
+      color: #fff;
+      text-shadow: 0 1px 4px rgba(0,0,0,.8);
+      pointer-events: none;
+    }
+    .frame-index { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    .frame-name { max-width: 78%; font-size: 12px; font-weight: 650; text-align: right; }
+
+    .system-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+    .system-item { min-height: 180px; padding: 24px; background: var(--canvas); }
+    .system-item strong { display: block; margin-bottom: 12px; font-size: 16px; }
+    .system-item p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.48; }
+    .accent-line { width: 36px; height: 3px; margin-bottom: 24px; background: var(--accent); }
+
+    .tool-grid { display: grid; grid-template-columns: minmax(280px, .78fr) minmax(0, 1.22fr); gap: 22px; align-items: start; }
+    .tool-panel, .output-panel { border: 1px solid var(--line); background: var(--surface); padding: 26px; }
+    .tool-panel h3, .output-panel h3 { margin-bottom: 10px; font-size: 27px; letter-spacing: -.05em; }
+    .tool-panel > p, .output-panel > p { margin-bottom: 24px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+    .field { margin-bottom: 18px; }
+    .field label { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .field textarea {
+      width: 100%;
+      min-height: 112px;
+      resize: vertical;
+      padding: 13px 14px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      background: var(--canvas);
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .field textarea:focus { border-color: var(--accent); outline: 0; }
+    .tool-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .status { color: var(--muted); font-size: 12px; }
+    .output {
+      min-height: 490px;
+      max-height: 680px;
+      overflow: auto;
+      margin: 0 0 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--code);
+      color: var(--text);
+      font: 13px/1.58 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .cta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: end;
+    }
+    .cta h2 { max-width: 690px; margin-bottom: 14px; font-size: clamp(42px, 6vw, 76px); line-height: .94; letter-spacing: -.075em; }
+    .cta p { max-width: 600px; margin-bottom: 0; color: var(--muted); font-size: 17px; line-height: 1.5; }
+    .keyword { color: var(--accent); }
+
+    .site-footer { padding: 30px 0 46px; color: var(--muted); font-size: 13px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+    .footer-inner a { text-decoration: underline; text-underline-offset: 4px; }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      background: rgba(0,0,0,.84);
+    }
+    .modal.open { display: grid; }
+    .modal-inner { position: relative; width: min(680px, 100%); }
+    .modal img { width: 100%; max-height: 84vh; object-fit: contain; border: 1px solid rgba(255,255,255,.2); }
+    .modal-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.4);
+      border-radius: 50%;
+      background: #000;
+      color: #fff;
+      font-size: 23px;
+      cursor: pointer;
+    }
+    .modal-caption { margin-top: 12px; color: #fff; font-size: 14px; }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-copy { max-width: 700px; }
+      .hero-media { max-width: 640px; }
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .system-grid { grid-template-columns: 1fr; }
+      .tool-grid { grid-template-columns: 1fr; }
+      .output { min-height: 340px; }
+    }
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 28px, 1180px); }
+      .header-link { display: none; }
+      .hero { padding: 58px 0 64px; }
+      .section { padding: 72px 0; }
+      h1 { font-size: clamp(68px, 22vw, 110px); }
+      .hero-media img { border-radius: 18px; }
+      .gallery { gap: 8px; }
+      .frame { border-radius: 12px; }
+      .frame-name { display: none; }
+      .tool-panel, .output-panel { padding: 18px; }
+      .cta { grid-template-columns: 1fr; align-items: start; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../"><span class="brand-mark" aria-hidden="true"></span>AI-VERSE FILMMAKERS</a>
+      <div class="header-actions">
+        <a class="header-link" href="../artifacts.html">Member tools</a>
+        <a class="header-link" href="https://www.skool.com/bogdans-ai-verse-4398/about">Join AI-Verse</a>
+        <button class="theme-switch" id="themeSwitch" type="button" role="switch" aria-checked="false" aria-label="Switch to dark mode">
+          <span class="switch-track" aria-hidden="true"><span class="switch-thumb"><span class="switch-symbol sun">☀</span><span class="switch-symbol moon">☾</span></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Visual prompt tool</p>
+          <h1>MATRIX<br><span>DNA</span></h1>
+          <p class="hero-lead">One visual DNA. Any idea.</p>
+          <p>Take any subject and place it inside one deliberate photographic world: fluorescent practicals, wet steel, dark glass, hard glare, green-black shadows and tense Super 35mm perspective.</p>
+          <div class="button-row">
+            <a class="button button-primary" href="#prompt">Use the prompt</a>
+            <a class="button button-secondary" href="#look">See the look</a>
+          </div>
+        </div>
+        <figure class="hero-media">
+          <img src="assets/00-collage-cover.webp" width="1080" height="1350" alt="Eight original Matrix DNA scenes arranged as one collage">
+          <figcaption class="hero-note">A fresh text-only proof set. No classroom reference images reused.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="look">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="eyebrow">The proof set</p>
+          <h2>Same visual world.<br>Different ideas.</h2>
+          <p>The DNA stays fixed while the subject changes. Open any frame to inspect it at full size.</p>
+        </div>
+        <div class="gallery">
+          <button class="frame" type="button" data-image="01-turbine-man.webp" data-title="1/8. Turbine worker">
+            <img src="assets/01-turbine-man.webp" width="1080" height="1350" alt="Turbine worker in a fluorescent hydroelectric power station">
+            <span class="frame-meta"><span class="frame-index">1/8</span><span class="frame-name">Turbine worker</span></span>
+          </button>
+          <button class="frame" type="button" data-image="02-ceramic-bottle.webp" data-title="2/8. Ceramic object">
+            <img src="assets/02-ceramic-bottle.webp" width="1080" height="1350" alt="Unbranded black ceramic bottle on an industrial turntable">
+            <span class="frame-meta"><span class="frame-index">2/8</span><span class="frame-name">Ceramic object</span></span>
+          </button>
+          <button class="frame" type="button" data-image="03-raven-pipe.webp" data-title="3/8. Raven on chrome">
+            <img src="assets/03-raven-pipe.webp" width="1080" height="1350" alt="Black raven on a wet chrome service pipe">
+            <span class="frame-meta"><span class="frame-index">3/8</span><span class="frame-name">Raven on chrome</span></span>
+          </button>
+          <button class="frame" type="button" data-image="04-freight-locomotive.webp" data-title="4/8. Freight locomotive">
+            <img src="assets/04-freight-locomotive.webp" width="1080" height="1350" alt="Matte black freight locomotive in an underground maintenance bay">
+            <span class="frame-meta"><span class="frame-index">4/8</span><span class="frame-name">Freight locomotive</span></span>
+          </button>
+          <button class="frame" type="button" data-image="05-visor-portrait.webp" data-title="5/8. Industrial visor">
+            <img src="assets/05-visor-portrait.webp" width="1080" height="1350" alt="Worker behind a clear industrial face shield">
+            <span class="frame-meta"><span class="frame-index">5/8</span><span class="frame-name">Industrial visor</span></span>
+          </button>
+          <button class="frame" type="button" data-image="06-flooded-stairwell.webp" data-title="6/8. Flooded stairwell">
+            <img src="assets/06-flooded-stairwell.webp" width="1080" height="1350" alt="Flooded brutalist stairwell with fluorescent lights">
+            <span class="frame-meta"><span class="frame-index">6/8</span><span class="frame-name">Flooded stairwell</span></span>
+          </button>
+          <button class="frame" type="button" data-image="07-evidence-capsule.webp" data-title="7/8. Evidence capsule">
+            <img src="assets/07-evidence-capsule.webp" width="1080" height="1350" alt="Sealed transparent evidence capsule on a steel laboratory bench">
+            <span class="frame-meta"><span class="frame-index">7/8</span><span class="frame-name">Evidence capsule</span></span>
+          </button>
+          <button class="frame" type="button" data-image="08-helicopter-hero.webp" data-title="8/8. Grounded helicopter">
+            <img src="assets/08-helicopter-hero.webp" width="1080" height="1350" alt="Grounded black utility helicopter in a flooded underground hangar">
+            <span class="frame-meta"><span class="frame-index">8/8</span><span class="frame-name">Grounded helicopter</span></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="eyebrow">The visual DNA</p>
+          <h2>Lock the behaviour,<br>not just the colour.</h2>
+          <p>The result should feel photographed as one world, not recoloured by a flat green filter.</p>
+        </div>
+        <div class="system-grid">
+          <article class="system-item"><div class="accent-line"></div><strong>Light has a source</strong><p>Fluorescent tubes, reflected glare and practical fixtures create the green. No random neon wash.</p></article>
+          <article class="system-item"><div class="accent-line"></div><strong>Materials carry the frame</strong><p>Chrome, wet concrete, dark glass, black technical fabric and water respond to the actual light.</p></article>
+          <article class="system-item"><div class="accent-line"></div><strong>The camera creates pressure</strong><p>A close, slightly wide Super 35mm feeling gives the frame geometry, tension and controlled perspective.</p></article>
+          <article class="system-item"><div class="accent-line"></div><strong>Highlights stay restrained</strong><p>Desaturated highlights and deep green-black shadows keep the image cinematic instead of glossy and synthetic.</p></article>
+          <article class="system-item"><div class="accent-line"></div><strong>Every object has weight</strong><p>Props, garments, reflections, shadows, rain and water need a believable physical cause.</p></article>
+          <article class="system-item"><div class="accent-line"></div><strong>The idea stays yours</strong><p>Change the subject, location and action. Keep the visual treatment recognisable across the whole set.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="prompt">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="eyebrow">Prompt tool</p>
+          <h2>Put your idea<br>through the DNA.</h2>
+          <p>Enter a subject and an optional direction. The tool keeps the visual system fixed while leaving the idea open.</p>
+        </div>
+        <div class="tool-grid">
+          <div class="tool-panel">
+            <h3>Your idea</h3>
+            <p>Keep the input simple. The production logic stays underneath.</p>
+            <div class="field">
+              <label for="idea">Your idea or subject</label>
+              <textarea id="idea" placeholder="A black ceramic helmet on a flooded archive table.">An adult worker beside a colossal hydroelectric turbine in a wet power station.</textarea>
+            </div>
+            <div class="field">
+              <label for="direction">Optional director's direction</label>
+              <textarea id="direction" placeholder="Camera distance, action, material or environment.">Low three-quarter camera, fitted black technical suit, fluorescent maintenance tubes, no loose fabric.</textarea>
+            </div>
+            <div class="tool-actions">
+              <button class="button button-primary" id="buildPrompt" type="button">Build prompt</button>
+              <span class="status" id="buildStatus" aria-live="polite">Ready</span>
+            </div>
+          </div>
+          <div class="output-panel">
+            <h3>Copyable prompt</h3>
+            <p>Use the output in your image model, then run the physical-logic gate before keeping the result.</p>
+            <pre class="output" id="promptOutput" tabindex="0"></pre>
+            <div class="tool-actions">
+              <button class="button button-primary" id="copyPrompt" type="button">Copy prompt</button>
+              <span class="status" id="copyStatus" aria-live="polite"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap cta">
+        <div>
+          <p class="eyebrow">AI-Verse workflow</p>
+          <h2>Want this look in your own projects?</h2>
+          <p>Comment <strong class="keyword">MATRIXDNA</strong> on the post and get the full reusable workflow through DM.</p>
+        </div>
+        <a class="button button-primary" href="https://www.skool.com/bogdans-ai-verse-4398/about">Join AI-Verse</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>AI-Verse Filmmakers</span>
+      <span><a href="https://www.skool.com/bogdans-ai-verse-4398/classroom/2ea1df59?md=5588cf1329dc4a1c9aed3f056afb56fa">Source: The Prism / The Matrix</a></span>
+    </div>
+  </footer>
+
+  <div class="modal" id="imageModal" role="dialog" aria-modal="true" aria-label="Expanded Matrix DNA frame">
+    <div class="modal-inner">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close image">×</button>
+      <img id="modalImage" src="" alt="">
+      <div class="modal-caption" id="modalCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const themeSwitch = document.getElementById('themeSwitch');
+      const themeColor = document.getElementById('themeColor');
+
+      function setTheme(theme) {
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        localStorage.setItem('aiverse-theme', theme);
+        themeSwitch.setAttribute('aria-checked', theme === 'dark' ? 'true' : 'false');
+        themeSwitch.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        themeColor.setAttribute('content', theme === 'dark' ? '#000000' : '#ffffff');
+      }
+      setTheme(root.dataset.theme || 'light');
+      themeSwitch.addEventListener('click', function () {
+        setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+      });
+
+      const fixedDNA = `Create one standalone finished cinematic image from the user's idea. Preserve the actual identity, function, anatomy, scale, pose, wardrobe construction, product proportions and physical context of the supplied subject. Do not replace the user's idea with a generic cyberpunk scene.
+
+The final image must feel like an original premium photographic frame from a sterile cyber-noir world, using the fixed MATRIX DNA visual treatment below. Do not recreate a recognisable film frame, actor, character, logo, title, costume, trademarked prop or specific movie composition.
+
+MATRIX DNA VISUAL TREATMENT:
+
+Super 35mm film capture with a restrained green-phosphor cast. The green must come from believable fluorescent practicals, reflected tube light, glass, chrome, wet surfaces and atmospheric bounce, not from a flat green colour filter. Use desaturated highlight tones, controlled low global contrast, open but deep green-black shadows, hard directional lighting and sharp fluorescent glare. Keep practical light sources visible or physically inferable in the environment.
+
+Build the scene from sterile industrial materials: reflective black leather or latex where appropriate, chrome, brushed steel, dark glass, wet concrete, polished tile and humid air. Let hard fluorescent streaks travel across those materials. Use a close, slightly wide-angle Super 35mm camera feeling with subtle perspective exaggeration, natural edge falloff and a small amount of believable barrel or spatial distortion. Keep the main subject sharply readable while retaining cinematic depth and background atmosphere.
+
+The composition should feel intentional and tense: strong geometric lines, glass divisions, reflective surfaces, controlled negative space, asymmetrical framing and motivated practical light. The image may feel strange or heightened, but every object must obey gravity, contact, scale, construction and light direction. Steam, rain, smoke, reflections and glare must have a visible physical cause. Garments remain attached to the person. Suspended objects require a visible support, sealed display or clearly explained physical setup.
+
+Keep the palette restrained: black-green shadows, oxidised green midtones, pale fluorescent whites and very small neutral or dirty amber accents only when motivated by the scene. Do not flood everything with neon green. Do not add rainbow cyberpunk lighting, random holograms, falling code, fake UI, glowing symbols or decorative tech clutter unless the user specifically asks for those elements.
+
+Make the result look photographed, tactile and premium, with natural skin, credible materials, physically accurate reflections, restrained organic film grain, subtle lens character and clean tonal transitions. No generated typography, logos, watermarks, borders, collages or contact sheets.
+
+Reject floating fabric, detached clothing, unexplained suspended props, impossible contact, broken hands, extra fingers, duplicated objects, warped product geometry, disconnected reflections, light that has no source, random steam or smoke, weightless vehicles, impossible architecture and subject-scale errors. Regenerate from the original idea if any of these appear.
+
+Avoid synthetic repeated micro-textures often produced by ChatGPT Images: tiny speckles, dots, flecks, stamped grain, stippling, cross-hatching, pixel clusters, visible tiling, mosquito noise, crunchy micro-contrast and oversharpened edges across skin, hair, fabric, clouds, foliage, stone, water or shadows. Each material must have its own physically appropriate, naturally irregular surface detail, with clean tonal transitions and smooth gradients. Preserve authentic film grain, sensor texture, pores, fibres and organic material detail only where physically appropriate. Do not remove real film grain. The image must look genuinely photographed at pixel level, without synthetic texture stamping, fake detail, waxy smoothing or plastic surfaces.
+
+RENDER: ARRI Alexa 35 colour response, cinema-prime lens behaviour, natural film grain, organic imperfect textures, gravity-accurate physics, raw tactile materials, controlled highlight rolloff, no CGI aesthetic, not overly contrasty.`;
+
+      const idea = document.getElementById('idea');
+      const direction = document.getElementById('direction');
+      const promptOutput = document.getElementById('promptOutput');
+      const buildPrompt = document.getElementById('buildPrompt');
+      const buildStatus = document.getElementById('buildStatus');
+      const copyPrompt = document.getElementById('copyPrompt');
+      const copyStatus = document.getElementById('copyStatus');
+
+      function renderPrompt() {
+        const subject = idea.value.trim() || '[Describe your idea or subject]';
+        const director = direction.value.trim();
+        promptOutput.textContent = `${subject}\n\n${director ? director + '\n\n' : ''}${fixedDNA}`;
+        buildStatus.textContent = 'Prompt ready';
+      }
+      buildPrompt.addEventListener('click', renderPrompt);
+      idea.addEventListener('input', function () { buildStatus.textContent = 'Changes not built'; });
+      direction.addEventListener('input', function () { buildStatus.textContent = 'Changes not built'; });
+      renderPrompt();
+
+      copyPrompt.addEventListener('click', async function () {
+        try {
+          await navigator.clipboard.writeText(promptOutput.textContent);
+          copyStatus.textContent = 'Copied';
+        } catch (error) {
+          copyStatus.textContent = 'Select the text and copy it';
+        }
+        window.setTimeout(function () { copyStatus.textContent = ''; }, 2400);
+      });
+
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalCaption = document.getElementById('modalCaption');
+      const modalClose = document.getElementById('modalClose');
+      let lastTrigger = null;
+
+      function closeModal() {
+        modal.classList.remove('open');
+        document.body.classList.remove('modal-open');
+        modalImage.src = '';
+        if (lastTrigger) lastTrigger.focus();
+      }
+      document.querySelectorAll('.frame').forEach(function (frame) {
+        frame.addEventListener('click', function () {
+          lastTrigger = frame;
+          modalImage.src = 'assets/' + frame.dataset.image;
+          modalImage.alt = frame.querySelector('img').alt;
+          modalCaption.textContent = frame.dataset.title;
+          modal.classList.add('open');
+          document.body.classList.add('modal-open');
+          modalClose.focus();
+        });
+      });
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (event) { if (event.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+    })();
+  </script>
+</body>
+</html>
