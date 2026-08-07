@@ -7,13 +7,12 @@
   <meta property="og:title" content="Matrix DNA | AI-Verse Filmmakers">
   <meta property="og:description" content="One visual DNA. Any idea. Explore the look and build your own Matrix DNA prompt.">
   <meta property="og:image" content="https://aiverse-filmmakers.github.io/hub/matrix-dna/assets/00-collage-cover.webp">
-  <meta name="theme-color" id="themeColor" content="#ffffff">
+  <meta name="theme-color" id="themeColor" content="#000000">
   <title>Matrix DNA | AI-Verse Filmmakers</title>
   <script>
     (function () {
       const saved = localStorage.getItem('aiverse-theme');
-      const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = saved || (systemDark ? 'dark' : 'light');
+      const theme = saved || 'dark';
       document.documentElement.dataset.theme = theme;
       document.documentElement.style.colorScheme = theme;
     })();
