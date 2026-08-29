@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Member Tools | AI-Verse Filmmakers</title>
   <meta name="description" content="AI-Verse Filmmakers member tools and browser artifacts." />
+  <link rel="canonical" href="https://aiverse-filmmakers.github.io/hub/artifacts.html" />
+  <meta property="og:title" content="Member Tools | AI-Verse Filmmakers" />
+  <meta property="og:description" content="Practical browser tools for planning, creating and finishing stronger AI films." />
+  <meta property="og:url" content="https://aiverse-filmmakers.github.io/hub/artifacts.html" />
+  <meta property="og:type" content="website" />
   <style>
     :root {
       --page: #f5f5f7;
@@ -96,6 +101,7 @@
     (async function() {
       const grid = document.getElementById('grid');
       const api = 'https://api.github.com/repos/aiverse-filmmakers/hub/contents/';
+      const fallback = './tool-registry.json';
       const excluded = new Set(['assets', 'artifacts', '.github', 'portfolio-builder']);
 
       try {
@@ -133,7 +139,30 @@
           grid.appendChild(card);
         });
       } catch (err) {
-        grid.innerHTML = '<div class="placeholder">More member tools coming soon.</div>';
+        try {
+          const local = await fetch(fallback);
+          if (!local.ok) throw new Error('Fallback unavailable');
+          const items = await local.json();
+          grid.innerHTML = '';
+          // Registry values are local repository data; labels use textContent below.
+          items.forEach(dir => {
+            const card = document.createElement('a');
+            card.className = 'card';
+            card.href = dir.href;
+            const top = document.createElement('div');
+            const label = document.createElement('p');
+            label.className = 'kicker';
+            label.textContent = 'Tool';
+            const title = document.createElement('div');
+            title.className = 'card-name';
+            title.textContent = dir.name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            top.append(label, title);
+            card.append(top);
+            grid.appendChild(card);
+          });
+        } catch (fallbackErr) {
+          grid.innerHTML = '<div class="placeholder">More member tools coming soon.</div>';
+        }
       }
     })();
   </script>

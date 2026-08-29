@@ -1,0 +1,27 @@
+[
+  {
+    "name": "ai-ad-agency-blueprint",
+    "type": "dir",
+    "href": "./ai-ad-agency-blueprint/"
+  },
+  {
+    "name": "animation-to-realism-studio",
+    "type": "dir",
+    "href": "./animation-to-realism-studio/"
+  },
+  {
+    "name": "build-your-portfolio",
+    "type": "dir",
+    "href": "./build-your-portfolio/"
+  },
+  {
+    "name": "camera-movements",
+    "type": "dir",
+    "href": "./camera-movements/"
+  },
+  {
+    "name": "vintage-2000-campaigns",
+    "type": "dir",
+    "href": "./vintage-2000-campaigns/"
+  }
+]
