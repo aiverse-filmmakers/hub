@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /hub/
+Disallow: /hub/.git/
+Sitemap: https://aiverse-filmmakers.github.io/hub/sitemap.xml
