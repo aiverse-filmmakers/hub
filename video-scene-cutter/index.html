@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta name="description" content="Find scene changes, review the cuts, and export clips with first and last frames.">
+<title>Video Scene Cutter · AI-Verse</title>
+<link rel="stylesheet" href="styles.css"><script src="config.js" defer></script><script src="app.js" defer></script>
+</head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><span class="brand">AI-VERSE<span class="brand-dot" aria-hidden="true">●</span></span><span class="eyebrow">CREATOR TOOLS</span></header>
+<main id="main">
+<section class="intro"><p class="eyebrow">VIDEO SCENE CUTTER</p><h1>One video.<br>Every scene, ready.</h1><p class="lead">Find scene changes. Review the cuts. Download clips and their first and last frames.</p></section>
+<div class="connection"><span id="health" role="status">Checking processing service…</span><button id="check" class="text-button" type="button">Check again</button></div>
+<section class="panel" aria-labelledby="upload-title"><div class="section-head"><h2 id="upload-title">01 / Add your video</h2><button id="reset" class="text-button" type="button" hidden>Start over</button></div>
+<form id="upload-form"><label for="file" class="file-label">Choose a video <span>MP4, MOV, WebM or AVI · up to 100 MB, 5 minutes, 4K</span></label><input id="file" type="file" accept="video/*,.mp4,.mov,.mkv,.webm,.avi,.m4v" required aria-describedby="privacy file-info"><p id="file-info" class="muted">No video selected.</p><p id="privacy" class="small muted">Temporary processing connection. Files are private to this session and deleted within 24 hours, or sooner if the service restarts. Keep this page open and download before leaving.</p><button id="upload" type="submit" disabled>Find cuts <span aria-hidden="true">↗</span></button></form>
+<div id="source-wrap" hidden><video id="source" controls playsinline preload="metadata" aria-label="Original video preview"></video><p id="preview-note" class="small muted">Original video preview. Detected cuts may need adjustment.</p></div></section>
+<section id="progress-panel" class="panel" hidden aria-labelledby="progress-title"><h2 id="progress-title">Processing video</h2><p id="status" role="status" aria-live="polite"></p><progress id="progress" max="100" aria-label="Processing progress"></progress><button id="cancel" type="button" class="secondary">Cancel</button></section>
+<div id="error-panel" class="error" hidden><p id="error" role="alert"></p><button id="retry" type="button" class="secondary" hidden>Try again</button></div>
+<section id="review" class="panel" hidden aria-labelledby="review-title"><h2 id="review-title" tabindex="-1">02 / Review the cuts</h2><p id="metadata" class="muted"></p><p id="cut-summary"></p><p class="small muted">Each cut starts a new scene. Check the frames on both sides; automatic detection can miss or add a cut.</p><ol id="cuts" class="cuts"></ol>
+<details id="adjust"><summary>Adjust cuts</summary><p class="small muted">Frames are numbered from 0. Use the controls on each cut to move it one frame or remove it.</p><form id="add-form" class="add-form"><label for="add-frame">Add a cut at frame</label><div class="row"><input id="add-frame" type="number" min="1" step="1" inputmode="numeric" required><button type="submit" class="secondary">Add cut</button></div></form><button id="restore" type="button" class="text-button">Restore detected cuts</button></details>
+<p id="edit-status" class="small" role="status"></p><button id="export" type="button">Export scenes <span aria-hidden="true">↗</span></button></section>
+<section id="results" class="panel" hidden aria-labelledby="results-title"><h2 id="results-title" tabindex="-1">03 / Download your scenes</h2><p class="muted">Download individually or choose a ZIP. Files open directly from the processing service.</p><div id="archives" class="archives"></div><ol id="scenes" class="scenes"></ol><button id="back" type="button" class="secondary">Back to cuts</button><p class="small muted">Save your files before leaving this page. Downloads may expire on the service.</p></section>
+</main><footer>AI-VERSE <span>Make room for the creative work.</span></footer></body></html>
