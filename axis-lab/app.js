@@ -16,35 +16,73 @@
   function trimmed(input, max, fallback) {
     return typeof input === "string" ? input.slice(0, max).trim() : fallback;
   }
+
+  var GRID_PIXELS = 80;
+  var MAX_SUBJECTS = 8;
+  var SWATCHES = ["#a2d5bd", "#d8a18d", "#adc0ef", "#e7cf88", "#c2aae4", "#ecb7bd", "#9fc8ca", "#d6c4a5"];
+  function defaultSubjects() {
+    return [{ id: "a", name: "Performer A", x: 390, y: 300 },
+            { id: "b", name: "Performer B", x: 570, y: 300 }];
+  }
   function initialState() {
     return {
-      version: 1, scene: "", aName: "Performer A", bName: "Performer B",
-      a: { x: 300, y: 300 }, b: { x: 660, y: 300 }, cam: { x: 480, y: 505 },
+      version: 2, scene: "", aName: "Performer A", bName: "Performer B",
+      a: { x: 390, y: 300 }, b: { x: 570, y: 300 }, cam: { x: 480, y: 520 },
+      subjects: defaultSubjects(), nextSubjectIndex: 2, gridMetres: 1,
       size: "medium", move: "Locked-off", intent: "", shots: [], active: -1
     };
   }
   var allowedSizes = ["wide", "medium", "close"];
   var allowedMoves = ["Locked-off", "Handheld", "Dolly", "Gimbal", "FPV / drone", "Orbit"];
+  var gridOptions = [0.5, 1, 2];
+  function subjectLabel(id) { return String(id || "?").toUpperCase(); }
+  function normalizeSubjects(raw, fallback) {
+    var source = Array.isArray(raw) && raw.length ? raw : fallback;
+    var used = {};
+    var subjects = [];
+    source.slice(0, MAX_SUBJECTS).forEach(function (entry, index) {
+      if (!entry || typeof entry !== "object") return;
+      var id = trimmed(entry.id, 6, "") || String.fromCharCode(97 + index);
+      if (!/^[a-z][a-z0-9]*$/.test(id) || used[id]) return;
+      used[id] = true;
+      var location = point(entry, { x: 390 + index * 30, y: 300 });
+      subjects.push({ id: id, name: trimmed(entry.name, 50, "") || "Performer " + subjectLabel(id), x: location.x, y: location.y });
+    });
+    return subjects.length ? subjects : defaultSubjects();
+  }
+  function legacySubjects(raw) {
+    var base = initialState();
+    return [{ id: "a", name: trimmed(raw.aName, 50, base.aName) || base.aName, x: point(raw.a, base.a).x, y: point(raw.a, base.a).y },
+            { id: "b", name: trimmed(raw.bName, 50, base.bName) || base.bName, x: point(raw.b, base.b).x, y: point(raw.b, base.b).y }];
+  }
   function safeShot(raw) {
     if (!raw || typeof raw !== "object") return null;
     var base = initialState();
+    var cast = normalizeSubjects(raw.subjects, legacySubjects(raw));
     return {
-      a: point(raw.a, base.a), b: point(raw.b, base.b), cam: point(raw.cam, base.cam),
-      size: allowedSizes.indexOf(raw.size) >= 0 ? raw.size : "medium",
-      move: allowedMoves.indexOf(raw.move) >= 0 ? raw.move : "Locked-off",
+      subjects: cast, a: { x: cast[0].x, y: cast[0].y },
+      b: cast.length > 1 ? { x: cast[1].x, y: cast[1].y } : { x: cast[0].x, y: cast[0].y },
+      cam: point(raw.cam, base.cam),
+      gridMetres: gridOptions.includes(Number(raw.gridMetres)) ? Number(raw.gridMetres) : 1,
+      size: allowedSizes.includes(raw.size) ? raw.size : "medium",
+      move: allowedMoves.includes(raw.move) ? raw.move : "Locked-off",
       intent: trimmed(raw.intent, 400, "")
     };
   }
   function sanitize(raw) {
-    if (!raw || typeof raw !== "object" || (raw.version !== 1 && raw.format !== "axis-lab-project")) throw new Error("This is not an AXIS LAB project.");
+    if (!raw || typeof raw !== "object" || (![1, 2].includes(raw.version) && raw.format !== "axis-lab-project")) throw new Error("This is not an AXIS LAB project.");
     var base = initialState();
+    var cast = normalizeSubjects(raw.subjects, legacySubjects(raw));
     var cleaned = {
-      version: 1,
-      scene: trimmed(raw.scene, 100, ""), aName: trimmed(raw.aName, 50, base.aName) || base.aName,
-      bName: trimmed(raw.bName, 50, base.bName) || base.bName,
-      a: point(raw.a, base.a), b: point(raw.b, base.b), cam: point(raw.cam, base.cam),
-      size: allowedSizes.indexOf(raw.size) >= 0 ? raw.size : "medium",
-      move: allowedMoves.indexOf(raw.move) >= 0 ? raw.move : "Locked-off",
+      version: 2, scene: trimmed(raw.scene, 100, ""),
+      aName: cast[0].name, bName: cast[1] ? cast[1].name : "",
+      subjects: cast, nextSubjectIndex: Math.max(2, Math.min(26, Math.max(...cast.map(function (x) { return x.id.charCodeAt(0) - 96; })))),
+      a: { x: cast[0].x, y: cast[0].y },
+      b: cast[1] ? { x: cast[1].x, y: cast[1].y } : { x: cast[0].x, y: cast[0].y },
+      cam: point(raw.cam, base.cam),
+      gridMetres: gridOptions.includes(Number(raw.gridMetres)) ? Number(raw.gridMetres) : 1,
+      size: allowedSizes.includes(raw.size) ? raw.size : "medium",
+      move: allowedMoves.includes(raw.move) ? raw.move : "Locked-off",
       intent: trimmed(raw.intent, 400, ""),
       shots: Array.isArray(raw.shots) ? raw.shots.slice(0, MAX_SHOTS).map(safeShot).filter(Boolean) : [],
       active: -1
@@ -58,14 +96,19 @@
   } catch (error) { state = initialState(); }
 
   function el(id) { return document.getElementById(id); }
-  var inputIds = ["sceneName", "actorA", "actorB", "shotSize", "cameraMove", "shotIntent"];
+  function syncLegacy() {
+    var first = state.subjects[0], second = state.subjects[1] || first;
+    state.a = { x: first.x, y: first.y };
+    state.b = { x: second.x, y: second.y };
+    state.aName = first.name;
+    state.bName = state.subjects[1] ? second.name : "";
+  }
   function syncInputs() {
     el("sceneName").value = state.scene;
-    el("actorA").value = state.aName;
-    el("actorB").value = state.bName;
     el("shotSize").value = state.size;
     el("cameraMove").value = state.move;
     el("shotIntent").value = state.intent;
+    el("gridMetres").value = String(state.gridMetres);
   }
   function save() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
@@ -80,37 +123,81 @@
     toastHandle = setTimeout(function () { toast.textContent = ""; }, 6500);
   }
 
+
   function distance(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
+  function metres(a, b, shot) { return distance(a, b) / GRID_PIXELS * (shot.gridMetres || 1); }
+  function measure(m) { return (Math.round(m * 10) / 10).toFixed(1) + " m"; }
+  function midPoint(subjects) {
+    var n = subjects.length || 1;
+    return { x: subjects.reduce(function (sum, p) { return sum + p.x; }, 0) / n,
+             y: subjects.reduce(function (sum, p) { return sum + p.y; }, 0) / n };
+  }
   function axisInfo(shot) {
-    var ax = shot.b.x - shot.a.x, ay = shot.b.y - shot.a.y;
+    var subjects = shot.subjects || legacySubjects(shot);
+    if (subjects.length < 2) return { side: 0, label: "Add second subject", offset: 0 };
+    var a = subjects[0], b = subjects[1];
+    var ax = b.x - a.x, ay = b.y - a.y;
     var length = Math.hypot(ax, ay);
     if (length < 75) return { side: 0, label: "Unclear axis", offset: 0 };
-    var cross = ax * (shot.cam.y - shot.a.y) - ay * (shot.cam.x - shot.a.x);
+    var cross = ax * (shot.cam.y - a.y) - ay * (shot.cam.x - a.x);
     var offset = cross / length;
-    return { side: Math.abs(offset) < 28 ? 0 : (offset > 0 ? 1 : -1), label: Math.abs(offset) < 28 ? "On action axis" : (offset > 0 ? "Side 1" : "Side 2"), offset: offset };
+    return { side: Math.abs(offset) < 28 ? 0 : (offset > 0 ? 1 : -1),
+      label: Math.abs(offset) < 28 ? "On action axis" : (offset > 0 ? "Side 1" : "Side 2"), offset: offset };
+  }
+  function projection(shot) {
+    var subjects = shot.subjects || legacySubjects(shot);
+    var target = midPoint(subjects);
+    var cam = shot.cam;
+    var dx = target.x - cam.x, dy = target.y - cam.y;
+    var len = Math.hypot(dx, dy);
+    if (len < 15) { dx = 0; dy = -1; len = 1; }
+    var f = { x: dx / len, y: dy / len }, right = { x: -f.y, y: f.x };
+    var fov = (shot.size === "wide" ? 90 : shot.size === "close" ? 43 : 68) * Math.PI / 180;
+    var tanH = Math.tan(fov / 2), tanV = tanH * 9 / 16;
+    var meter = (shot.gridMetres || 1) / GRID_PIXELS;
+    var targetDepth = Math.max(0.3, len * meter);
+    var tilt = (1.6 - 0.85) / targetDepth;
+    return subjects.map(function (subject, index) {
+      var relx = subject.x - cam.x, rely = subject.y - cam.y;
+      var depth = relx * f.x + rely * f.y, lateral = relx * right.x + rely * right.y;
+      var dm = depth * meter;
+      var visible = dm > 0.10;
+      var safeDepth = Math.max(dm, 0.25);
+      var x = 50 + (lateral * meter / (2 * safeDepth * tanH)) * 100;
+      var h = 1.7 / (2 * safeDepth * tanV) * 100;
+      var footY = 50 + ((1.6 - tilt * safeDepth) / (2 * safeDepth * tanV)) * 100;
+      var width = 0.58 / (2 * safeDepth * tanH) * 100;
+      return { id: subject.id, name: subject.name, x: x, height: Math.min(h, 280),
+        width: Math.min(width, 65), bottom: 100 - footY,
+        distance: metres(subject, cam, shot), depth: dm, visible: visible,
+        inFrame: visible && x + width / 2 > 0 && x - width / 2 < 100 && footY - h < 100 && footY > 0,
+        color: SWATCHES[index % SWATCHES.length] };
+    });
   }
   function screenProjection(shot) {
-    var target = { x: (shot.a.x + shot.b.x) / 2, y: (shot.a.y + shot.b.y) / 2 };
-    var dx = target.x - shot.cam.x, dy = target.y - shot.cam.y;
-    var len = Math.hypot(dx, dy) || 1;
-    var rx = -dy / len, ry = dx / len;
-    var extent = shot.size === "wide" ? 880 : shot.size === "close" ? 440 : 600;
-    function subjectX(p) { return between(50 + ((p.x - target.x) * rx + (p.y - target.y) * ry) / extent * 100, 9, 91); }
-    return { a: subjectX(shot.a), b: subjectX(shot.b) };
+    var result = {};
+    projection(shot).forEach(function (s) { result[s.id] = s.x; });
+    return result;
   }
   function currentShot() {
+    syncLegacy();
     return {
+      subjects: state.subjects.map(function (p) { return { id: p.id, name: p.name, x: p.x, y: p.y }; }),
       a: { x: state.a.x, y: state.a.y }, b: { x: state.b.x, y: state.b.y },
-      cam: { x: state.cam.x, y: state.cam.y },
+      cam: { x: state.cam.x, y: state.cam.y }, gridMetres: state.gridMetres,
       size: state.size, move: state.move, intent: state.intent
     };
   }
+  function persistActive() {
+    if (state.active >= 0 && state.active < state.shots.length) state.shots[state.active] = currentShot();
+  }
   function prettySize(value) { return value === "wide" ? "Wide" : value === "close" ? "Close" : "Medium"; }
-  function shortName(value) { return (value || "").slice(0, 18).toUpperCase(); }
+  function shortName(value) { return (value || "").slice(0, 16).toUpperCase(); }
   function screenOrder(shot) {
-    var projection = screenProjection(shot);
-    if (Math.abs(projection.a - projection.b) < 4) return "Overlapping sightlines";
-    return projection.a < projection.b ? "A left / B right" : "B left / A right";
+    var onscreen = projection(shot).filter(function (p) { return p.inFrame; }).sort(function (a,b) { return a.x-b.x; });
+    if (!onscreen.length) return "No subjects in frame";
+    if (onscreen.length === 1) return subjectLabel(onscreen[0].id) + " in frame";
+    return onscreen.map(function (p) { return subjectLabel(p.id); }).join(" left → right ");
   }
 
   function redrawFloor() {
