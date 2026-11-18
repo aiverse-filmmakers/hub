@@ -26,7 +26,7 @@ There are no uploads, accounts, remote scripts, AI model calls or fees. The app 
 2. For a smaller or larger set, choose **Metres per grid square**. The default is **1 m** per square.
 3. Under **Floor plan**, choose **A**, **B**, any added subject, or **Camera**. Tap the floor to place them, or drag the labelled marker.
 4. In **Camera preview**, move the camera and the performers at different depths to see near subjects grow larger and far ones shrink. Check the live ground distances underneath.
-5. Tap **+ Position** just above the preview to create shot **1**. Move the camera and create shot **2**. Select numbered tabs to revisit and edit shots.
+5. Tap **+ Position** just above the preview to save shot **1**. Tap **+ Position** again **before** moving the camera to create shot **2**, then reposition it. Selecting a numbered tab lets you edit that saved shot without changing the others.
 6. Tap **Save position diagram** to save/share a PNG showing the spatial arrangement, scale, preview and measured plan distances.
 7. Export the Markdown brief or a JSON backup if you want to share your plan or work on another device.
 
