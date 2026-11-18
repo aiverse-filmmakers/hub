@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d1013">
+  <meta name="description" content="AXIS LAB is a free, private scene-blocking and cut-continuity director for AI filmmakers. Plan a shot before you spend generation credits.">
+  <title>AXIS LAB | AI-Verse Filmmakers</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <div class="app-shell">
+    <header class="masthead">
+      <a class="brand" href="./" aria-label="AXIS LAB home">
+        <span class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-type">AXIS <strong>LAB</strong><small>AN AI-VERSE PRODUCTION TOOL</small></span>
+      </a>
+      <div class="masthead-right"><span class="privacy-indicator"><span class="privacy-dot"></span> LOCAL ONLY</span><button type="button" id="reset" class="text-button">New scene</button></div>
+    </header>
+
+    <div class="hero">
+      <div class="kicker"><span>01 / THE DIRECTOR'S WORKBENCH</span><span>BLOCK · FRAME · CUT</span></div>
+      <h1>Direct the space.<br><em>Before the pixels.</em></h1>
+      <p>Stage two performers, position the camera, and build coverage. See screen direction and possible continuity breaks before you spend another generation credit.</p>
+    </div>
+
+    <main id="workspace" class="workspace">
+      <aside class="panel setup" aria-labelledby="setup-title">
+        <div class="panel-heading"><span class="eyebrow">SETUP / 01</span><h2 id="setup-title">Scene briefing</h2></div>
+        <label for="sceneName">Scene name</label>
+        <input id="sceneName" type="text" maxlength="100" placeholder="Give this scene a name" autocomplete="off">
+        <div class="duo-fields">
+          <div><label for="actorA"><span class="actor-swatch swatch-a"></span> Performer A</label><input id="actorA" type="text" maxlength="50" value="Performer A" autocomplete="off"></div>
+          <div><label for="actorB"><span class="actor-swatch swatch-b"></span> Performer B</label><input id="actorB" type="text" maxlength="50" value="Performer B" autocomplete="off"></div>
+        </div>
+        <div class="form-divider"></div>
+        <div class="panel-heading subheading"><span class="eyebrow">CAMERA / 02</span><h2>Build a setup</h2></div>
+        <label for="shotSize">Framing</label>
+        <select id="shotSize"><option value="wide">Wide / establish</option><option value="medium" selected>Medium / dialogue</option><option value="close">Close / intimate</option></select>
+        <label for="cameraMove">Camera language</label>
+        <select id="cameraMove"><option>Locked-off</option><option>Handheld</option><option>Dolly</option><option>Gimbal</option><option>FPV / drone</option><option>Orbit</option></select>
+        <label for="shotIntent">Story beat <span class="optional">(optional)</span></label>
+        <textarea id="shotIntent" maxlength="400" rows="3" placeholder="What changes for the audience in this shot?"></textarea>
+        <button type="button" class="primary-button" id="capture"><span class="plus-icon">+</span> Capture this setup <span class="button-shortcut">SHOT</span></button>
+        <p class="aside-help">Drag the performers or camera on the floor plan. Every captured shot remembers its own blocking and settings.</p>
+      </aside>
+
+      <section class="panel stage-panel" aria-labelledby="stage-title">
+        <div class="panel-heading stage-heading"><div><span class="eyebrow">BLOCKING / 03</span><h2 id="stage-title">Floor plan</h2></div><span class="micro-label">TOP VIEW · NOT TO SCALE</span></div>
+        <div class="floor-wrap">
+          <svg id="floor" role="img" aria-label="Draggable floor plan with two performers, action axis and camera" viewBox="0 0 960 600">
+            <defs>
+              <pattern id="floorGrid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-opacity=".055" stroke-width="1"/></pattern>
+              <linearGradient id="sideGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8d2c0" stop-opacity=".065"/><stop offset="1" stop-color="#a8d2c0" stop-opacity="0"/></linearGradient>
+            </defs>
+            <rect x="0" y="0" width="960" height="600" fill="#12181c"/>
+            <rect x="0" y="0" width="960" height="600" fill="url(#floorGrid)"/>
+            <rect x="35" y="35" width="890" height="530" rx="4" fill="none" stroke="#d5dccf" stroke-opacity=".13" stroke-dasharray="3 8"/>
+            <text x="54" y="65" class="floor-stamp">PLAN 01 / SCENE SPACE</text>
+            <line id="axisExtended" x1="0" y1="300" x2="960" y2="300" stroke="#c4a878" stroke-width="1.6" stroke-opacity=".64" stroke-dasharray="10 10"/>
+            <line id="axisSolid" x1="300" y1="300" x2="660" y2="300" stroke="#c4a878" stroke-width="2.5"/>
+            <text id="axisLabel" x="480" y="284" text-anchor="middle" class="axis-stamp">AXIS OF ACTION / 180°</text>
+            <path id="cameraCone" fill="#e8c98f" fill-opacity=".07" stroke="#e8c98f" stroke-opacity=".37" stroke-width="1.8"/>
+            <g id="priorCameras"></g>
+            <g class="floor-handle performer-a" id="handleA" tabindex="0" role="button" aria-label="Move performer A using pointer or arrow keys">
+              <circle r="31" class="handle-ring"></circle><circle r="19" class="handle-core"></circle><text class="handle-letter" text-anchor="middle" y="6">A</text><text id="labelA" class="handle-caption" text-anchor="middle" y="58">PERFORMER A</text>
+            </g>
+            <g class="floor-handle performer-b" id="handleB" tabindex="0" role="button" aria-label="Move performer B using pointer or arrow keys">
+              <circle r="31" class="handle-ring"></circle><circle r="19" class="handle-core"></circle><text class="handle-letter" text-anchor="middle" y="6">B</text><text id="labelB" class="handle-caption" text-anchor="middle" y="58">PERFORMER B</text>
+            </g>
+            <g class="floor-handle camera-handle" id="handleCam" tabindex="0" role="button" aria-label="Move camera using pointer or arrow keys">
+              <circle r="34" class="handle-ring"></circle><circle r="24" class="handle-core"></circle><path d="M -9 -7 L 6 -7 L 14 0 L 6 7 L -9 7 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle r="3.5" fill="currentColor"/><text class="handle-caption" text-anchor="middle" y="60">CAMERA</text>
+            </g>
+          </svg>
+          <div class="floor-legend"><span><i class="dot-a"></i> ACTOR A</span><span><i class="dot-b"></i> ACTOR B</span><span><i class="dot-axis"></i> ACTION AXIS</span><span class="drag-note">DRAG TO REPOSITION</span></div>
+        </div>
+        <div class="director-note"><span class="info-glyph">i</span><p><strong>Director's note</strong><span id="directionTip">Keep cameras on the same side of the action axis for predictable screen direction. Crossing can work when you motivate it.</span></p></div>
+      </section>
+
+      <aside class="panel monitor-panel" aria-labelledby="monitor-title">
+        <div class="panel-heading"><span class="eyebrow">MONITOR / 04</span><h2 id="monitor-title">Camera preview</h2></div>
+        <div class="monitor-frame">
+          <div class="monitor-chrome"><span class="rec-dot"></span> LIVE BLOCKING <span>16:9 · SCHEMATIC</span></div>
+          <div class="viewfinder" id="viewfinder">
+            <div class="frame-grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="horizon"></div>
+            <div id="subjectA" class="subject subject-a"><div class="subject-head"></div><div class="subject-body"></div><b>A</b></div>
+            <div id="subjectB" class="subject subject-b"><div class="subject-head"></div><div class="subject-body"></div><b>B</b></div>
+            <span class="frame-corner tl"></span><span class="frame-corner tr"></span><span class="frame-corner bl"></span><span class="frame-corner br"></span>
+            <div class="frame-bottom" id="frameBottom">MEDIUM · LOCKED-OFF</div>
+          </div>
+          <div class="monitor-meta"><span id="screenOrder">A LEFT · B RIGHT</span><span id="axisStatus">SOUTH SIDE</span></div>
+        </div>
+        <div class="readout">
+          <div class="readout-row"><span>Camera side</span><strong id="cameraSide">Near side</strong></div>
+          <div class="readout-row"><span>Shot coverage</span><strong id="coverageLabel">Medium</strong></div>
+          <div class="readout-row"><span>Continuity guidance</span><strong id="guidanceLabel">Set up your first shot</strong></div>
+        </div>
+        <p class="fine-print">Preview shows approximate screen order, not a physically accurate 3D camera render. Confirm framing in your generation tool.</p>
+      </aside>
+    </main>
+
+    <section class="coverage-section" aria-labelledby="coverage-title">
+      <div class="coverage-heading"><div><span class="eyebrow">SEQUENCE / 05</span><h2 id="coverage-title">Your coverage <span id="shotCount">(0 shots)</span></h2></div><span class="micro-label">CLICK A SHOT TO RESTORE ITS SETUP</span></div>
+      <div id="shotList" class="shot-list" aria-live="polite"><div class="empty-coverage">No setups captured yet. Position the camera and capture your first shot.</div></div>
+      <div class="continuity-board">
+        <div class="continuity-header"><div><span class="eyebrow">CUT CHECK / 06</span><h2>Continuity preflight</h2></div><span id="issueCount" class="issue-pill">0 CUTS TO REVIEW</span></div>
+        <div id="continuityResults" class="continuity-results" aria-live="polite">Capture at least two shots to review the cut between them.</div>
+      </div>
+      <div class="export-bar">
+        <div><h3>Take the plan into production.</h3><p>Export a practical shot list and continuity notes for any AI video model, editor or client brief.</p></div>
+        <div class="export-actions"><button type="button" class="secondary-button" id="copyBrief">Copy shot brief</button><button type="button" class="primary-button smaller" id="downloadBrief">Download .md</button><button type="button" class="text-button bordered" id="saveProject">Save project .json</button><button type="button" class="text-button bordered" id="loadProject">Open project .json</button></div>
+      </div>
+      <input id="importFile" type="file" accept=".json,application/json" hidden>
+      <p id="toast" role="status" aria-live="polite" class="toast"></p>
+    </section>
+
+    <footer class="footer"><span>AXIS LAB / A FILMMAKER'S TOOL FOR AI FILMMAKERS</span><span>BY <a href="https://www.skool.com/ai-verse-filmmakers" target="_blank" rel="noopener noreferrer">AI-VERSE</a> · NO ACCOUNTS · NO UPLOADS</span></footer>
+  </div>
+</body>
+</html>
