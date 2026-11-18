@@ -23,7 +23,7 @@
     <div class="hero">
       <div class="kicker"><span>01 / THE DIRECTOR'S WORKBENCH</span><span>BLOCK · FRAME · CUT</span></div>
       <h1>Direct the space.<br><em>Before the pixels.</em></h1>
-      <p>Stage two performers, position the camera, and build coverage. See screen direction and possible continuity breaks before you spend another generation credit.</p>
+      <p>Stage your cast, position the camera, and build coverage. See screen direction and possible continuity breaks before you spend another generation credit.</p>
     </div>
 
     <main id="workspace" class="workspace">
@@ -31,9 +31,16 @@
         <div class="panel-heading"><span class="eyebrow">SETUP / 01</span><h2 id="setup-title">Scene briefing</h2></div>
         <label for="sceneName">Scene name</label>
         <input id="sceneName" type="text" maxlength="100" placeholder="Give this scene a name" autocomplete="off">
-        <div class="duo-fields">
-          <div><label for="actorA"><span class="actor-swatch swatch-a"></span> Performer A</label><input id="actorA" type="text" maxlength="50" value="Performer A" autocomplete="off"></div>
-          <div><label for="actorB"><span class="actor-swatch swatch-b"></span> Performer B</label><input id="actorB" type="text" maxlength="50" value="Performer B" autocomplete="off"></div>
+        <div class="subject-heading"><span>SUBJECTS <span id="subjectCount">(2/8)</span></span><button type="button" id="addSubject" class="text-button add-subject">+ Add subject</button></div>
+        <div id="subjectControls" class="subject-controls" aria-label="Add, rename, and remove subjects"></div>
+        <div class="calibration">
+          <label for="gridMetres">Metres per grid square</label>
+          <select id="gridMetres" aria-describedby="scaleExplain">
+            <option value="0.5">0.5 m</option>
+            <option value="1" selected>1 m</option>
+            <option value="2">2 m</option>
+          </select>
+          <p id="scaleExplain" class="aside-help">Planned distances only. One floor grid square is 80 units; set its real-world size here.</p>
         </div>
         <div class="form-divider"></div>
         <div class="panel-heading subheading"><span class="eyebrow">CAMERA / 02</span><h2>Build a setup</h2></div>
@@ -44,15 +51,15 @@
         <label for="shotIntent">Story beat <span class="optional">(optional)</span></label>
         <textarea id="shotIntent" maxlength="400" rows="3" placeholder="What changes for the audience in this shot?"></textarea>
         <button type="button" class="primary-button" id="capture"><span class="plus-icon">+</span> Capture this setup <span class="button-shortcut">SHOT</span></button>
-        <p class="aside-help">Drag the performers or camera on the floor plan. Every captured shot remembers its own blocking and settings.</p>
+        <p class="aside-help">Select a subject or the camera, then tap or drag to place it. Press + Position before moving to a new angle, so the previous shot stays saved.</p>
       </aside>
 
       <section class="panel stage-panel" aria-labelledby="stage-title">
-        <div class="panel-heading stage-heading"><div><span class="eyebrow">BLOCKING / 03</span><h2 id="stage-title">Floor plan</h2></div><span class="micro-label">TOP VIEW · NOT TO SCALE</span></div>
+        <div class="panel-heading stage-heading"><div><span class="eyebrow">BLOCKING / 03</span><h2 id="stage-title">Floor plan</h2></div><span class="micro-label">TOP VIEW · CALIBRATED GRID</span></div>
         <div class="floor-wrap">
-          <svg id="floor" role="group" aria-label="Draggable floor plan with two performers, action axis and camera" viewBox="0 0 960 600">
+          <svg id="floor" role="group" aria-label="Editable top-down metric floor plan with performers, action axis and camera" viewBox="0 0 960 600">
             <defs>
-              <pattern id="floorGrid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-opacity=".055" stroke-width="1"/></pattern>
+              <pattern id="floorGrid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="#ffffff" stroke-opacity=".055" stroke-width="1"/></pattern>
               <linearGradient id="sideGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8d2c0" stop-opacity=".065"/><stop offset="1" stop-color="#a8d2c0" stop-opacity="0"/></linearGradient>
             </defs>
             <rect x="0" y="0" width="960" height="600" fill="#12181c"/>
@@ -64,48 +71,50 @@
             <text id="axisLabel" x="480" y="284" text-anchor="middle" class="axis-stamp">AXIS OF ACTION / 180°</text>
             <path id="cameraCone" fill="#e8c98f" fill-opacity=".07" stroke="#e8c98f" stroke-opacity=".37" stroke-width="1.8"/>
             <g id="priorCameras"></g>
-            <g class="floor-handle performer-a" id="handleA" tabindex="0" role="button" aria-label="Move performer A using pointer or arrow keys">
-              <circle r="66" class="touch-zone" fill="transparent" pointer-events="all"></circle><circle r="31" class="handle-ring"></circle><circle r="19" class="handle-core"></circle><text class="handle-letter" text-anchor="middle" y="6">A</text><text id="labelA" class="handle-caption" text-anchor="middle" y="58">PERFORMER A</text>
+            <g id="metreRuler" aria-label="Metric scale bar" pointer-events="none">
+              <rect x="50" y="544" width="280" height="43" rx="5" fill="#0d1317" opacity=".88"/>
+              <line x1="65" y1="562" x2="305" y2="562" stroke="#e2c38d" stroke-width="2"/>
+              <path d="M65 555v13 M145 555v13 M225 555v13 M305 555v13" stroke="#e2c38d" stroke-width="2"/>
+              <g id="rulerLabels" fill="#f1e2bd" font-size="11" font-weight="700"><text x="62" y="581">0</text><text x="141" y="581">1</text><text x="221" y="581">2</text><text x="302" y="581">3 m</text></g>
             </g>
-            <g class="floor-handle performer-b" id="handleB" tabindex="0" role="button" aria-label="Move performer B using pointer or arrow keys">
-              <circle r="66" class="touch-zone" fill="transparent" pointer-events="all"></circle><circle r="31" class="handle-ring"></circle><circle r="19" class="handle-core"></circle><text class="handle-letter" text-anchor="middle" y="6">B</text><text id="labelB" class="handle-caption" text-anchor="middle" y="58">PERFORMER B</text>
-            </g>
+            <g id="subjectsLayer"></g>
             <g class="floor-handle camera-handle" id="handleCam" tabindex="0" role="button" aria-label="Move camera using pointer or arrow keys">
               <circle r="66" class="touch-zone" fill="transparent" pointer-events="all"></circle><circle r="34" class="handle-ring"></circle><circle r="24" class="handle-core"></circle><path d="M -9 -7 L 6 -7 L 14 0 L 6 7 L -9 7 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle r="3.5" fill="currentColor"/><text class="handle-caption" text-anchor="middle" y="60">CAMERA</text>
             </g>
           </svg>
           <div class="floor-controls" role="group" aria-label="Choose what to move">
             <span class="floor-controls-title">MOVE</span>
-            <button id="placeA" type="button" aria-pressed="false"><span class="selector-dot dot-a"></span> Performer A</button>
-            <button id="placeB" type="button" aria-pressed="false"><span class="selector-dot dot-b"></span> Performer B</button>
+            <div id="subjectPlaceButtons" class="placement-subjects"></div>
             <button id="placeCam" type="button" aria-pressed="true"><span class="selector-dot dot-cam"></span> Camera</button>
           </div>
           <p class="floor-instruction" id="floorHelp" aria-live="polite">Camera selected. Tap a position on the floor plan to move it, or drag its marker.</p>
-          <div class="floor-legend"><span><i class="dot-a"></i> ACTOR A</span><span><i class="dot-b"></i> ACTOR B</span><span><i class="dot-axis"></i> ACTION AXIS</span><span class="drag-note">TAP TO PLACE · OR DRAG</span></div>
+          <div class="floor-legend"><span><i class="dot-a"></i> SUBJECTS</span><span><i class="dot-axis"></i> ACTION AXIS</span><span class="drag-note">TAP TO PLACE · OR DRAG</span></div>
         </div>
         <div class="director-note"><span class="info-glyph">i</span><p><strong>Director's note</strong><span id="directionTip">Keep cameras on the same side of the action axis for predictable screen direction. Crossing can work when you motivate it.</span></p></div>
       </section>
 
       <aside class="panel monitor-panel" aria-labelledby="monitor-title">
         <div class="panel-heading"><span class="eyebrow">MONITOR / 04</span><h2 id="monitor-title">Camera preview</h2></div>
+        <div class="positions-row"><span class="positions-label">SHOT POSITIONS</span><div id="shotTabs" class="shot-tabs" role="group" aria-label="Saved shot positions"></div><button id="newPosition" type="button" class="position-add" title="Save a new shot position">+ <span>Position</span></button></div>
         <div class="monitor-frame">
           <div class="monitor-chrome"><span class="rec-dot"></span> LIVE BLOCKING <span>16:9 · SCHEMATIC</span></div>
           <div class="viewfinder" id="viewfinder">
             <div class="frame-grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
             <div class="horizon"></div>
-            <div id="subjectA" class="subject subject-a"><div class="subject-head"></div><div class="subject-body"></div><b>A</b></div>
-            <div id="subjectB" class="subject subject-b"><div class="subject-head"></div><div class="subject-body"></div><b>B</b></div>
+            <div id="previewSubjects" class="preview-subjects"></div>
             <span class="frame-corner tl"></span><span class="frame-corner tr"></span><span class="frame-corner bl"></span><span class="frame-corner br"></span>
             <div class="frame-bottom" id="frameBottom">MEDIUM · LOCKED-OFF</div>
           </div>
           <div class="monitor-meta"><span id="screenOrder">A LEFT · B RIGHT</span><span id="axisStatus">SOUTH SIDE</span></div>
         </div>
+        <div class="distance-panel"><div class="distance-heading">GROUND DISTANCES <span>ESTIMATED · m</span></div><div id="distanceReadouts" class="distance-readouts"></div></div>
+        <button id="saveDiagram" type="button" class="diagram-button"><span>↓</span> Save position diagram <small>PNG</small></button>
         <div class="readout">
           <div class="readout-row"><span>Camera side</span><strong id="cameraSide">Near side</strong></div>
           <div class="readout-row"><span>Shot coverage</span><strong id="coverageLabel">Medium</strong></div>
           <div class="readout-row"><span>Continuity guidance</span><strong id="guidanceLabel">Set up your first shot</strong></div>
         </div>
-        <p class="fine-print">Preview shows approximate screen order, not a physically accurate 3D camera render. Confirm framing in your generation tool.</p>
+        <p class="fine-print">Preview uses approximate perspective: subjects farther from the camera appear smaller, with near subjects in front. Distances depend on your chosen grid calibration. This is a planning aid, not a measured 3D set or lens simulation.</p>
       </aside>
     </main>
 
