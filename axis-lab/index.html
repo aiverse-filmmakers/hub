@@ -50,7 +50,7 @@
       <section class="panel stage-panel" aria-labelledby="stage-title">
         <div class="panel-heading stage-heading"><div><span class="eyebrow">BLOCKING / 03</span><h2 id="stage-title">Floor plan</h2></div><span class="micro-label">TOP VIEW · NOT TO SCALE</span></div>
         <div class="floor-wrap">
-          <svg id="floor" role="img" aria-label="Draggable floor plan with two performers, action axis and camera" viewBox="0 0 960 600">
+          <svg id="floor" role="group" aria-label="Draggable floor plan with two performers, action axis and camera" viewBox="0 0 960 600">
             <defs>
               <pattern id="floorGrid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-opacity=".055" stroke-width="1"/></pattern>
               <linearGradient id="sideGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8d2c0" stop-opacity=".065"/><stop offset="1" stop-color="#a8d2c0" stop-opacity="0"/></linearGradient>
@@ -65,16 +65,23 @@
             <path id="cameraCone" fill="#e8c98f" fill-opacity=".07" stroke="#e8c98f" stroke-opacity=".37" stroke-width="1.8"/>
             <g id="priorCameras"></g>
             <g class="floor-handle performer-a" id="handleA" tabindex="0" role="button" aria-label="Move performer A using pointer or arrow keys">
-              <circle r="31" class="handle-ring"></circle><circle r="19" class="handle-core"></circle><text class="handle-letter" text-anchor="middle" y="6">A</text><text id="labelA" class="handle-caption" text-anchor="middle" y="58">PERFORMER A</text>
+              <circle r="66" class="touch-zone" fill="transparent" pointer-events="all"></circle><circle r="31" class="handle-ring"></circle><circle r="19" class="handle-core"></circle><text class="handle-letter" text-anchor="middle" y="6">A</text><text id="labelA" class="handle-caption" text-anchor="middle" y="58">PERFORMER A</text>
             </g>
             <g class="floor-handle performer-b" id="handleB" tabindex="0" role="button" aria-label="Move performer B using pointer or arrow keys">
-              <circle r="31" class="handle-ring"></circle><circle r="19" class="handle-core"></circle><text class="handle-letter" text-anchor="middle" y="6">B</text><text id="labelB" class="handle-caption" text-anchor="middle" y="58">PERFORMER B</text>
+              <circle r="66" class="touch-zone" fill="transparent" pointer-events="all"></circle><circle r="31" class="handle-ring"></circle><circle r="19" class="handle-core"></circle><text class="handle-letter" text-anchor="middle" y="6">B</text><text id="labelB" class="handle-caption" text-anchor="middle" y="58">PERFORMER B</text>
             </g>
             <g class="floor-handle camera-handle" id="handleCam" tabindex="0" role="button" aria-label="Move camera using pointer or arrow keys">
-              <circle r="34" class="handle-ring"></circle><circle r="24" class="handle-core"></circle><path d="M -9 -7 L 6 -7 L 14 0 L 6 7 L -9 7 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle r="3.5" fill="currentColor"/><text class="handle-caption" text-anchor="middle" y="60">CAMERA</text>
+              <circle r="66" class="touch-zone" fill="transparent" pointer-events="all"></circle><circle r="34" class="handle-ring"></circle><circle r="24" class="handle-core"></circle><path d="M -9 -7 L 6 -7 L 14 0 L 6 7 L -9 7 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle r="3.5" fill="currentColor"/><text class="handle-caption" text-anchor="middle" y="60">CAMERA</text>
             </g>
           </svg>
-          <div class="floor-legend"><span><i class="dot-a"></i> ACTOR A</span><span><i class="dot-b"></i> ACTOR B</span><span><i class="dot-axis"></i> ACTION AXIS</span><span class="drag-note">DRAG TO REPOSITION</span></div>
+          <div class="floor-controls" role="group" aria-label="Choose what to move">
+            <span class="floor-controls-title">MOVE</span>
+            <button id="placeA" type="button" aria-pressed="false"><span class="selector-dot dot-a"></span> Performer A</button>
+            <button id="placeB" type="button" aria-pressed="false"><span class="selector-dot dot-b"></span> Performer B</button>
+            <button id="placeCam" type="button" aria-pressed="true"><span class="selector-dot dot-cam"></span> Camera</button>
+          </div>
+          <p class="floor-instruction" id="floorHelp" aria-live="polite">Camera selected. Tap a position on the floor plan to move it, or drag its marker.</p>
+          <div class="floor-legend"><span><i class="dot-a"></i> ACTOR A</span><span><i class="dot-b"></i> ACTOR B</span><span><i class="dot-axis"></i> ACTION AXIS</span><span class="drag-note">TAP TO PLACE · OR DRAG</span></div>
         </div>
         <div class="director-note"><span class="info-glyph">i</span><p><strong>Director's note</strong><span id="directionTip">Keep cameras on the same side of the action axis for predictable screen direction. Crossing can work when you motivate it.</span></p></div>
       </section>
