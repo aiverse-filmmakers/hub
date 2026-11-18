@@ -2,34 +2,41 @@
 
 **A scene-blocking and cut-continuity director for AI filmmakers.**
 
-Stage two performers, move your camera around the action axis, capture coverage and export a shot plan before generating video.
+Stage up to eight performers, see their apparent sizes change with camera distance, measure planned ground distances, save numbered positions and export your camera diagram as a PNG before generating video.
 
-**GitHub Pages URL after merging the pull request:** https://aiverse-filmmakers.github.io/hub/axis-lab/
+**Live GitHub Pages app:** https://aiverse-filmmakers.github.io/hub/axis-lab/
 
 AXIS LAB lives entirely inside this directory. It does not replace or alter the repository's existing website, FRAMECHECK or any other application.
 
 ## Features
 
-- **Interactive floor plan:** On mobile, select Camera, Performer A or Performer B and tap a position on the stage, or drag the larger markers. On desktop, click-to-place and dragging also work. Keyboard users can focus a handle and reposition it using arrow keys.
-- **Schematic camera preview:** Watch performer screen-left/screen-right order change as you move around the scene. Choose wide, medium or close framing.
-- **Shot planning:** Save up to 60 independent setups, each with performer positions, camera position, framing, camera language and an optional story beat. Select any saved shot to restore its setup.
-- **Continuity preflight:** Adjacent shots are checked for possible crossings of the 180-degree line, ambiguous camera positions, unexpected performer movement and nearly identical coverage.
-- **Production brief:** Download or copy a Markdown shot list including camera side, approximate screen order, blocking coordinates, suggested generation direction, cut warnings and a human QC checklist.
-- **Editable backup:** Save and reopen JSON scene projects. The current project also persists in the browser automatically.
+- **Distance-based perspective preview:** Subjects closer to the camera appear larger; farther people shrink naturally, shift towards the horizon and can be hidden behind a nearer subject. The camera automatically looks toward the centre of the cast.
+- **Meter-calibrated stage:** Each visible floor grid square equals the selectable **0.5 m, 1 m or 2 m**. Planned ground distances are shown for the camera to every subject and the first two subjects to one another. An annotated metric ruler is visible at the bottom of the floor plan.
+- **Flexible subjects:** Start with two, add up to eight, rename or remove any performer. The first two subjects define the editable action axis; with only one subject the axis preflight is suppressed.
+- **Quick position tabs:** Click **+ Position** above the preview to capture a numbered shot. Tap **1, 2, 3** and so on to switch shots, then move markers to update that saved position. The detailed coverage filmstrip remains below.
+- **One-click PNG:** **Save position diagram** creates a local 1700 × 950 PNG with floor plan, calibrated scale, cast, camera, perspective preview and ground-distance labels. On supported mobile browsers it opens the system share sheet; otherwise it downloads a PNG.
+- **Continuity preflight:** Adjacent shots are checked for action-axis crossing, ambiguous near-axis cameras, changes in cast or blocking, and overly similar coverage.
+- **Portable files:** Copy/download the Markdown production brief, save/edit/import JSON project backups, and keep the working state automatically on this browser.
 
-This does not generate AI video, upload video, analyze rendered frames, call a model or inspect client assets. Its purpose is better planning before you spend generation credits.
+There are no uploads, accounts, remote scripts, AI model calls or fees. The app is a planning tool and does not generate footage.
 
-## Start in one minute
+## Phone quick start
 
-1. Open the app on a phone or desktop, then rename the scene and performers if needed.
-2. On your phone, tap **Performer A** then tap the floor where A should stand. Repeat for **Performer B**. You can also drag each labelled marker directly.
-3. Select **Camera** then tap its desired location, or drag the camera marker. Move it to the opposite side of the line to see how screen direction changes.
-4. Choose the framing, camera movement and optionally describe the story beat.
-5. Click **Capture this setup**.
-6. Move the camera and capture the next setup. Continue until you have your intended coverage.
-7. Review the continuity preflight and export the Markdown shot brief for your generation and editing workflow.
+1. Open the app, set a scene name and add or rename subjects if needed.
+2. For a smaller or larger set, choose **Metres per grid square**. The default is **1 m** per square.
+3. Under **Floor plan**, choose **A**, **B**, any added subject, or **Camera**. Tap the floor to place them, or drag the labelled marker.
+4. In **Camera preview**, move the camera and the performers at different depths to see near subjects grow larger and far ones shrink. Check the live ground distances underneath.
+5. Tap **+ Position** just above the preview to create shot **1**. Move the camera and create shot **2**. Select numbered tabs to revisit and edit shots.
+6. Tap **Save position diagram** to save/share a PNG showing the spatial arrangement, scale, preview and measured plan distances.
+7. Export the Markdown brief or a JSON backup if you want to share your plan or work on another device.
 
-**Directing principle:** Crossing the 180-degree line is not automatically an error. It can be a deliberate creative choice. The tool encourages you to notice the change and motivate it, show a continuous move or use a neutral shot to re-establish geography.
+**Scale accuracy:** The grid is a user-defined *planning assumption*, not a rangefinder. If you choose 1 m per 80-unit square, a subject 160 units from camera is displayed as 2.0 m away horizontally. Set the size according to actual known measurements for a more useful previsualization. Distances are on the ground plane and do not include camera height.
+
+**Perspective accuracy:** The camera preview uses a simplified pinhole-perspective model, approximate horizontal fields of view for Wide/Medium/Close, fixed 1.7 m subject heights and 1.6 m camera height. Moving closer increases apparent height and width. These numbers are educational defaults, not calibrated lenses, a full 3D scene or measured heights. A subject behind the camera will not be shown.
+
+**Shot editing:** With a numbered position selected, subsequent placement and camera changes update that position. Press + to make another position. Older AXIS LAB v1 JSON backups and saved browser projects load in the new format.
+
+**Directing principle:** Crossing the 180-degree line is not automatically an error. The tool calls attention to potential screen-direction reversal, not a creative prohibition.
 
 ## What the continuity checks mean
 
@@ -40,7 +47,7 @@ This does not generate AI video, upload video, analyze rendered frames, call a m
 | Blocking changed | One or more performers were repositioned significantly between snapshots | Verify that the action accounts for the movement or restore the same blocking |
 | Similar coverage | Consecutive shots share nearly identical camera placement and shot size | Ask what the cut adds and consider differentiated coverage |
 
-**Limitations:** All flags are geometric heuristics for a manually constructed schematic, not verified video defects or automated editorial judgments. Preview silhouettes estimate screen order rather than render a lens-accurate 3D environment. The stage units are arbitrary pixels, not real distances, and shot size does not correspond to measured focal length. Real editing still requires a visual and sound review. Actor movement, over-the-shoulder views, motivated axis crossing and camera motion can all justify exceptions to these rules.
+**Limitations:** All flags are geometric heuristics for a manually constructed schematic, not verified video defects or automated editorial judgments. The preview uses depth-correct relative scaling within a simplified perspective model, not a lens-accurate 3D environment. The metre scale depends on user calibration; these are estimated planned dimensions rather than real measured distances. Real editing still requires a visual and sound review. Actor movement, over-the-shoulder views, motivated axis crossing and camera motion can all justify exceptions to these rules.
 
 ## Privacy
 
@@ -69,9 +76,9 @@ Dependency-free Node smoke tests:
 
     node axis-lab/tests/smoke.cjs
 
-They check initial state, shot capture, keyboard camera movement across the line, a 180-degree warning, saved shot positions, restoring and deleting setups, exporting Markdown and JSON, resetting, importing JSON and invalid import protection.
+They check initial state, iPhone-style touch placement, metres and depth scaling, adding/removing cast, numbered position editing, PNG export, Markdown and JSON, version-1 project migration and invalid-import protection.
 
-A GitHub Actions workflow runs this test for relevant changes. It does not touch the website deployment. Recommended manual browser check: select each placement button and tap the floor on a phone; drag all three handles on desktop and mobile; save multiple shots; review the cut flags; restore earlier coverage; export a Markdown brief; save/reopen project JSON and check the layout at mobile width.
+A GitHub Actions workflow runs this test for relevant changes. It does not touch the website deployment. Recommended manual browser check: change the metre calibration, move a subject farther from the camera, add and remove a third subject, create several numbered positions, export the PNG on iPhone, restore an earlier position, import a legacy JSON backup, and check the responsive layout.
 
 ## Why this tool
 
@@ -95,8 +102,9 @@ These resources provide film and model-workflow context; none endorses AXIS LAB.
 - Plain HTML, CSS and JavaScript
 - SVG Pointer Events and keyboard-accessible performer and camera handles
 - Signed cross product for camera-side classification
-- Camera-right projection for approximate screen-order preview
+- Perspective projection with depth-based subject sizing and depth ordering (conceptual 1.7 m subjects and 1.6 m camera)
 - Per-shot state snapshots and adjacent-shot continuity checks
-- Browser localStorage plus explicit Markdown and JSON exports
+- Calibrated 80-unit floor-grid conversion to planned metres
+- Local Canvas PNG renderer, mobile share fallback, browser localStorage and Markdown/JSON exports
 
 Built for the AI-Verse Filmmakers community. This README does not grant a separate reuse license.
