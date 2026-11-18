@@ -200,74 +200,169 @@
     return onscreen.map(function (p) { return subjectLabel(p.id); }).join(" left → right ");
   }
 
-  function redrawFloor() {
-    var a = state.a, b = state.b, cam = state.cam;
-    el("handleA").setAttribute("transform", "translate(" + a.x + " " + a.y + ")");
-    el("handleB").setAttribute("transform", "translate(" + b.x + " " + b.y + ")");
-    el("handleCam").setAttribute("transform", "translate(" + cam.x + " " + cam.y + ")");
-    el("labelA").textContent = shortName(state.aName);
-    el("labelB").textContent = shortName(state.bName);
-    el("axisSolid").setAttribute("x1", a.x); el("axisSolid").setAttribute("y1", a.y);
-    el("axisSolid").setAttribute("x2", b.x); el("axisSolid").setAttribute("y2", b.y);
-    var dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1;
-    var ux = dx / len, uy = dy / len;
-    var x1 = a.x - ux * 1000, y1 = a.y - uy * 1000, x2 = b.x + ux * 1000, y2 = b.y + uy * 1000;
-    el("axisExtended").setAttribute("x1", x1); el("axisExtended").setAttribute("y1", y1);
-    el("axisExtended").setAttribute("x2", x2); el("axisExtended").setAttribute("y2", y2);
-    el("axisLabel").setAttribute("x", (a.x + b.x) / 2);
-    el("axisLabel").setAttribute("y", (a.y + b.y) / 2 - 20);
-    var mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-    var cross = Math.hypot(mid.x - cam.x, mid.y - cam.y) || 1;
-    var perpX = (mid.y - cam.y) / cross, perpY = -(mid.x - cam.x) / cross;
-    var radius = Math.min(125, cross * .5);
-    el("cameraCone").setAttribute("d", "M " + cam.x + " " + cam.y + " L " + (mid.x + perpX * radius) + " " + (mid.y + perpY * radius) + " L " + (mid.x - perpX * radius) + " " + (mid.y - perpY * radius) + " Z");
-    var old = el("priorCameras");
-    old.replaceChildren();
-    state.shots.forEach(function (shot, index) {
-      var node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      node.setAttribute("cx", shot.cam.x);
-      node.setAttribute("cy", shot.cam.y);
-      node.setAttribute("r", 9);
-      node.setAttribute("fill", index === state.active ? "#e2c38d" : "#879e96");
-      node.setAttribute("fill-opacity", index === state.active ? ".8" : ".38");
-      node.setAttribute("stroke", "#f2eee5");
-      node.setAttribute("stroke-opacity", ".45");
-      var t = document.createElementNS("http://www.w3.org/2000/svg", "title");
-      t.textContent = "Shot " + (index + 1) + " camera position";
-      node.appendChild(t);
-      old.appendChild(node);
+
+  var svgNS = "http://www.w3.org/2000/svg";
+  var subjectNodes = {};
+  function svgNode(tag, attrs, content) {
+    var node = document.createElementNS(svgNS, tag);
+    Object.keys(attrs || {}).forEach(function (name) { node.setAttribute(name, attrs[name]); });
+    if (content != null) node.textContent = String(content);
+    return node;
+  }
+  function makeFloorSubject(subject, index) {
+    var group = svgNode("g", {
+      "id": "handle" + subjectLabel(subject.id), "data-subject-id": subject.id,
+      "class": "floor-handle " + (index === 0 ? "performer-a" : index === 1 ? "performer-b" : "performer-extra"),
+      "tabindex": "0", "role": "button",
+      "aria-label": "Move " + subject.name + " using finger, mouse or arrow keys"
     });
+    var zone = svgNode("circle", { r: 63, "class": "touch-zone", fill: "transparent", "pointer-events": "all" });
+    var ring = svgNode("circle", { r: 31, "class": "handle-ring" });
+    var core = svgNode("circle", { r: 19, "class": "handle-core" });
+    var letter = svgNode("text", { "class": "handle-letter", "text-anchor": "middle", y: 6 }, subjectLabel(subject.id));
+    var caption = svgNode("text", { "class": "handle-caption", "text-anchor": "middle", y: 58 }, shortName(subject.name));
+    group.appendChild(zone); group.appendChild(ring); group.appendChild(core); group.appendChild(letter); group.appendChild(caption);
+    group._caption = caption;
+    group._letter = letter;
+    group.addEventListener("keydown", function (event) {
+      var directions = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, -12], ArrowDown: [0, 12] };
+      if (!directions[event.key]) return;
+      event.preventDefault();
+      setTool(subject.id);
+      var p = state.subjects.find(function (x) { return x.id === subject.id; });
+      if (!p) return;
+      var delta = directions[event.key], loc = point({ x: p.x + delta[0], y: p.y + delta[1] }, p);
+      p.x = loc.x; p.y = loc.y;
+      persistActive(); render(); save();
+    });
+    return group;
+  }
+  function redrawFloor() {
+    var cast = state.subjects, cam = state.cam, a = cast[0], b = cast[1];
+    el("handleCam").setAttribute("transform", "translate(" + cam.x + " " + cam.y + ")");
+    el("handleCam").setAttribute("data-selected", String(activeTool === "cam"));
+    var layer = el("subjectsLayer");
+    Object.keys(subjectNodes).forEach(function (id) {
+      if (!cast.some(function (p) { return p.id === id; })) {
+        if (subjectNodes[id].parentNode) subjectNodes[id].parentNode.removeChild(subjectNodes[id]);
+        delete subjectNodes[id];
+      }
+    });
+    cast.forEach(function (subject, index) {
+      var node = subjectNodes[subject.id];
+      if (!node) {
+        node = makeFloorSubject(subject, index);
+        subjectNodes[subject.id] = node;
+        layer.appendChild(node);
+      }
+      node.setAttribute("transform", "translate(" + subject.x + " " + subject.y + ")");
+      node.setAttribute("data-selected", String(activeTool === subject.id));
+      node.setAttribute("style", "color:" + SWATCHES[index % SWATCHES.length]);
+      node.setAttribute("aria-label", "Move " + subject.name + " using finger, mouse or arrow keys");
+      node._caption.textContent = shortName(subject.name);
+      node._letter.textContent = subjectLabel(subject.id);
+    });
+    var axisVisible = !!b;
+    ["axisExtended","axisSolid","axisLabel"].forEach(function (id) { el(id).style.opacity = axisVisible ? "1" : "0"; });
+    if (b) {
+      el("axisSolid").setAttribute("x1", a.x); el("axisSolid").setAttribute("y1", a.y);
+      el("axisSolid").setAttribute("x2", b.x); el("axisSolid").setAttribute("y2", b.y);
+      var dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1;
+      var ux = dx / len, uy = dy / len;
+      el("axisExtended").setAttribute("x1", a.x - ux * 1000);
+      el("axisExtended").setAttribute("y1", a.y - uy * 1000);
+      el("axisExtended").setAttribute("x2", b.x + ux * 1000);
+      el("axisExtended").setAttribute("y2", b.y + uy * 1000);
+      el("axisLabel").setAttribute("x", (a.x + b.x) / 2);
+      el("axisLabel").setAttribute("y", (a.y + b.y) / 2 - 22);
+      el("axisLabel").textContent = "ACTION AXIS " + subjectLabel(a.id) + " / " + subjectLabel(b.id);
+    }
+    var mid = midPoint(cast), lenCam = distance(mid, cam) || 1;
+    var perpX = (mid.y - cam.y) / lenCam, perpY = -(mid.x - cam.x) / lenCam;
+    var radius = Math.min(155, lenCam * .65);
+    el("cameraCone").setAttribute("d", "M " + cam.x + " " + cam.y +
+      " L " + (mid.x + perpX * radius) + " " + (mid.y + perpY * radius) +
+      " L " + (mid.x - perpX * radius) + " " + (mid.y - perpY * radius) + " Z");
+    var past = el("priorCameras");
+    past.replaceChildren();
+    state.shots.forEach(function (shot, index) {
+      var circle = svgNode("circle", {cx:shot.cam.x,cy:shot.cam.y,r:9,
+        fill:index === state.active ? "#e2c38d" : "#879e96",
+        "fill-opacity":index === state.active ? ".78" : ".32",
+        stroke:"#f2eee5","stroke-opacity":".40"});
+      circle.appendChild(svgNode("title",{},"Position " + (index + 1)));
+      past.appendChild(circle);
+    });
+    var labels = el("rulerLabels").children;
+    for (var i = 0; i < labels.length; i++) {
+      labels[i].textContent = (i === 0 ? "0" : String(i * state.gridMetres)) + (i === 3 ? " m" : "");
+    }
   }
   function redrawMonitor() {
-    var shot = currentShot(), projection = screenProjection(shot), info = axisInfo(shot);
-    var size = state.size;
-    var h = size === "wide" ? 54 : size === "close" ? 137 : 88;
-    var bottom = size === "wide" ? -10 : size === "close" ? -45 : -22;
-    [["A", projection.a], ["B", projection.b]].forEach(function (item) {
-      var node = el("subject" + item[0]);
-      node.style.left = item[1] + "%";
-      node.style.height = h + "%";
-      node.style.bottom = bottom + "%";
+    var shot = currentShot(), people = projection(shot), info = axisInfo(shot);
+    var layer = el("previewSubjects");
+    layer.replaceChildren();
+    people.slice().sort(function (a,b) { return b.depth - a.depth; }).forEach(function (p, index) {
+      if (!p.visible) return;
+      var node = element("div", "subject " + (p.id === "a" ? "subject-a" : p.id === "b" ? "subject-b" : "subject-extra"));
+      node.style.left = p.x + "%";
+      node.style.height = p.height + "%";
+      node.style.width = p.width + "%";
+      node.style.bottom = p.bottom + "%";
+      node.style.zIndex = String(1000 - index);
+      node.style.setProperty("--subject-color", p.color);
+      node.appendChild(element("div","subject-head"));
+      node.appendChild(element("div","subject-body"));
+      node.appendChild(element("b","",subjectLabel(p.id)));
+      layer.appendChild(node);
     });
     el("screenOrder").textContent = screenOrder(shot).toUpperCase();
     el("axisStatus").textContent = info.label.toUpperCase();
     el("cameraSide").textContent = info.label;
-    el("coverageLabel").textContent = prettySize(size);
-    el("frameBottom").textContent = prettySize(size).toUpperCase() + " · " + state.move.toUpperCase();
-    var guidance = state.shots.length ? "Compare against saved setups" : "Capture an opening shot";
-    var tip = "Keep cameras on one side of the action axis for predictable screen direction. Cross intentionally with a motivated move or neutral bridge.";
-    if (distance(shot.a, shot.b) < 75) { guidance = "Separate your performers"; tip = "Move the performers apart to establish a usable action axis."; }
-    else if (info.side === 0) { guidance = "Axis position is ambiguous"; tip = "You are near the action axis. This can be a deliberate neutral bridge, but don't assume the screen direction is stable."; }
-    else if (state.shots.length) {
-      var last = state.shots[state.shots.length - 1];
-      var lastSide = axisInfo(last).side;
+    el("coverageLabel").textContent = prettySize(state.size);
+    el("frameBottom").textContent = prettySize(state.size).toUpperCase() + " · " + state.move.toUpperCase() + " · DEPTH PREVIEW";
+    var guidance = state.shots.length ? "Review your saved positions" : "Add position 1 to start";
+    var tip = "Farther performers appear smaller. The first two subjects define the action axis. Moving the camera across it may reverse screen direction.";
+    if (shot.subjects.length < 2) {
+      guidance = "Add a second subject for axis checks";
+      tip = "A solo setup has no performer-to-performer action axis. You can still plan framing and distances.";
+    } else if (distance(shot.subjects[0], shot.subjects[1]) < 75) {
+      guidance = "Separate first two subjects";
+      tip = "Move the first two subjects apart to establish a useful action axis.";
+    } else if (info.side === 0) {
+      guidance = "Camera near action axis";
+      tip = "A neutral view can be intentional. Verify eyelines and screen direction in generated frames.";
+    } else if (state.shots.length && state.active < 0) {
+      var lastSide = axisInfo(state.shots[state.shots.length - 1]).side;
       if (lastSide && lastSide !== info.side) {
-        guidance = "Potential axis crossing";
-        tip = "This camera sits across the line from your last captured setup. Consider an intentional neutral insert or a visible camera move.";
+        guidance = "Possible axis crossing";
+        tip = "This position crosses the action axis from your last saved shot. Check whether the move is motivated.";
       }
     }
+    var outOfFrame = people.filter(function (p) { return !p.inFrame; });
+    if (outOfFrame.length) guidance = outOfFrame.length + " subject" + (outOfFrame.length > 1 ? "s" : "") + " outside frame";
     el("guidanceLabel").textContent = guidance;
     el("directionTip").textContent = tip;
+    redrawDistances(shot, people);
+  }
+  function redrawDistances(shot, people) {
+    var container = el("distanceReadouts");
+    container.replaceChildren();
+    people.forEach(function (person) {
+      var row = element("div", "distance-line");
+      row.appendChild(element("span", "", "CAM → " + subjectLabel(person.id) + " · " + person.name));
+      var value = element("strong", "", measure(person.distance));
+      if (!person.inFrame) value.title = "Outside the camera preview";
+      row.appendChild(value);
+      container.appendChild(row);
+    });
+    if (shot.subjects.length >= 2) {
+      var betweenLine = element("div","distance-line between-line");
+      betweenLine.appendChild(element("span","","" + subjectLabel(shot.subjects[0].id) + " ↔ " + subjectLabel(shot.subjects[1].id) + " · first two subjects"));
+      betweenLine.appendChild(element("strong","",measure(metres(shot.subjects[0],shot.subjects[1],shot))));
+      container.appendChild(betweenLine);
+    }
+    el("scaleExplain").textContent = "1 grid square = " + state.gridMetres + " m. These are planned ground distances, not measurements of a real location.";
   }
   function element(tag, className, textValue) {
     var node = document.createElement(tag);
