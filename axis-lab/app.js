@@ -569,7 +569,7 @@
     });
     var subject = state.subjects.find(function(p){return p.id === field;});
     var name = field === "cam" ? "Camera" : subject.name;
-    el("floorHelp").textContent = name + " selected. Tap on the floor to place it, or drag the marker.";
+    el("floorHelp").textContent = name + " selected. Tap to place or drag." + (state.active >= 0 ? " Editing position " + (state.active + 1) + ". Press + Position before moving to start a different shot." : " Press + Position to save the first shot.");
   }
   el("placeCam").addEventListener("click",function(){setTool("cam");});
   function handleField(target) {
@@ -780,8 +780,8 @@
     c.fillStyle="#e2c38d";c.font="700 17px sans-serif";c.fillText("CAMERA VIEW   /   " + prettySize(shot.size).toUpperCase(),1040,550);
     c.fillStyle="#a5b4b3";c.font="14px sans-serif";c.fillText("PERSPECTIVE PREVIEW · APPROXIMATE 1.7 m HEIGHT",1040,578);
     c.fillStyle="#eae8dc";c.font="700 17px sans-serif";c.fillText("PLANNED GROUND DISTANCES",1040,635);
-    people.forEach(function(p,i){c.fillStyle="#a4b3b1";c.font="15px sans-serif";c.fillText("CAM → "+subjectLabel(p.id)+"  "+p.name.slice(0,23),1040,675+i*34);c.fillStyle="#e2c38d";c.fillText(measure(p.distance),1545,675+i*34);});
-    if(cast.length>=2){c.fillStyle="#d7e2dd";c.fillText(subjectLabel(cast[0].id)+" ↔ "+subjectLabel(cast[1].id),1040,675+people.length*34);c.fillStyle="#e2c38d";c.fillText(measure(metres(cast[0],cast[1],shot)),1545,675+people.length*34);}
+    people.forEach(function(p,i){c.fillStyle="#a4b3b1";c.font="15px sans-serif";c.fillText("CAM → "+subjectLabel(p.id)+"  "+p.name.slice(0,23),1040,665+i*26);c.fillStyle="#e2c38d";c.fillText(measure(p.distance),1545,665+i*26);});
+    if(cast.length>=2){c.fillStyle="#d7e2dd";c.fillText(subjectLabel(cast[0].id)+" ↔ "+subjectLabel(cast[1].id),1040,665+people.length*26);c.fillStyle="#e2c38d";c.fillText(measure(metres(cast[0],cast[1],shot)),1545,665+people.length*26);}
     c.fillStyle="#809093";c.font="15px sans-serif";c.fillText("ESTIMATED GEOMETRY  ·  NOT A MEASURED SET",1050,903);
     return canvas;
   }
