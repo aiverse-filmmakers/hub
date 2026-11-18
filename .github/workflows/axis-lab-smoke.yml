@@ -1,0 +1,24 @@
+name: AXIS LAB smoke
+on:
+  pull_request:
+    paths:
+      - "axis-lab/**"
+      - ".github/workflows/axis-lab-smoke.yml"
+  push:
+    paths:
+      - "axis-lab/**"
+      - ".github/workflows/axis-lab-smoke.yml"
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run AXIS LAB browser-behavior smoke tests
+        run: node axis-lab/tests/smoke.cjs
