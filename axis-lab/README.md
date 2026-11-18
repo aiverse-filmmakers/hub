@@ -10,7 +10,7 @@ AXIS LAB lives entirely inside this directory. It does not replace or alter the 
 
 ## Features
 
-- **Interactive floor plan:** Drag two performers and a camera. Keyboard users can focus a handle and reposition it using arrow keys.
+- **Interactive floor plan:** On mobile, select Camera, Performer A or Performer B and tap a position on the stage, or drag the larger markers. On desktop, click-to-place and dragging also work. Keyboard users can focus a handle and reposition it using arrow keys.
 - **Schematic camera preview:** Watch performer screen-left/screen-right order change as you move around the scene. Choose wide, medium or close framing.
 - **Shot planning:** Save up to 60 independent setups, each with performer positions, camera position, framing, camera language and an optional story beat. Select any saved shot to restore its setup.
 - **Continuity preflight:** Adjacent shots are checked for possible crossings of the 180-degree line, ambiguous camera positions, unexpected performer movement and nearly identical coverage.
@@ -22,8 +22,8 @@ This does not generate AI video, upload video, analyze rendered frames, call a m
 ## Start in one minute
 
 1. Open the app on a phone or desktop, then rename the scene and performers if needed.
-2. Drag the two performers onto the floor to establish an action axis.
-3. Drag the camera to the first setup. Observe how screen direction changes when you cross the action axis.
+2. On your phone, tap **Performer A** then tap the floor where A should stand. Repeat for **Performer B**. You can also drag each labelled marker directly.
+3. Select **Camera** then tap its desired location, or drag the camera marker. Move it to the opposite side of the line to see how screen direction changes.
 4. Choose the framing, camera movement and optionally describe the story beat.
 5. Click **Capture this setup**.
 6. Move the camera and capture the next setup. Continue until you have your intended coverage.
@@ -71,7 +71,7 @@ Dependency-free Node smoke tests:
 
 They check initial state, shot capture, keyboard camera movement across the line, a 180-degree warning, saved shot positions, restoring and deleting setups, exporting Markdown and JSON, resetting, importing JSON and invalid import protection.
 
-A GitHub Actions workflow runs this test for relevant changes. It does not touch the website deployment. Recommended manual browser check: drag all three handles on desktop and mobile, save multiple shots, review the cut flags, restore earlier coverage, export a Markdown brief, save/reopen project JSON and check the layout at mobile width.
+A GitHub Actions workflow runs this test for relevant changes. It does not touch the website deployment. Recommended manual browser check: select each placement button and tap the floor on a phone; drag all three handles on desktop and mobile; save multiple shots; review the cut flags; restore earlier coverage; export a Markdown brief; save/reopen project JSON and check the layout at mobile width.
 
 ## Why this tool
 
