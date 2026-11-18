@@ -370,12 +370,88 @@
     if (textValue != null) node.textContent = textValue;
     return node;
   }
+
+  function renderSubjectControls() {
+    var holder = el("subjectControls");
+    holder.replaceChildren();
+    el("subjectCount").textContent = "(" + state.subjects.length + "/" + MAX_SUBJECTS + ")";
+    el("addSubject").disabled = state.subjects.length >= MAX_SUBJECTS || state.nextSubjectIndex >= 26;
+    state.subjects.forEach(function (subject, index) {
+      var row = element("div", "subject-edit-row");
+      var label = element("label","",subjectLabel(subject.id));
+      label.style.color = SWATCHES[index % SWATCHES.length];
+      var input = element("input","");
+      input.type = "text"; input.maxLength = 50; input.value = subject.name;
+      input.setAttribute("aria-label", "Name for performer " + subjectLabel(subject.id));
+      input.addEventListener("input", function () {
+        subject.name = input.value.slice(0,50);
+        syncLegacy(); persistActive(); redrawFloor(); redrawMonitor(); save();
+      });
+      row.appendChild(label); row.appendChild(input);
+      var remove = element("button", "remove-subject", "×");
+      remove.type = "button"; remove.title = "Remove " + subject.name;
+      remove.setAttribute("aria-label", "Remove " + subject.name);
+      remove.disabled = state.subjects.length <= 1;
+      remove.addEventListener("click", function () {
+        if (state.subjects.length <= 1) return;
+        state.subjects = state.subjects.filter(function (p) { return p.id !== subject.id; });
+        if (activeTool === subject.id) activeTool = "cam";
+        syncLegacy(); persistActive(); render(); save();
+        notify(subject.name + " removed from this position.");
+      });
+      row.appendChild(remove); holder.appendChild(row);
+    });
+    var place = el("subjectPlaceButtons");
+    place.replaceChildren();
+    state.subjects.forEach(function (p, index) {
+      var button = element("button", "");
+      button.type = "button"; button.id = "place" + subjectLabel(p.id);
+      button.setAttribute("aria-pressed", String(activeTool === p.id));
+      var dot = element("span", "selector-dot");
+      dot.style.backgroundColor = SWATCHES[index % SWATCHES.length];
+      button.appendChild(dot);
+      button.appendChild(document.createTextNode(" " + subjectLabel(p.id)));
+      button.title = "Place " + p.name;
+      button.setAttribute("aria-label", "Place " + p.name);
+      button.addEventListener("click", function () { setTool(p.id); });
+      place.appendChild(button);
+    });
+    setTool(activeTool);
+  }
+  function restoreShot(index) {
+    var shot = state.shots[index];
+    if (!shot) return;
+    state.subjects = normalizeSubjects(shot.subjects, legacySubjects(shot));
+    state.cam = point(shot.cam, state.cam);
+    state.gridMetres = shot.gridMetres || 1;
+    state.size = shot.size;
+    state.move = shot.move;
+    state.intent = shot.intent;
+    state.active = index;
+    if (activeTool !== "cam" && !state.subjects.some(function(p) { return p.id === activeTool; })) activeTool = "cam";
+    syncLegacy(); syncInputs(); render(); save();
+    notify("Position " + (index + 1) + " restored. Edit its markers to update this position.");
+  }
+  function renderTabs() {
+    var tabs = el("shotTabs");
+    tabs.replaceChildren();
+    if (!state.shots.length) tabs.appendChild(element("span","position-empty","LIVE"));
+    state.shots.forEach(function (shot, index) {
+      var tab = element("button", "position-tab" + (index === state.active ? " selected" : ""), String(index + 1));
+      tab.type = "button"; tab.title = "Open shot position " + (index + 1);
+      tab.setAttribute("aria-label", "Open saved position " + (index + 1));
+      tab.setAttribute("aria-pressed", String(index === state.active));
+      tab.addEventListener("click", function() { restoreShot(index); });
+      tabs.appendChild(tab);
+    });
+    el("newPosition").disabled = state.shots.length >= MAX_SHOTS;
+  }
   function renderShots() {
     var list = el("shotList");
     list.replaceChildren();
     el("shotCount").textContent = "(" + state.shots.length + " shot" + (state.shots.length === 1 ? "" : "s") + ")";
     if (!state.shots.length) {
-      list.appendChild(element("div", "empty-coverage", "No setups captured yet. Position the camera and capture your first shot."));
+      list.appendChild(element("div", "empty-coverage", "No positions captured yet. Stage the scene, then press + Position above the preview."));
       return;
     }
     state.shots.forEach(function (shot, index) {
@@ -384,12 +460,13 @@
       button.type = "button";
       button.setAttribute("aria-label", "Restore setup from shot " + (index + 1));
       var mini = element("div", "mini-scene");
-      var positions = screenProjection(shot);
-      [["a", positions.a], ["b", positions.b]].forEach(function (data) {
-        var talent = element("div", "mini-talent " + data[0]);
-        talent.style.left = data[1] + "%";
-        if (shot.size === "wide") { talent.style.height = "33px"; }
-        if (shot.size === "close") { talent.style.height = "75px"; }
+      projection(shot).slice().sort(function(a,b){return b.depth - a.depth;}).forEach(function (p) {
+        if (!p.visible) return;
+        var talent = element("div", "mini-talent");
+        talent.style.left = p.x + "%";
+        talent.style.height = Math.max(14, p.height / 100 * 78) + "px";
+        talent.style.bottom = p.bottom / 100 * 78 + "px";
+        talent.style.backgroundColor = p.color;
         mini.appendChild(talent);
       });
       var meta = element("div", "shot-meta");
@@ -399,19 +476,15 @@
       info.appendChild(element("span", "", shot.move.toUpperCase()));
       info.appendChild(element("span", "", axisInfo(shot).label.toUpperCase()));
       button.appendChild(mini); button.appendChild(meta); button.appendChild(info);
-      button.addEventListener("click", function () {
-        state.a = point(shot.a, state.a); state.b = point(shot.b, state.b); state.cam = point(shot.cam, state.cam);
-        state.size = shot.size; state.move = shot.move; state.intent = shot.intent;
-        state.active = index; syncInputs(); render(); save();
-        notify("Restored shot " + (index + 1) + ". Capturing again creates a new setup.");
-      });
+      button.addEventListener("click", function () { restoreShot(index); });
       var remove = element("button", "shot-remove", "×");
       remove.type = "button"; remove.title = "Remove shot " + (index + 1);
       remove.setAttribute("aria-label", "Remove shot " + (index + 1));
       remove.addEventListener("click", function () {
         state.shots.splice(index, 1);
-        state.active = -1; render(); save();
-        notify("Shot removed.");
+        if (state.active === index) state.active = -1;
+        else if (state.active > index) state.active -= 1;
+        render(); save(); notify("Shot position removed.");
       });
       wrap.appendChild(button); wrap.appendChild(remove); list.appendChild(wrap);
     });
@@ -419,21 +492,25 @@
   function cutChecks() {
     var results = [];
     for (var i = 1; i < state.shots.length; i++) {
-      var before = state.shots[i - 1], after = state.shots[i];
+      var before = state.shots[i-1], after = state.shots[i];
       var prev = axisInfo(before), next = axisInfo(after);
-      var changes = Math.max(distance(before.a, after.a), distance(before.b, after.b));
+      var left = before.subjects || legacySubjects(before), right = after.subjects || legacySubjects(after);
       var flags = [];
-      if (changes > 35) flags.push("Performer blocking changed between snapshots. Verify the movement is motivated and physically continuous.");
-      if (prev.side === 0 || next.side === 0) flags.push("A camera is on or near the action axis. Confirm eyelines and screen direction in the actual shots.");
-      else if (prev.side !== next.side) flags.push("Possible 180° line crossing. Screen order may reverse. Move the camera, add an intentional neutral shot, or show the crossing.");
-      var from = screenOrder(before), to = screenOrder(after);
-      if (from !== to && prev.side !== 0 && next.side !== 0 && changes <= 35 && !flags.some(function (flag) { return flag.indexOf("line crossing") >= 0; })) {
-        flags.push("Left/right screen order changes. Check whether the audience can still follow the geography.");
-      }
-      if (!flags.length && before.size === after.size && distance(before.cam, after.cam) < 85) {
-        flags.push("Similar camera placement and framing. Consider more distinct coverage if this cut needs to feel different.");
-      }
-      results.push({ from: i, to: i + 1, flags: flags });
+      var moved = false, unmatched = false;
+      left.forEach(function (p) {
+        var counterpart = right.find(function(q){return q.id === p.id;});
+        if (!counterpart) unmatched = true;
+        else if (distance(p,counterpart)>35) moved = true;
+      });
+      right.forEach(function(p){if (!left.some(function(q){return q.id === p.id;})) unmatched = true;});
+      if (unmatched) flags.push("The subjects present change between shots. Check entrances, exits and action continuity.");
+      if (moved) flags.push("Performer blocking changed between snapshots. Check that a motivated move explains the change.");
+      var sameAxis = left.length >= 2 && right.length >= 2 && left[0].id === right[0].id && left[1].id === right[1].id;
+      if (sameAxis && (prev.side === 0 || next.side === 0)) flags.push("A camera is on or near the action axis. Confirm eyelines and screen direction in actual shots.");
+      else if (sameAxis && prev.side !== next.side) flags.push("Possible 180° line crossing. Screen order may reverse. Motivate the move or add a neutral shot.");
+      if (!flags.length && before.size === after.size && distance(before.cam,after.cam)<85)
+        flags.push("Similar camera position and framing. Consider a more distinct cut if it would serve the scene.");
+      results.push({from:i,to:i+1,flags:flags});
     }
     return results;
   }
@@ -452,14 +529,14 @@
       card.appendChild(element("span", "check-mark", report.flags.length ? "!" : "✓"));
       var copy = element("div", "");
       copy.appendChild(element("strong", "", "SHOT " + String(report.from).padStart(2, "0") + " → SHOT " + String(report.to).padStart(2, "0")));
-      (report.flags.length ? report.flags : ["No axis or blocking issue detected by this geometry check. Still review the performance, action, light, colour and sound bridge."]).forEach(function (message) {
+      (report.flags.length ? report.flags : ["No simple blocking or action-axis issue detected. Check lighting, movement, colour and sound in the finished shots."]).forEach(function (message) {
         copy.appendChild(element("p", "", message));
       });
       card.appendChild(copy); result.appendChild(card);
     });
   }
   function render() {
-    redrawFloor(); redrawMonitor(); renderShots(); renderChecks();
+    renderSubjectControls(); redrawFloor(); redrawMonitor(); renderShots(); renderTabs(); renderChecks();
     el("capture").disabled = state.shots.length >= MAX_SHOTS;
   }
   function pointerPosition(event) {
