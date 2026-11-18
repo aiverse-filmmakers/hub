@@ -227,3 +227,23 @@ a { color: inherit; }
 .shot-wrap .shot-card { width: 100%; height: 100%; }
 .shot-wrap .shot-remove { position: absolute; z-index: 2; top: 7px; right: 7px; }
 @media (max-width: 560px) { .shot-wrap { flex-basis: 175px; } }
+
+/* Phone-first placement controls. SVG hit zones are at least ~44 CSS px on a narrow phone. */
+.floor-handle .touch-zone { fill: transparent; pointer-events: all; }
+.floor-handle[data-selected="true"] .handle-ring { stroke-opacity: 1; stroke-width: 3; stroke-dasharray: none; }
+.floor-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 12px 3px 0; }
+.floor-controls-title { color: var(--warm); letter-spacing: .14em; font-size: 10px; font-weight: 800; margin-right: 4px; }
+.floor-controls button { background: #10171a; color: #b2bdba; border: 1px solid #3d4b4b; border-radius: 5px; padding: 10px 12px; min-height: 43px; font-weight: 700; font-size: 11px; white-space: nowrap; }
+.floor-controls button[aria-pressed="true"] { color: #131817; background: var(--warm); border-color: var(--warm); }
+.selector-dot { display: inline-block; border-radius: 50%; height: 9px; width: 9px; vertical-align: -1px; margin-right: 6px; }
+.selector-dot.dot-a { background: var(--mint); }
+.selector-dot.dot-b { background: var(--coral); }
+.selector-dot.dot-cam { background: var(--warm); }
+.floor-controls button[aria-pressed="true"] .selector-dot { background: #26302d; }
+.floor-instruction { color: #d5c6a9; font-size: 12px; line-height: 1.55; margin: 9px 3px 1px; }
+@media (max-width: 560px) {
+  .floor-controls { gap: 6px; padding: 8px 8px 0; }
+  .floor-controls-title { flex: 0 0 100%; }
+  .floor-controls button { flex: 1 1 auto; padding: 10px 7px; font-size: 11px; }
+  .floor-instruction { padding: 0 8px; }
+}
