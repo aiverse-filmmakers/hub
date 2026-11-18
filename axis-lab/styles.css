@@ -311,3 +311,6 @@ a { color: inherit; }
   .floor-controls .placement-subjects button { flex:1 1 40px; }
   .distance-readouts { max-height:none; }
 }
+
+/* Keep the perspective silhouettes behind monitor guides while preserving near-over-far ordering. */
+.preview-subjects { z-index:2; isolation:isolate; }
