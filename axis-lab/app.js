@@ -552,27 +552,32 @@
   // Selecting a tool lets phone users tap anywhere on the floor rather than
   // trying to grab a small SVG marker. This also works with a mouse.
   var activeTool = "cam";
-  function setTool(field) {
-    if (!["a", "b", "cam"].includes(field)) return;
-    activeTool = field;
-    var buttons = { a: "placeA", b: "placeB", cam: "placeCam" };
-    var handles = { a: "handleA", b: "handleB", cam: "handleCam" };
-    Object.keys(buttons).forEach(function (key) {
-      el(buttons[key]).setAttribute("aria-pressed", String(key === field));
-      el(handles[key]).setAttribute("data-selected", String(key === field));
-    });
-    var name = field === "cam" ? "Camera" : field === "a" ? (state.aName || "Performer A") : (state.bName || "Performer B");
-    el("floorHelp").textContent = name + " selected. Tap anywhere on the floor to place it, or drag the highlighted marker.";
-  }
-  [["placeA", "a"], ["placeB", "b"], ["placeCam", "cam"]].forEach(function (pair) {
-    el(pair[0]).addEventListener("click", function () { setTool(pair[1]); });
-  });
 
+  function setTool(field) {
+    if (field !== "cam" && !state.subjects.some(function(p){return p.id === field;})) return;
+    activeTool = field;
+    el("placeCam").setAttribute("aria-pressed", String(field === "cam"));
+    el("handleCam").setAttribute("data-selected", String(field === "cam"));
+    var buttons = el("subjectPlaceButtons").children;
+    for (var i=0;i<buttons.length;i++) {
+      var id = buttons[i].id.replace(/^place/,"").toLowerCase();
+      buttons[i].setAttribute("aria-pressed", String(id === field));
+    }
+    Object.keys(subjectNodes).forEach(function (id) {
+      subjectNodes[id].setAttribute("data-selected", String(field === id));
+    });
+    var subject = state.subjects.find(function(p){return p.id === field;});
+    var name = field === "cam" ? "Camera" : subject.name;
+    el("floorHelp").textContent = name + " selected. Tap on the floor to place it, or drag the marker.";
+  }
+  el("placeCam").addEventListener("click",function(){setTool("cam");});
   function handleField(target) {
     while (target && target !== floor) {
-      if (target.id === "handleA") return "a";
-      if (target.id === "handleB") return "b";
       if (target.id === "handleCam") return "cam";
+      if (target.getAttribute) {
+        var id = target.getAttribute("data-subject-id");
+        if (id && state.subjects.some(function(p){return p.id === id;})) return id;
+      }
       target = target.parentNode;
     }
     return null;
@@ -580,79 +585,88 @@
   function setPosition(field, event, finish) {
     var p = pointerPosition(event);
     if (!p) return;
-    state[field] = p;
-    state.active = -1;
-    if (finish) { render(); save(); }
+    if (field === "cam") state.cam = p;
+    else {
+      var subject = state.subjects.find(function(s){return s.id === field;});
+      if (!subject) return;
+      subject.x = p.x; subject.y = p.y;
+    }
+    syncLegacy();
+    if (finish) { persistActive(); render(); save(); }
     else { redrawFloor(); redrawMonitor(); }
   }
   var draggingPointer = null;
   floor.addEventListener("pointerdown", function (event) {
     if (event.pointerType === "mouse" && event.button !== 0) return;
-    if (draggingPointer !== null) return; // Ignore a second finger.
+    if (draggingPointer !== null) return;
     var field = handleField(event.target) || activeTool;
     event.preventDefault();
     setTool(field);
     draggingPointer = { id: event.pointerId, field: field };
     setPosition(field, event, false);
-    // Capture on the SVG root, not an SVG <g>, for better iOS Safari support.
-    // Window listeners below also work when pointer capture is unavailable.
     try { if (floor.setPointerCapture) floor.setPointerCapture(event.pointerId); } catch (error) { /* window fallback */ }
   });
   function movePointer(event) {
-    if (draggingPointer === null || event.pointerId !== draggingPointer.id) return;
+    if (!draggingPointer || event.pointerId !== draggingPointer.id) return;
     if (event.cancelable) event.preventDefault();
     setPosition(draggingPointer.field, event, false);
   }
   function stopPointer(event) {
-    if (draggingPointer === null || event.pointerId !== draggingPointer.id) return;
+    if (!draggingPointer || event.pointerId !== draggingPointer.id) return;
     var field = draggingPointer.field;
     draggingPointer = null;
     if (event.type !== "pointercancel") setPosition(field, event, true);
-    else { render(); save(); }
-    try { if (floor.hasPointerCapture && floor.hasPointerCapture(event.pointerId)) floor.releasePointerCapture(event.pointerId); } catch (error) { /* already released */ }
+    else { persistActive(); render(); save(); }
+    try { if (floor.hasPointerCapture && floor.hasPointerCapture(event.pointerId)) floor.releasePointerCapture(event.pointerId); } catch (error) {}
   }
   window.addEventListener("pointermove", movePointer);
   window.addEventListener("pointerup", stopPointer);
   window.addEventListener("pointercancel", stopPointer);
+  el("handleCam").addEventListener("keydown", function (event) {
+    var directions = { ArrowLeft: [-12,0], ArrowRight: [12,0], ArrowUp: [0,-12], ArrowDown: [0,12] };
+    if (!directions[event.key]) return;
+    event.preventDefault(); setTool("cam");
+    var d = directions[event.key];
+    state.cam = point({ x:state.cam.x+d[0],y:state.cam.y+d[1] }, state.cam);
+    persistActive(); render(); save();
+  });
 
-  // Arrow keys are still supported when an SVG marker has keyboard focus.
-  function attachDrag(id, field) {
-    el(id).addEventListener("keydown", function (event) {
-      var directions = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, -12], ArrowDown: [0, 12] };
-      if (!directions[event.key]) return;
-      event.preventDefault();
-      setTool(field);
-      var delta = directions[event.key];
-      state[field] = point({ x: state[field].x + delta[0], y: state[field].y + delta[1] }, state[field]);
-      state.active = -1;
-      render();
-      save();
-    });
-  }
   function updateField(id, field, max) {
     el(id).addEventListener("input", function (event) {
-      state[field] = max ? event.target.value.slice(0, max) : event.target.value;
-      state.active = -1;
-      if (field === "aName" || field === "bName" || field === "size" || field === "move") render();
+      state[field] = max ? event.target.value.slice(0,max) : event.target.value;
+      if (field !== "scene") persistActive();
+      if (field === "size" || field === "move") render();
       save();
     });
   }
   updateField("sceneName", "scene", 100);
-  updateField("actorA", "aName", 50);
-  updateField("actorB", "bName", 50);
   updateField("shotSize", "size");
   updateField("cameraMove", "move");
   updateField("shotIntent", "intent", 400);
-  attachDrag("handleA", "a"); attachDrag("handleB", "b"); attachDrag("handleCam", "cam");
-
-  el("capture").addEventListener("click", function () {
-    if (state.shots.length >= MAX_SHOTS) { notify("This project has reached the 60-shot limit. Export it before starting a new one.", true); return; }
-    if (distance(state.a, state.b) < 75) { notify("Move performers A and B farther apart to establish an action axis.", true); return; }
+  el("gridMetres").addEventListener("change", function(event) {
+    var value = Number(event.target.value);
+    if (!gridOptions.includes(value)) return;
+    state.gridMetres = value; persistActive(); render(); save();
+  });
+  el("addSubject").addEventListener("click", function() {
+    if (state.subjects.length >= MAX_SUBJECTS || state.nextSubjectIndex >= 26) return;
+    var id = String.fromCharCode(97 + state.nextSubjectIndex++);
+    var n = state.subjects.length;
+    var loc = point({x:480+(n%3-1)*75, y:210+(n%2)*75},state.cam);
+    state.subjects.push({id:id,name:"Performer " + subjectLabel(id),x:loc.x,y:loc.y});
+    syncLegacy(); persistActive(); render(); save(); setTool(id);
+    notify("Added performer " + subjectLabel(id) + ". Tap the floor to place them.");
+  });
+  function capturePosition() {
+    if (state.shots.length >= MAX_SHOTS) { notify("Maximum 60 saved shot positions. Export your project before starting another.", true); return; }
     state.shots.push(currentShot());
     state.active = state.shots.length - 1;
-    render(); save(); notify("Shot " + state.shots.length + " captured.");
+    render(); save();
+    notify("Position " + state.shots.length + " saved. Changes to this tab update its shot.");
     var list = el("shotList"); list.scrollLeft = list.scrollWidth;
-  });
+  }
+  el("capture").addEventListener("click", capturePosition);
+  el("newPosition").addEventListener("click", capturePosition);
 
   function safeLine(value) { return String(value || "").replace(/[\r\n]+/g, " ").trim(); }
   function brief() {
