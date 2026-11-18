@@ -309,7 +309,7 @@
       node.style.height = p.height + "%";
       node.style.width = p.width + "%";
       node.style.bottom = p.bottom + "%";
-      node.style.zIndex = String(1000 - index);
+      node.style.zIndex = String(1 + index);
       node.style.setProperty("--subject-color", p.color);
       node.appendChild(element("div","subject-head"));
       node.appendChild(element("div","subject-body"));
@@ -536,6 +536,7 @@
     });
   }
   function render() {
+    if (activeTool !== "cam" && !state.subjects.some(function(p) { return p.id === activeTool; })) activeTool = "cam";
     renderSubjectControls(); redrawFloor(); redrawMonitor(); renderShots(); renderTabs(); renderChecks();
     el("capture").disabled = state.shots.length >= MAX_SHOTS;
   }
@@ -842,14 +843,14 @@
     try {
       if (file.size > 500000) throw new Error("Project file is too large (500 KB limit).");
       var loaded = sanitize(JSON.parse(await file.text()));
-      state = loaded; syncInputs(); render(); save();
+      state = loaded; activeTool = "cam"; syncInputs(); render(); save();
       notify("Project loaded. All shots are ready to edit.");
     } catch (error) { notify(error.message || "Could not open this project.", true); }
     event.target.value = "";
   });
   el("reset").addEventListener("click", function () {
     if ((state.shots.length || state.scene) && !window.confirm("Start a new scene? Export a JSON backup first if you want to keep this work.")) return;
-    state = initialState(); syncInputs(); render(); save(); notify("New scene ready.");
+    state = initialState(); activeTool = "cam"; syncInputs(); render(); save(); notify("New scene ready.");
   });
   syncInputs(); setTool("cam"); render();
 })();
