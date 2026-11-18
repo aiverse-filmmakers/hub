@@ -281,38 +281,93 @@
     el("capture").disabled = state.shots.length >= MAX_SHOTS;
   }
   function pointerPosition(event) {
-    var ctm = floor.getScreenCTM();
-    if (!ctm) return null;
-    var p = floor.createSVGPoint(); p.x = event.clientX; p.y = event.clientY;
-    var transformed = p.matrixTransform(ctm.inverse());
-    return point(transformed, state.cam);
+    var matrix = floor.getScreenCTM();
+    if (!matrix) return null;
+    var screenPoint = floor.createSVGPoint();
+    screenPoint.x = event.clientX;
+    screenPoint.y = event.clientY;
+    var coordinates = screenPoint.matrixTransform(matrix.inverse());
+    return point(coordinates, state.cam);
   }
+
+  // Selecting a tool lets phone users tap anywhere on the floor rather than
+  // trying to grab a small SVG marker. This also works with a mouse.
+  var activeTool = "cam";
+  function setTool(field) {
+    if (!["a", "b", "cam"].includes(field)) return;
+    activeTool = field;
+    var buttons = { a: "placeA", b: "placeB", cam: "placeCam" };
+    var handles = { a: "handleA", b: "handleB", cam: "handleCam" };
+    Object.keys(buttons).forEach(function (key) {
+      el(buttons[key]).setAttribute("aria-pressed", String(key === field));
+      el(handles[key]).setAttribute("data-selected", String(key === field));
+    });
+    var name = field === "cam" ? "Camera" : field === "a" ? (state.aName || "Performer A") : (state.bName || "Performer B");
+    el("floorHelp").textContent = name + " selected. Tap anywhere on the floor to place it, or drag the highlighted marker.";
+  }
+  [["placeA", "a"], ["placeB", "b"], ["placeCam", "cam"]].forEach(function (pair) {
+    el(pair[0]).addEventListener("click", function () { setTool(pair[1]); });
+  });
+
+  function handleField(target) {
+    while (target && target !== floor) {
+      if (target.id === "handleA") return "a";
+      if (target.id === "handleB") return "b";
+      if (target.id === "handleCam") return "cam";
+      target = target.parentNode;
+    }
+    return null;
+  }
+  function setPosition(field, event, finish) {
+    var p = pointerPosition(event);
+    if (!p) return;
+    state[field] = p;
+    state.active = -1;
+    if (finish) { render(); save(); }
+    else { redrawFloor(); redrawMonitor(); }
+  }
+  var draggingPointer = null;
+  floor.addEventListener("pointerdown", function (event) {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (draggingPointer !== null) return; // Ignore a second finger.
+    var field = handleField(event.target) || activeTool;
+    event.preventDefault();
+    setTool(field);
+    draggingPointer = { id: event.pointerId, field: field };
+    setPosition(field, event, false);
+    // Capture on the SVG root, not an SVG <g>, for better iOS Safari support.
+    // Window listeners below also work when pointer capture is unavailable.
+    try { if (floor.setPointerCapture) floor.setPointerCapture(event.pointerId); } catch (error) { /* window fallback */ }
+  });
+  function movePointer(event) {
+    if (draggingPointer === null || event.pointerId !== draggingPointer.id) return;
+    if (event.cancelable) event.preventDefault();
+    setPosition(draggingPointer.field, event, false);
+  }
+  function stopPointer(event) {
+    if (draggingPointer === null || event.pointerId !== draggingPointer.id) return;
+    var field = draggingPointer.field;
+    draggingPointer = null;
+    if (event.type !== "pointercancel") setPosition(field, event, true);
+    else { render(); save(); }
+    try { if (floor.hasPointerCapture && floor.hasPointerCapture(event.pointerId)) floor.releasePointerCapture(event.pointerId); } catch (error) { /* already released */ }
+  }
+  window.addEventListener("pointermove", movePointer);
+  window.addEventListener("pointerup", stopPointer);
+  window.addEventListener("pointercancel", stopPointer);
+
+  // Arrow keys are still supported when an SVG marker has keyboard focus.
   function attachDrag(id, field) {
-    var handle = el(id), dragging = false;
-    handle.addEventListener("pointerdown", function (event) {
-      if (event.button !== 0 && event.pointerType === "mouse") return;
-      event.preventDefault(); dragging = true;
-      handle.setPointerCapture(event.pointerId);
-      var p = pointerPosition(event);
-      if (p) { state[field] = p; state.active = -1; render(); }
-    });
-    handle.addEventListener("pointermove", function (event) {
-      if (!dragging) return;
-      event.preventDefault();
-      var p = pointerPosition(event);
-      if (p) { state[field] = p; state.active = -1; redrawFloor(); redrawMonitor(); }
-    });
-    function stop() { if (!dragging) return; dragging = false; render(); save(); }
-    handle.addEventListener("pointerup", stop);
-    handle.addEventListener("pointercancel", stop);
-    handle.addEventListener("lostpointercapture", stop);
-    handle.addEventListener("keydown", function (event) {
+    el(id).addEventListener("keydown", function (event) {
       var directions = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, -12], ArrowDown: [0, 12] };
       if (!directions[event.key]) return;
       event.preventDefault();
+      setTool(field);
       var delta = directions[event.key];
       state[field] = point({ x: state[field].x + delta[0], y: state[field].y + delta[1] }, state[field]);
-      state.active = -1; render(); save();
+      state.active = -1;
+      render();
+      save();
     });
   }
   function updateField(id, field, max) {
@@ -427,5 +482,5 @@
     if ((state.shots.length || state.scene) && !window.confirm("Start a new scene? Export a JSON backup first if you want to keep this work.")) return;
     state = initialState(); syncInputs(); render(); save(); notify("New scene ready.");
   });
-  syncInputs(); render();
+  syncInputs(); setTool("cam"); render();
 })();
