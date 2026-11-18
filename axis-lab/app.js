@@ -669,52 +669,148 @@
   el("newPosition").addEventListener("click", capturePosition);
 
   function safeLine(value) { return String(value || "").replace(/[\r\n]+/g, " ").trim(); }
+
   function brief() {
     var lines = [
       "# AXIS LAB | Production shot brief", "",
       "**Scene:** " + (safeLine(state.scene) || "Untitled scene"),
-      "**Performers:** " + safeLine(state.aName) + " / " + safeLine(state.bName),
-      "**Planned shots:** " + state.shots.length,
+      "**Current cast:** " + state.subjects.map(function(p){return subjectLabel(p.id) + ": " + safeLine(p.name);}).join(", "),
+      "**Saved positions:** " + state.shots.length,
       "",
-      "## Staging notes", "",
-      "Coordinates are relative values on a 960 × 600 schematic, not measured metres or an accurate 3D reconstruction.",
-      "Keep fixed references for performer identity, wardrobe, props, light and environment across shots.",
-      "Camera orientation aims approximately toward the midpoint between performers.",
+      "## Metric calibration", "",
+      "1 grid square (80 plan units) = " + state.gridMetres + " planned metres in the active position.",
+      "Distances are user-calibrated plan estimates, not verified physical measurements.",
+      "Default performer height in perspective guide: 1.7 m. Camera height estimate: 1.6 m.",
+      "The camera automatically looks towards the cast centre; framing is schematic, not lens-accurate.",
       ""
     ];
     state.shots.forEach(function (shot, index) {
-      var side = axisInfo(shot), proj = screenOrder(shot);
-      lines.push("## Shot " + String(index + 1).padStart(2, "0") + " · " + prettySize(shot.size), "");
-      lines.push("- **Story beat:** " + (safeLine(shot.intent) || "Not specified"));
-      lines.push("- **Camera language:** " + shot.move);
-      lines.push("- **Camera side:** " + side.label + " of the action axis");
-      lines.push("- **Approximate screen order:** " + proj);
-      lines.push("- **Blocking positions:** " + safeLine(state.aName) + " (" + Math.round(shot.a.x) + "," + Math.round(shot.a.y) + "), " + safeLine(state.bName) + " (" + Math.round(shot.b.x) + "," + Math.round(shot.b.y) + ")");
-      lines.push("- **Camera plan:** (" + Math.round(shot.cam.x) + "," + Math.round(shot.cam.y) + "), oriented toward the performers' midpoint");
-      lines.push("- **Generation direction:** " + prettySize(shot.size).toLowerCase() + " framing; " + shot.move.toLowerCase() + " camera; maintain established performer identity, scene geography, light direction and action state.");
+      var side = axisInfo(shot), cast = shot.subjects || legacySubjects(shot);
+      lines.push("## Position " + (index + 1) + " | " + prettySize(shot.size), "");
+      lines.push("- Story beat: " + (safeLine(shot.intent) || "Not specified"));
+      lines.push("- Camera movement: " + shot.move);
+      lines.push("- Camera side: " + side.label);
+      lines.push("- Screen order: " + screenOrder(shot));
+      lines.push("- Metre scale: " + (shot.gridMetres || 1) + " m / square");
+      lines.push("- Camera plan coordinates: (" + Math.round(shot.cam.x) + "," + Math.round(shot.cam.y) + ")");
+      cast.forEach(function (person) {
+        lines.push("- " + subjectLabel(person.id) + " (" + safeLine(person.name) + ") position: (" + Math.round(person.x) + "," + Math.round(person.y) + "); ground distance to camera: " + measure(metres(person,shot.cam,shot)));
+      });
+      if (cast.length >= 2) lines.push("- " + subjectLabel(cast[0].id) + " to " + subjectLabel(cast[1].id) + ": " + measure(metres(cast[0],cast[1],shot)));
       lines.push("");
     });
     lines.push("## Cut preflight", "");
     var cuts = cutChecks();
-    if (!cuts.length) lines.push("Capture two or more shots to review cuts.");
+    if (!cuts.length) lines.push("Capture two or more positions to review cuts.");
     cuts.forEach(function (cut) {
-      lines.push("**Shot " + cut.from + " → " + cut.to + "**");
-      if (!cut.flags.length) lines.push("- No geometric continuity flags detected. Check actual eyelines, movement, lighting, colour and sound.");
-      cut.flags.forEach(function (flag) { lines.push("- " + flag); });
+      lines.push("**Position " + cut.from + " to " + cut.to + "**");
+      if (!cut.flags.length) lines.push("- No simple blocking or axis flags. Confirm actual continuity.");
+      cut.flags.forEach(function(flag){lines.push("- " + flag);});
       lines.push("");
     });
-    lines.push("## Final human review", "");
-    lines.push("- [ ] Character, wardrobe, prop and environment consistency");
-    lines.push("- [ ] Eyeline, geography, action and motion continuity");
-    lines.push("- [ ] Lens / shot-size intention and edit rhythm");
-    lines.push("- [ ] Light direction, exposure, colour balance and texture");
-    lines.push("- [ ] Dialogue, ambience, room tone, effects and sound bridges");
-    lines.push("- [ ] Brand accuracy, source permissions and delivery requirements");
+    lines.push("## Human review", "");
+    lines.push("- [ ] Performer identity, props, costume and environment");
+    lines.push("- [ ] Eyelines, screen direction and physical motion");
+    lines.push("- [ ] Exposure, matching grade, sound perspective and edit rhythm");
+    lines.push("- [ ] Rights, client claims and delivery specifications");
     lines.push("");
-    lines.push("AXIS LAB is a creative planning tool, not AI analysis. A possible issue is a discussion prompt, not a verified defect.");
-    lines.push("Generated locally in the browser. No video or production content was uploaded.");
+    lines.push("AXIS LAB: a manually staged geometric planning aid, not an automated video or camera-lens analysis.");
+    lines.push("All calculations are local to the browser.");
     return lines.join("\n");
   }
+  function drawDiagram() {
+    var canvas = document.createElement("canvas");
+    canvas.width = 1700; canvas.height = 950;
+    var c = canvas.getContext("2d");
+    if (!c) throw new Error("Canvas unavailable in this browser.");
+    var shot = currentShot(), people = projection(shot);
+    var main = { x: 50, y: 170, w: 940, h: 587.5 };
+    var right = {x: 1040,y: 170,w: 610,h: 343};
+    c.fillStyle="#0e1215";c.fillRect(0,0,1700,950);
+    c.fillStyle="#e2c38d"; c.font="700 19px sans-serif";c.fillText("AI-VERSE  /  AXIS LAB",50,62);
+    c.fillStyle="#f2eee5";c.font="600 42px sans-serif";c.fillText((state.scene || "UNTITLED SCENE").slice(0,42),50,119);
+    c.fillStyle="#9ca6a8";c.font="15px sans-serif";c.fillText("POSITION " + (state.active >= 0 ? String(state.active+1).padStart(2,"0") : "LIVE") + "   /   TOP VIEW + DEPTH PREVIEW",1050,80);
+    c.fillStyle="#12191d"; c.fillRect(main.x,main.y,main.w,main.h);
+    c.strokeStyle="#2a393e";c.lineWidth=1;
+    var scale=main.w/960;
+    for(var gx=0;gx<=960;gx+=80){c.beginPath();c.moveTo(main.x+gx*scale,main.y);c.lineTo(main.x+gx*scale,main.y+main.h);c.stroke();}
+    for(var gy=0;gy<=600;gy+=80){c.beginPath();c.moveTo(main.x,main.y+gy*scale);c.lineTo(main.x+main.w,main.y+gy*scale);c.stroke();}
+    function planar(p){return {x:main.x+p.x*scale,y:main.y+p.y*scale};}
+    var cast=shot.subjects;
+    if(cast.length>=2){
+      var p1=planar(cast[0]),p2=planar(cast[1]);
+      c.strokeStyle="#e2c38d";c.lineWidth=2;c.setLineDash([10,9]);c.beginPath();c.moveTo(p1.x,p1.y);c.lineTo(p2.x,p2.y);c.stroke();c.setLineDash([]);
+    }
+    var cam=planar(shot.cam),mid=planar(midPoint(cast));
+    c.fillStyle="#e2c38d25";c.strokeStyle="#e2c38d55";
+    var vx=mid.x-cam.x,vy=mid.y-cam.y,vl=Math.hypot(vx,vy)||1,rr=Math.min(160,vl*.5);
+    c.beginPath();c.moveTo(cam.x,cam.y);c.lineTo(mid.x-vy/vl*rr,mid.y+vx/vl*rr);c.lineTo(mid.x+vy/vl*rr,mid.y-vx/vl*rr);c.closePath();c.fill();c.stroke();
+    cast.forEach(function(p,i){
+      var xy=planar(p),col=SWATCHES[i%SWATCHES.length],letter=subjectLabel(p.id);
+      c.strokeStyle=col;c.lineWidth=2;c.beginPath();c.arc(xy.x,xy.y,26,0,Math.PI*2);c.stroke();
+      c.fillStyle=col;c.beginPath();c.arc(xy.x,xy.y,20,0,Math.PI*2);c.fill();
+      c.fillStyle="#101718";c.font="700 17px sans-serif";c.textAlign="center";c.fillText(letter,xy.x,xy.y+6);
+      c.textAlign="left";c.fillStyle="#f3eadb";c.font="600 13px sans-serif";c.fillText(p.name.slice(0,20),xy.x-30,xy.y+48);
+    });
+    c.strokeStyle="#e2c38d";c.lineWidth=3;c.beginPath();c.arc(cam.x,cam.y,25,0,Math.PI*2);c.stroke();
+    c.fillStyle="#e2c38d";c.beginPath();c.arc(cam.x,cam.y,7,0,Math.PI*2);c.fill();
+    c.font="700 14px sans-serif";c.textAlign="center";c.fillText("CAMERA",cam.x,cam.y+51);c.textAlign="left";
+    // A drawn ruler makes the calibration legible even when the PNG is shared outside the app.
+    var rulerY=805,rulerX=70;c.strokeStyle="#e2c38d";c.lineWidth=3;
+    c.beginPath();c.moveTo(rulerX,rulerY);c.lineTo(rulerX+240*scale,rulerY);c.stroke();
+    c.fillStyle="#f0ddaf";c.font="14px sans-serif";
+    for(var k=0;k<=3;k++){var px=rulerX+k*80*scale;c.beginPath();c.moveTo(px,rulerY-8);c.lineTo(px,rulerY+8);c.stroke();c.fillText(k*shot.gridMetres+(k===3?" m":""),px-3,rulerY+29);}
+    c.fillStyle="#89999c";c.font="15px sans-serif";c.fillText("1 GRID SQUARE = "+shot.gridMetres+" m  ·  PLANNED SCALE",50,893);
+    c.fillStyle="#161f23";c.fillRect(right.x,right.y,right.w,right.h);
+    c.save();c.beginPath();c.rect(right.x,right.y,right.w,right.h);c.clip();
+    c.fillStyle="#293735";c.fillRect(right.x,right.y,right.w,right.h);
+    c.strokeStyle="#60736d44";c.lineWidth=1;
+    for(var zz=1;zz<3;zz++){c.beginPath();c.moveTo(right.x+zz*right.w/3,right.y);c.lineTo(right.x+zz*right.w/3,right.y+right.h);c.stroke();}
+    for(var yy=1;yy<3;yy++){c.beginPath();c.moveTo(right.x,right.y+yy*right.h/3);c.lineTo(right.x+right.w,right.y+yy*right.h/3);c.stroke();}
+    people.slice().sort(function(a,b){return b.depth-a.depth;}).forEach(function(p){
+      if (!p.visible) return;
+      var px=right.x+p.x/100*right.w,ph=p.height/100*right.h,pw=p.width/100*right.w;
+      var foot=right.y+right.h*(1-p.bottom/100), top=foot-ph;
+      c.fillStyle=p.color;c.beginPath();c.ellipse(px,top+ph*.13,Math.max(4,pw*.19),Math.max(5,ph*.14),0,0,Math.PI*2);c.fill();
+      c.fillStyle=p.color+"ca";c.beginPath();c.moveTo(px-pw*.34,top+ph*.30);c.lineTo(px+pw*.34,top+ph*.30);c.lineTo(px+pw*.47,foot);c.lineTo(px-pw*.47,foot);c.closePath();c.fill();
+      c.fillStyle="#101718";c.font="700 15px sans-serif";c.textAlign="center";c.fillText(subjectLabel(p.id),px,top+ph*.62);c.textAlign="left";
+    });
+    c.restore();
+    c.fillStyle="#e2c38d";c.font="700 17px sans-serif";c.fillText("CAMERA VIEW   /   " + prettySize(shot.size).toUpperCase(),1040,550);
+    c.fillStyle="#a5b4b3";c.font="14px sans-serif";c.fillText("PERSPECTIVE PREVIEW · APPROXIMATE 1.7 m HEIGHT",1040,578);
+    c.fillStyle="#eae8dc";c.font="700 17px sans-serif";c.fillText("PLANNED GROUND DISTANCES",1040,635);
+    people.forEach(function(p,i){c.fillStyle="#a4b3b1";c.font="15px sans-serif";c.fillText("CAM → "+subjectLabel(p.id)+"  "+p.name.slice(0,23),1040,675+i*34);c.fillStyle="#e2c38d";c.fillText(measure(p.distance),1545,675+i*34);});
+    if(cast.length>=2){c.fillStyle="#d7e2dd";c.fillText(subjectLabel(cast[0].id)+" ↔ "+subjectLabel(cast[1].id),1040,675+people.length*34);c.fillStyle="#e2c38d";c.fillText(measure(metres(cast[0],cast[1],shot)),1545,675+people.length*34);}
+    c.fillStyle="#809093";c.font="15px sans-serif";c.fillText("ESTIMATED GEOMETRY  ·  NOT A MEASURED SET",1050,903);
+    return canvas;
+  }
+  el("saveDiagram").addEventListener("click", function () {
+    try {
+      var canvas = drawDiagram();
+      var name = "axis-lab-" + slug(state.scene) + "-position-" + (state.active < 0 ? "live" : state.active+1) + ".png";
+      canvas.toBlob(async function (blob) {
+        if (!blob) { notify("Image export failed. Try another browser.",true); return; }
+        try {
+          if (typeof File !== "undefined" && navigator.canShare && navigator.share) {
+            var file = new File([blob],name,{type:"image/png"});
+            if (navigator.canShare({files:[file]})) {
+              await navigator.share({files:[file],title:"AXIS LAB scene diagram"});
+              notify("Diagram shared or saved.");
+              return;
+            }
+          }
+        } catch(error) {
+          if (error && error.name === "AbortError") return;
+          // Fall back to standard PNG download.
+        }
+        var url=URL.createObjectURL(blob),link=document.createElement("a");
+        link.href=url;link.download=name;
+        document.body.appendChild(link);link.click();link.remove();
+        setTimeout(function(){URL.revokeObjectURL(url);},2500);
+        notify("Position diagram PNG saved.");
+      },"image/png");
+    } catch(error){notify("Could not create diagram: "+error.message,true);}
+  });
   function download(name, content, type) {
     var blob = new Blob([content], { type: type });
     var url = URL.createObjectURL(blob);
